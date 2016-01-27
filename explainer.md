@@ -180,7 +180,7 @@ TODO
 
 ### Comic relief
 
-There exists a [very creative solution](http://www.backalleycoder.com/2013/03/18/cross-browser-event-based-element-resize-detection/) to resize detection today. It is cross-browser, and based upon existing standards. To track elements size, create a child iframe that is absolutelly pinned to element's size. iframe is a window, to It exploits window.resize event. Create a iframe inside every resizeable element, and listen to iframe's resize event. The cost is 0.5Mb per event listener.
+There exists a [very creative solution](http://www.backalleycoder.com/2013/03/18/cross-browser-event-based-element-resize-detection/) to resize detection today. It is cross-browser, and based upon existing standards. To track elements size, create a child iframe that is absolutelly pinned to element's size. iframe is a window, so it gets window.resize event. The penalty is the iframe creation cost, 0.5Mb per event listener.
 
 
 
