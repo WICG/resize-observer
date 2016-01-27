@@ -7,6 +7,7 @@ This document outlines an API for observing DOM element's size.
 Javascript is often used to dynamically create and/or position DOM children. Main reasons for doing this are:
 
 1) loading only visible children's contents via XHR.
+
 2) custom layout as CSS is not expressive enough.
 
 This code needs to know when element's size changes so children can be repositioned, loaded. And there is no API for this.
