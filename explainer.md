@@ -9,7 +9,9 @@ Javascript is often used to dynamically create and/or position DOM children. Mai
 1) loading only visible children's contents via XHR.
 2) custom layout as CSS is not expressive enough.
 
-This code needs to know when element's size changes so children can be repositioned, loaded.
+This code needs to know when element's size changes so children can be repositioned, loaded. And there is no API for this.
+
+But there are workarounds.
 
 ## Current workarounds
 
