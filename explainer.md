@@ -81,12 +81,15 @@ There are many sizes of DOM elements:
 You need to know borderTop, and paddingTop to find contentRect from above measurements.
 
 #### What information do notifications contain?
-#### What happens with transforms, animations?
 #### Inline elements
 
 The answers to these are dependent on what triggers resize notifications.
 
+#### What happens with transforms, animations?
+Does changing transform fire these callbacks, e.g. does transform:scale fire resize callbacks? If so, what about compositor thread animations of transform? Most browsers do some animations on a separate thread. Changes on a separate thread will show up in the list of changes fired in the callback when that thread synchronizes with the main thread.
+
 #### Resizing and visibility
+Is there a possibilty of using the resize API for element's visibilty? display:none element's offsetHeight is 0, so the API will deliver notifications when elements display state changes. If visibility is not possible with ResizeObserver, or IntersectionObserver, do we need another interface?
 
 #### When are notifications delivered?
 
