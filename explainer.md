@@ -6,11 +6,11 @@ This document outlines an API for observing DOM element's size.
 
 Javascript is often used to dynamically create and/or position DOM children. Main reasons for doing this are:
 
-1) loading only visible children's contents via XHR.
+* to load only a visible subset of all possible children.
 
-2) custom layout as CSS is not expressive enough.
+* to perform custom layout.
 
-This code needs to know when element's size changes so children can be repositioned, loaded. And there is no API for this.
+The DOM manipulation code needs to redo its side-effects when element's size changes. There is no clean way to tell when that happens.
 
 But there are workarounds.
 
@@ -20,10 +20,9 @@ There are two main patterns that replicate ResizeObserver functionality:
 
 1) Size polling. This is an only option for component developers. They can be resized by host scripts at any time. It is power-inefficient, janky, and a performance hit because querying element's size can trigger layout.
 
-2) Ad-hoc notifications: Javascript that triggers a resize must generate resize notifications. This solution is error-prone, cumbersome to maintain, and only works if developer is in control of the entire
-page.
+2) Ad-hoc notifications: Javascript that triggers a resize must generate resize notifications. This solution is error-prone, cumbersome to maintain, and only works if developer is in control of the entire page.
 
-3) Comic relief: Very creative solution is exploit window.resize event. Create a iframe inside every resizeable element, and listen to iframe's resize event. The cost is 0.5Mb per event listener.
+> "We call notifyResize all the time" -- Polymer user
 
 [Pattern samples](#common_practice) can be found at the bottom of this document.
 
@@ -55,7 +54,13 @@ The proposed API is an observer-style API. It is modeled after [other](https://w
 
     interface ResizeChangeRecord {
        Element element;
-       // … What size information do developers need?
+       double offsetWidth;
+       double offsetHeight;
+       double borderWidth;
+       double borderHeight;
+       double paddingWidth;
+       double paddingHeight;
+       boolean isAnimation; ????
     };
 
     callback ErrorCallback = void(DOMException error, sequence<ResizeChangeRecord> changeset);
@@ -71,28 +76,37 @@ Performance: resize notifications can be high frequency. Observer API avoids the
 
 Framework authors could provide a developer-friendly 'event-like' based API on top of ResizeObserver to avoid registering too many observers.
 
-#### What triggers a resize notification? (TODO)
+#### What triggers a resize notification?
 
-Another way of asking the same question is: "What is the Element size developers care about?"
+ResizeObserver's clients are interested in manipulating content inside its content box. The minimal information they need is its size. This information can be computed with:
 
-There are many sizes of DOM elements:
-- scrollHeight: height of the content area
-- clientHeight: The value contains the height with the padding, but it does not include the scrollBar, border, and the margin.
-- offsetHeight: height of the visible area
-- getBoundingClientRect: affected by rotations
+* offsetSize: css size + border + padding + scrollbar
+* borderSize:
+* paddingSize:
 
-You need to know borderTop, and paddingTop to find contentRect from above measurements.
+Changes in any of these should trigger a resize notification.
+
+Edge case: If a property is changed, and then gets changed back to original value before notification is triggered, the notification should still get triggered. This avoids the complexity of keeping track of the original state.
 
 #### What information do notifications contain?
+
+offsetSize, borderSize, and paddingSize.
+
 #### Inline elements
 
-The answers to these are dependent on what triggers resize notifications.
+Inline elements should not generate resize notifications.
 
-#### What happens with transforms, animations?
-Does changing transform fire these callbacks, e.g. does transform:scale fire resize callbacks? If so, what about compositor thread animations of transform? Most browsers do some animations on a separate thread. Changes on a separate thread will show up in the list of changes fired in the callback when that thread synchronizes with the main thread.
+#### What about transforms?
+
+Transforms do not affect offsetSize, borderSize, or paddingSize. They should not trigger notifications.
+
+#### What about animations?
+Animations that affect watched properties should trigger notifications.
+
+Developers might want to skip doing work during animation if work is expensive. It might be useful to add an 'isAnimation' flag to make this easy.
 
 #### Resizing and visibility
-Is there a possibilty of using the resize API for element's visibilty? display:none element's offsetHeight is 0, so the API will deliver notifications when elements display state changes. If visibility is not possible with ResizeObserver, or IntersectionObserver, do we need another interface?
+Is there a possibilty of using the resize API for element's visibilty? display:none forces offsetHeight to 0, so notifications will be generated when elements display state changes. If visibility is not possible with ResizeObserver, or IntersectionObserver, do we need another interface?
 
 #### When are notifications delivered?
 
@@ -115,7 +129,7 @@ All error handlers will be called because it is expected that most developers wi
 Looping can be limited either by number, or as a time limit, or a combination of both. For example, at least 10 loops, or any number in less than 5 * 16ms.
 
 ## MutationObserver.takeRecords
-Why is MutationObserver.takeRecords there? Performance, ask Tab?
+Why is MutationObserver.takeRecords there? TODO
 
 ## Usage examples <a name="common_practice">
 
@@ -149,6 +163,7 @@ Polymer framework implements ad-hoc resize notification
 
 > IronResizableBehavior is a behavior that can be used in Polymer elements to coordinate the flow of resize events between "resizers" (elements that control the size or hidden state of their children) and "resizables" (elements that need to be notified when they are resized or un-hidden by their parents in order to take action on their new measurements).
 
+
 TODO ResizeAPI usage
 
 #### EXAMPLE 4: [Google Maps API](https://developers.google.com/maps/documentation/javascript/3.exp/reference)
@@ -162,6 +177,10 @@ TODO ResizeAPI usage
 #### EXAMPLE 5: An infinite scroller
 
 TODO
+
+### Comic relief
+
+There exists a [very creative solution](http://www.backalleycoder.com/2013/03/18/cross-browser-event-based-element-resize-detection/) to resize detection today. It is cross-browser, and based upon existing standards. To track elements size, create a child iframe that is absolutelly pinned to element's size. iframe is a window, to It exploits window.resize event. Create a iframe inside every resizeable element, and listen to iframe's resize event. The cost is 0.5Mb per event listener.
 
 
 
