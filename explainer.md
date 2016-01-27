@@ -2,29 +2,29 @@
 
 This document outlines an API for observing DOM element's size.
 
-## Who wants to observe size changes?
+## Why observe size changes?
 
-Common developer pattern is to use javascript to dynamically create and/or position element's children. They do this because:
+Javascript is often used to dynamically create and/or position DOM children. Main reasons for doing this are:
 
-1. Children's contents are loaded by XHR. Only visible children should be loaded.
-2. They are writing a custom layout as CSS is not expressive enough.
+1) loading only visible children's contents via XHR.
+2) custom layout as CSS is not expressive enough.
 
-These developers are our audience. They want to know when the element's size changes in order to readjust the children.
+This code needs to know when element's size changes so children can be repositioned, loaded.
 
 ## Current workarounds
 
-Developers have created two main patterns to replicate ResizeObserver's functionality:
+There are two main patterns that replicate ResizeObserver functionality:
 
 1) Size polling. This is an only option for component developers. They can be resized by host scripts at any time. It is power-inefficient, janky, and a performance hit because querying element's size can trigger layout.
 
 2) Ad-hoc notifications: Javascript that triggers a resize must generate resize notifications. This solution is error-prone, cumbersome to maintain, and only works if developer is in control of the entire
 page.
 
-3) Fun one: Very creative solution is exploit window.resize event. Create a iframe inside every resizeable element, and listen to iframe's resize event. Clever, but it costs 0.5Mb per event listener.
+3) Comic relief: Very creative solution is exploit window.resize event. Create a iframe inside every resizeable element, and listen to iframe's resize event. The cost is 0.5Mb per event listener.
 
 [Pattern samples](#common_practice) can be found at the bottom of this document.
 
-None of existing solutions are desirable. They fail in power consumption, code complexity, and perfomance.
+None of existing workarounds are desirable. They fail in power consumption, code complexity, and perfomance.
 
 ## Goal
 
