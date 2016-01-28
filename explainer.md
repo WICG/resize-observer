@@ -122,14 +122,16 @@ The callbacks themselves can (and will) modify style and tree structure, so we n
 
 #### Dealing with infinite loops
 
-The number of times notification loop will run has to be limited to prevent infinite recursion. If the number of loops exceeds the recurion limit, errorHandler will be called not just for ResizeObservers for the current changeset, for all ResizeObservers that registered error handlers.
+The number of times notifications will run in a single frame has to be limited to prevent infinite loops. Error will be thrown if the number of loops exceeds the limit.
 
-All error handlers will be called because it is expected that most developers will not implement the error handler. The idea is that developers that really care will be able to detect errors caused by misbehaving components they are using. For example, framework developers.
+All registered error handlers will be notified of the error, not just the handlers for the existing changeset. We call all handlers because it is expected that most developers will not implement the error handler. The idea is that developers that really care will be able to detect errors caused by misbehaving components they are using.
 
-Looping can be limited either by number, or as a time limit, or a combination of both. For example, at least 10 loops, or any number in less than 5 * 16ms.
+The notifications not delivered because of the error will be delivered in the next delivery cycle. The API should never drop notifications. Missed notification would result in user-facing ugliness.
+
+Looping number still needs to be determined empirically.
 
 ## MutationObserver.takeRecords
-Why is MutationObserver.takeRecords there? TODO
+Do we need to emulate MutationObserver.takeRecords? takeRecords is a hack that allows reading of pending notifications.
 
 ## Usage examples <a name="common_practice">
 
