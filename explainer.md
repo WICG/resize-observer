@@ -8,7 +8,7 @@ Javascript is often used to dynamically create and/or position DOM children. Mai
 
 * to load only a visible subset of all possible children.
 
-* to perform custom layout.
+* to responsively position children.
 
 The DOM manipulation code needs to redo its side-effects when element's size changes. There is no clean way to tell when that happens.
 
@@ -54,12 +54,6 @@ The proposed API is an observer-style API. It is modeled after [other](https://w
 
     interface ResizeChangeRecord {
        Element element;
-       double offsetWidth;
-       double offsetHeight;
-       double borderWidth;
-       double borderHeight;
-       double paddingWidth;
-       double paddingHeight;
        boolean isAnimation; ????
     };
 
@@ -86,11 +80,11 @@ ResizeObserver's clients are interested in manipulating content inside its conte
 
 Changes in any of these should trigger a resize notification.
 
-Edge case: If a property is changed, and then gets changed back to original value before notification is triggered, the notification should still get triggered. This avoids the complexity of keeping track of the original state.
+Edge case: If a property is changed, and then gets changed back to original value before notification is triggered, the notification might still get triggered. This avoids the complexity of keeping track of the original state.
 
 #### What information do notifications contain?
 
-offsetSize, borderSize, and paddingSize.
+The element, and isAnimationFlag???.
 
 #### Inline elements
 
