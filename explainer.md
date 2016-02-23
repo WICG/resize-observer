@@ -126,9 +126,6 @@ The notifications not delivered because of the error will be delivered in the ne
 
 Looping number still needs to be determined empirically.
 
-#### MutationObserver.takeRecords
-Do we need to emulate MutationObserver.takeRecords? takeRecords is a hack that allows reading of pending notifications.
-
 ## Usage examples <a name="common_practice">
 
 
