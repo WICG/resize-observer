@@ -53,8 +53,15 @@ The proposed API is an observer-style API. It is modeled after [other](https://w
     callback ResizeObserverCallback = void(sequence<ResizeChangeRecord> changeset);
 
     interface ResizeChangeRecord {
-       Element element;
-       boolean isAnimation; ????
+        Element element;
+        // TODO: is this the right information to pass back?
+        double offsetWidth;
+        double offsetHeight;
+        double borderWidth;
+        double borderHeight;
+        double paddingWidth;
+        double paddingHeight;
+        boolean isAnimation;
     };
 
     callback ErrorCallback = void(DOMException error, sequence<ResizeChangeRecord> changeset);
@@ -84,7 +91,11 @@ Edge case: what to do if changes are reverted before notification is fired? It i
 
 #### What information do notifications contain?
 
-The element, and isAnimationFlag???.
+The element.
+
+Geometry information: offsetSize, borderSize, and paddingSize. Geometry is here to help authors avoid triggering layout.
+
+isAnimationFlag???.
 
 #### Inline elements
 
@@ -169,13 +180,13 @@ Facebook would like to use resize event to optimize friend list loading.
 > use case we have right now is inserting a <div> that will hold a list of friends who are online in chat. As soon as we insert the <div> we want to know it's size so we can plan how many people we should render in the list. Querying the height right away triggers a layout, so we encourage people to do so inside a RAF. This requires cooperation between all RAF users to coordinate queries and modifications to the DOM. I think users of ResizeObserver would find a similar issue if the code triggered by one event modifies the DOM and the code from the next event queries it, a layout is forced.
 
 ```javascript
-    // ResizeObserver helps a bit: automatically places callback in RAF.
-    // Layout will still be forced with offsetHeight
+    // ResizeObserver helps: automatically places callback in RAF.
+    // geometry information
     var friends = document.createElement('div');
     resizeObserver = new ResizeObserver(function handler(changes) {
         for (var i=0; i<changes.length;i++) {
             if (changes[i] == friends) {
-                var howManyFriends = friends.offsetHeight / 24;
+                var howManyFriends = changes[i].geometry.height / 24;
             }
         }
     });
