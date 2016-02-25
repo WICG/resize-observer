@@ -177,7 +177,7 @@ life and performance.
 
 Facebook would like to use resize event to optimize friend list loading.
 
-> use case we have right now is inserting a <div> that will hold a list of friends who are online in chat. As soon as we insert the <div> we want to know it's size so we can plan how many people we should render in the list. Querying the height right away triggers a layout, so we encourage people to do so inside a RAF. This requires cooperation between all RAF users to coordinate queries and modifications to the DOM. I think users of ResizeObserver would find a similar issue if the code triggered by one event modifies the DOM and the code from the next event queries it, a layout is forced.
+> use case we have right now is inserting a `<div>` that will hold a list of friends who are online in chat. As soon as we insert the `<div>` we want to know it's size so we can plan how many people we should render in the list. Querying the height right away triggers a layout, so we encourage people to do so inside a RAF. This requires cooperation between all RAF users to coordinate queries and modifications to the DOM. I think users of ResizeObserver would find a similar issue if the code triggered by one event modifies the DOM and the code from the next event queries it, a layout is forced.
 
 ```javascript
     // ResizeObserver helps: automatically places callback in RAF.
