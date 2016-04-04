@@ -102,16 +102,18 @@ The callbacks themselves can (and will) modify style and tree structure, so we n
 
 ## Error handling
 
-As described, ResizeObserver will keep delivering resize notifications in a single frame, until no more notifications are available.
+ResizeObserver will keep delivering resize notifications in a single frame, until no further notifications are available.
 
-Each notification handler can manipulate DOM, and trigger further notifications.
-This can cause infinite looping, which would be very bad user experience.
+Notification callbacks can manipulate DOM, and trigger further notifications.
+The notifications can cascade into an infinite loop, which would be very bad user experience.
 
 To prevent this, the number of times ResizeObserver can be triggered in a single frame will be limited to REPEAT_LIMIT.
 If the limit is exceeded, an error task will be queued.
 An error object will contain the observer that triggered the error, and its changeset.
 
-TODO: determine the REPEAT_LIMIT
+The user might observe DOM in an inconsistent state, which is less harmful than a frozen page.
+
+TODO: determine the REPEAT_LIMIT, why not 16?
 
 #### Order of notification delivery
 
@@ -139,7 +141,16 @@ clientSize becomes 0 when element is invisible.
 This will generate a resize notification.
 Developers will be able to use ResizeObserver to observe visibility.
 
-## Usage examples (WORK IN PROGRESS, IGNORE)
+## Usage examples
+
+#### EXAMPLE: [Google Maps API](https://developers.google.com/maps/documentation/javascript/3.exp/reference)
+
+Google Maps is one of the most widely used components.
+It uses the ad-hoc workaround, and requires developers to send map an event on every resize:
+
+> `resize` event:  Developers should trigger this event on the map when the div changes size: google.maps.event.trigger(map, 'resize') .
+
+Google Maps can eliminate the event and use ResizeObserver instead.
 
 #### EXAMPLE: [Disqus](https://disqus.com/)
 
@@ -164,10 +175,8 @@ life and performance.
         var content = document.getElementById('content');
 
         var resizeObserver = new ResizeObserver(function handler(changes) {
-            for (var i=0; i<changes.length; i++) {
-                if (changes[i].element == content) {
-                    console.log("resize the top level iframe and move around elements inside the iframe");
-                }
+            if (changes.find(function(record) { return record.element === content })) {
+                console.log("resize the top level iframe and move around elements inside the iframe");
             }
         });
         resizeObserver.observe( document.getElementById('content'));
@@ -185,27 +194,8 @@ Facebook would like to use resize event to optimize friend list loading.
     // geometry information
     var friends = document.createElement('div');
     resizeObserver = new ResizeObserver(function handler(changes) {
-        for (var i=0; i<changes.length;i++) {
-            if (changes[i] == friends) {
-                var howManyFriends = changes[i].clientHeight / 24;
-            }
-        }
+        var change = changes.find( function cmp(record) { return record.element == friends });
+        if (change)
+            var howManyFriends = change.clientHeight / 24;
     });
 ```
-
-#### EXAMPLE: [Polymer.IronResizableBehavior](https://elements.polymer-project.org/elements/iron-resizable-behavior)
-
-Polymer framework implements ad-hoc resize notification
-
-> IronResizableBehavior is a behavior that can be used in Polymer elements to coordinate the flow of resize events between "resizers" (elements that control the size or hidden state of their children) and "resizables" (elements that need to be notified when they are resized or un-hidden by their parents in order to take action on their new measurements).
-
-The entire [Polymer.IronResizableBehavior](https://github.com/PolymerElements/iron-resizable-behavior/blob/master/iron-resizable-behavior.html) can be reimplemented with ResizeObserver.
-
-
-#### EXAMPLE: [Google Maps API](https://developers.google.com/maps/documentation/javascript/3.exp/reference)
-
-Google Maps API requires developers to notify map when it has been resized
-
-> `resize` event:  Developers should trigger this event on the map when the div changes size: google.maps.event.trigger(map, 'resize') .
-
-By using ResizeObserver internally, Google Maps no longer needs an external 'resize' API.
