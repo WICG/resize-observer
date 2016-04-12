@@ -32,8 +32,11 @@ This approach is error-prone, hard to maintain, and requires every component to 
 Others use [clever hacks](https://github.com/wnr/element-resize-detector) to approximate resize event.
 The best hacks all use a similar absolute child trick: insert an absolutely-positioned child into the component,
 and craft the child in such a way that it emits a scroll event, or a window.resize when parent's size changes.
+The absolute child method will not work in ShadowDOM, or frameworks such as React.
 
-None of these approaches are desirable. They fail in correctness, code complexity, and performance.
+None of these approaches are desirable.
+They fail in correctness, code complexity, and performance.
+
 
 ## Proposed API
 
