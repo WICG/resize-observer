@@ -54,14 +54,13 @@ Providing solution to iframe content height sizing is not a goal.
         void disconnect();
     };
 
-    callback ResizeObserverCallback = void(sequence<ResizeChangeRecord> changeset);
+    callback ResizeObserverCallback = void (sequence<ResizeObserverEntry> entries, ResizeObserver observer);
 
-    interface ResizeChangeRecord {
-        Element element;
-        double clientWidth;
-        double clientHeight;
+    interface ResizeObserverEntry {
+        readonly Element target;
+        readonly long clientWidth;
+        readonly long clientHeight;
     };
-
 
 ### Design discussion
 
@@ -115,6 +114,9 @@ If the limit is exceeded, an error task will be queued.
 An error object will contain the observer that triggered the error, and its changeset.
 
 The user might observe DOM in an inconsistent state, which is less harmful than a frozen page.
+
+ISSUE: If the page has resize observers in an infinite observation loop,
+it'll peg the CPU to 100%, and the only clue will be the error console. Should rogue observers be disconnected after the error?
 
 TODO: determine the REPEAT_LIMIT, why not 16?
 
