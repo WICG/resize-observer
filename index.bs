@@ -1,0 +1,210 @@
+<pre class='metadata'>
+Title: Resize Observer
+Shortname: resize-observer
+Level: 1
+Status: ED
+Group: Web Performance Working Group
+URL: https://github.com/WICG/ResizeObserver/
+Editor: Aleks Totic, Google, atotic@google.com
+Abstract: This specification describes an API for observing changes to element's size.
+</pre>
+<pre class="anchors">
+urlPrefix: https://drafts.csswg.org/css-box-3/
+    url: #content-box; type: dfn; text: content box
+urlPrefix: https://www.w3.org/TR/css3-positioning/
+    url: #viewport; type: dfn; text: viewport
+urlPrefix: https://html.spec.whatwg.org/multipage/
+    urlPrefix: webappapis.html;
+        url: #processing-model-8; type: dfn; text: HTML Processing Model
+</pre>
+
+<h2 id="intro">Introduction</h2>
+
+<em>This section is non-normative.</em>
+
+Responsive Web Components need to respond to <a>content box</a>
+size changes. For example, {{Element}} that displays a map
+fills its content box with map tiles.
+{{Element}} must redo this tiling when it is resized.
+
+Responsive Web Applications already have similar ability. They can
+respond to <a>viewport</a> size changes using CSS media queries,
+or window.{{resize}} event.
+
+The ResizeObserver API is an interface for observing changes
+to {{Element}}'s {{clientWidth}} and {{clientHeight}}.
+
+{{clientWidth}} and {{clientHeight}} are observed because
+they are the best match for size of the {{Element}}'s <a>content box</a>.
+
+{{offsetWidth}} was also considered. It was rejected because
+it contained width of the scroller. Scroller width is dependent
+upon Element's children, and this can cause interesting
+notification loops.
+
+<div class="example">
+  <pre highlight="js">
+    var ro = new ResizeObserver( entries => {
+      for (entry of entries) {
+        console.log(
+            'element:', entry.target,
+            'width: ', entry.clientWidth,
+            ' height: ', entry.clientHeight);
+      }
+    });
+
+    let el = document.createElement('div');
+    document.body.appendChild(el);
+    ro.observe(el);
+    el.appendChild(document.createElement('input'));
+    // el.clientWidth changes after el.appendChild
+
+    el = document.createElement('div');
+    ro.observe(el);
+    document.body.appendChild(el);
+    // el.clientWidht changes after el is inserted into body.
+
+    el.style.display = 'none';
+    // el.clientWidth changes after el was hidden.
+
+    // All these size changes would trigger ResizeObserver
+  </pre>
+</div>
+
+<h2 id="api">Resize Observer API</h2>
+
+<h3 id="resize-observer-interface">ResizeObserver interface</h3>
+
+The ResizeObserver interface is used to observe changes to {{Element}}'s
+{{clientWidth}} and {{clientHeight}}.
+
+It is modeled after {{MutationObserver}} and {{IntersectionObserver}}.
+
+<pre class="idl">
+[Constructor(ResizeObserverCallback callback),
+    Exposed=Window]
+interface ResizeObserver {
+    void observe(Element target);
+    void unobserve(Element target);
+    void disconnect();
+};
+</pre>
+
+<div dfn-type="method" dfn-for="ResizeObserver">
+    : <dfn constructor lt="ResizeObserver(callback)">new ResizeObserver(callback)</dfn>
+    ::
+        1) Let |this| be a new {{ResizeObserver}} object
+
+        2) Set |this| internal {{ResizeObserver/callback}} slot to |callback|
+
+        3) Add |this| to document's {{Document/resizeObservers}} slot.
+
+
+    : <dfn method>observe(target)</dfn>
+    ::
+        Adds target to the list of observed elements.
+
+        1) If |target| is in {{ResizeObserver/observationTargets}} slot, return.
+
+        2) Create new {{ResizeObservation}} with |target|
+
+        3) Add the resizeObservation to the {{ResizeObserver/observationTargets}} slot.
+
+    :  <dfn method for="ResizeObserver">unobserve(target)</dfn>
+    ::
+        Removes |target| from the list of observed elements.
+
+        1) Let |observation| be {{ResizeObservation}} in {{ResizeObserver/observationTargets}} whose target slot is |target|.
+
+        2) If |observation| is not found, return.
+
+        3) Remove |observation| from {{observationTargets}}
+
+    : <dfn method>disconnect()</dfn>
+    ::
+        1) Clear the {{observationTargets}} list.
+
+</div>
+
+<h3 id="resize-observer-callback">ResizeObserverCallback</h3>
+
+<pre class="idl">
+callback ResizeObserverCallback = void (sequence&lt;ResizeObserverEntry> entries, ResizeObserver observer)
+</pre>
+
+This callback is invoked to deliver ResizeObserver's notifications by a
+<a>notify resize observers</a> algorithm.
+
+<h3 id="resize-observer-entry-interface">ResizeObserverEntry</h3>
+
+<pre class="idl">
+interface ResizeObserverEntry {
+    readonly attribute Element target;
+    readonly attribute long clientWidth;
+    readonly attribute long clientHeight;
+};
+</pre>
+
+<div dfn-type="attribute" dfn-for="ResizeObserverEntry">
+    : <dfn>target</dfn>
+    ::
+        The {{Element}} whose size has changed.
+    : <dfn>clientWidth</dfn>
+    ::
+        {{Element}}'s {{clientWidth}} when entry was created.
+    : <dfn>clientHeight</dfn>
+    ::
+        {{Element}}'s {{clientHeight}} when entry was created.
+</div>
+
+
+<h2 id="processing-model">Processing Model</h2>
+
+<h3 id="internal-slot-definitions">Internal Slot Definitions</h3>
+
+<h4 id="document-slots">Document</h4>
+
+<a>Document</a> has a <dfn attribute for="Document">resizeObservers</dfn> slot; a list of active ResizeObservers in this document. It is initialized to empty.
+
+<h4 id="resize-observer-slots">ResizeObserver</h4>
+
+{{ResizeObserver}} has a <dfn attribute for="ResizeObserver">callback</dfn> slot, initialized by constructor.
+
+{{ResizeObserver}} has an <dfn attribute for="ResizeObserver">observationTargets</dfn> slot, which is a list of {{ResizeObservations}}
+
+<dfn concept for="ResizeObserver">ResizeObservation</dfn> holds observation information for a single {{Element}}
+  * target, which the element
+  * lastClientWidth, which is last observed clientWidth
+  * lastClientHeight, which is last observed clientHeight
+
+  When ResizeObservation is created:
+
+  * target must be a valid element.
+  * lastClientWidth/height must be initialized to element's clientWidth/height.
+
+<h3 id="algorithms">Algorithms</h3>
+
+<h4 id="notify-resize-observers">Notify Resize Observers</h4>
+
+To <dfn>notify resize observers</dfn> for a |document|,
+run these steps:
+
+TODOTODOTODOTODO
+
+<h2 id="lifetime">ResizeObserver Lifetime</h2>
+
+A {{ResizeObserver}} will remain alive until both of these conditions are met:
+
+* there are no scripting references to the observer
+* the observer is not observing any targets
+
+<h2 id="integrations">External Spec Integrations</h2>
+
+<h3 id="html-event-loop"> HTML Processing Model: Event Loop</h3>
+
+{{ResizeObserver}} processing happens inside the step 12 that is
+inside of step 7 of the <a>HTML Processing Model</a> event loop.
+
+Step 12 is currently underspecified as: <i>For each fully active Document in docs, update the rendering or user interface of that Document and its browsing context to reflect the current state.</i>.
+
+https://api.csswg.org/bikeshed/
