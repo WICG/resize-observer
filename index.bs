@@ -93,32 +93,32 @@ interface ResizeObserver {
 <div dfn-type="method" dfn-for="ResizeObserver">
     : <dfn constructor lt="ResizeObserver(callback)">new ResizeObserver(callback)</dfn>
     ::
-        1) Let |this| be a new {{ResizeObserver}} object
+        1. Let |this| be a new {{ResizeObserver}} object
 
-        2) Set |this| internal {{ResizeObserver/callback}} slot to |callback|
+        2. Set |this| internal {{ResizeObserver/callback}} slot to |callback|
 
-        3) Add |this| to document's {{Document/resizeObservers}} slot.
+        3. Add |this| to document's {{Document/resizeObservers}} slot.
 
 
     : <dfn method>observe(target)</dfn>
     ::
         Adds target to the list of observed elements.
 
-        1) If |target| is in {{ResizeObserver/observationTargets}} slot, return.
+        1. If |target| is in {{ResizeObserver/observationTargets}} slot, return.
 
-        2) Create new {{ResizeObservation}} with |target|
+        2. Create new {{ResizeObservation}} with |target|
 
-        3) Add the resizeObservation to the {{ResizeObserver/observationTargets}} slot.
+        3. Add the resizeObservation to the {{ResizeObserver/observationTargets}} slot.
 
     :  <dfn method for="ResizeObserver">unobserve(target)</dfn>
     ::
         Removes |target| from the list of observed elements.
 
-        1) Let |observation| be {{ResizeObservation}} in {{ResizeObserver/observationTargets}} whose target slot is |target|.
+        1. Let |observation| be {{ResizeObservation}} in {{ResizeObserver/observationTargets}} whose target slot is |target|.
 
-        2) If |observation| is not found, return.
+        2. If |observation| is not found, return.
 
-        3) Remove |observation| from {{observationTargets}}
+        3. Remove |observation| from {{observationTargets}}
 
     : <dfn method>disconnect()</dfn>
     ::
@@ -189,22 +189,64 @@ interface ResizeObserverEntry {
 To <dfn>notify resize observers</dfn> for a |document|,
 run these steps:
 
-TODOTODOTODOTODO
+XXXXXXXXXXXXXXXXXXXXXXXX
 
-<h2 id="lifetime">ResizeObserver Lifetime</h2>
+<h4 id="has-pending-resize-notifications">Has Pending Resize Notifications</h4>
+
+To determine if {{Document}} <dfn>has pending resize notifications</dfn> run these steps:
+
+XXXXXXXXXXXXXXXXXXXXXXXX
+
+<h4 id="deliver-resize-error-notification">Deliver Resize Error Notification</h4>
+
+To <dfn>deliver resize error notification</dfn> run these steps:
+
+XXXXXXXXXXXXXXXXXXXXXXXX
+
+<h3 id="lifetime">ResizeObserver Lifetime</h3>
 
 A {{ResizeObserver}} will remain alive until both of these conditions are met:
 
 * there are no scripting references to the observer
 * the observer is not observing any targets
 
-<h2 id="integrations">External Spec Integrations</h2>
+<h3 id="integrations">External Spec Integrations</h3>
 
-<h3 id="html-event-loop"> HTML Processing Model: Event Loop</h3>
+<h4 id="html-event-loop"> HTML Processing Model: Event Loop</h4>
 
-{{ResizeObserver}} processing happens inside the step 12 that is
-inside of step 7 of the <a>HTML Processing Model</a> event loop.
+{{ResizeObserver}} processing happens inside the step 7.12 of the <a>HTML Processing Model</a> event loop.
 
-Step 12 is currently underspecified as: <i>For each fully active Document in docs, update the rendering or user interface of that Document and its browsing context to reflect the current state.</i>.
+Step 12 is currently underspecified as:
+<q>For each fully active Document in docs, update the rendering or user interface of that Document and its browsing context to reflect the current state.</q>.
 
-https://api.csswg.org/bikeshed/
+Existing step 12 should be fully specified as:
+
+For each fully active Document in docs, run the following steps for that Document and its browsing contents:
+
+    1. update layout
+
+    2. paint
+
+    3. draw bits on screen
+
+{{ResizeObserver}} extends step 12 with resize notifications. It tries to deliver all pending notifications
+by looping until no pending notifications are available. Infinite looping is prevented
+by limiting the number of times loop is repeated to RESIZE_OBSERVER_LOOP_LIMIT constant. Looping too
+many times generates an error.
+
+Note: RESIZE_OBSERVER_LOOP_LIMIT is currently arbitrarily set to 16. It might get adjusted
+based on data we obtain from real-world usage.
+
+Step 12 with {{ResizeObserver}} notifications is:
+
+For each fully active Document in docs, run the following steps for that Document and its browsing contentx:
+
+1. update layout
+2. let |resizeNotificationCount| be 0
+3. repeat while (resizeNotificationCount < RESIZE_OBSERVER_LOOP_LIMIT && document <a>has pending resize notifications</a>)
+   1. <a>Notify Resize Observers</a>
+   2. update layout
+   3. increment resizeNotificationCount by 1
+   4. if (resizeNotificationCount is RESIZE_OBSERVER_LOOP_LIMIT && document <a>has pending resize notifications</a>) then <a>deliver resize error notification</a>
+
+
