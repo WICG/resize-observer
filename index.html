@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0031)https://api.csswg.org/bikeshed/ -->
+<!-- saved from url=(0031) -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
+
   <title>Resize Observer</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 <style data-fill-with="stylesheet">/******************************************************************************
@@ -1381,7 +1381,7 @@ Possible extra rowspan handling
         code.highlight { padding: .1em; border-radius: .3em; }
         pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
         </style>
- </head><body class="h-entry toc-inline"><p id="toc-nav"><a id="toc-jump" href="https://api.csswg.org/bikeshed/#toc"><span aria-hidden="true">↑</span> <span>Jump to Table of Contents</span></a><a id="toc-toggle" href="https://api.csswg.org/bikeshed/#toc"><span aria-hidden="true">→</span> <span>Pop Out Sidebar</span></a></p>
+ </head><body class="h-entry toc-inline"><p id="toc-nav"><a id="toc-jump" href="#toc"><span aria-hidden="true">↑</span> <span>Jump to Table of Contents</span></a><a id="toc-toggle" href="#toc"><span aria-hidden="true">→</span> <span>Pop Out Sidebar</span></a></p>
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Resize Observer</h1>
@@ -1411,56 +1411,56 @@ Parts of this work may be from another specification document.  If so, those par
   <nav data-fill-with="table-of-contents" id="toc">
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
-    <li><a href="https://api.csswg.org/bikeshed/#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
+    <li><a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
     </li><li>
-     <a href="https://api.csswg.org/bikeshed/#api"><span class="secno">2</span> <span class="content">Resize Observer API</span></a>
+     <a href="#api"><span class="secno">2</span> <span class="content">Resize Observer API</span></a>
      <ol class="toc">
-      <li><a href="https://api.csswg.org/bikeshed/#resize-observer-interface"><span class="secno">2.1</span> <span class="content">ResizeObserver interface</span></a>
-      </li><li><a href="https://api.csswg.org/bikeshed/#resize-observer-callback"><span class="secno">2.2</span> <span class="content">ResizeObserverCallback</span></a>
-      </li><li><a href="https://api.csswg.org/bikeshed/#resize-observer-entry-interface"><span class="secno">2.3</span> <span class="content">ResizeObserverEntry</span></a>
-      </li><li><a href="https://api.csswg.org/bikeshed/#resize-observation-interface"><span class="secno">2.4</span> <span class="content">ResizeObservation</span></a>
+      <li><a href="#resize-observer-interface"><span class="secno">2.1</span> <span class="content">ResizeObserver interface</span></a>
+      </li><li><a href="#resize-observer-callback"><span class="secno">2.2</span> <span class="content">ResizeObserverCallback</span></a>
+      </li><li><a href="#resize-observer-entry-interface"><span class="secno">2.3</span> <span class="content">ResizeObserverEntry</span></a>
+      </li><li><a href="#resize-observation-interface"><span class="secno">2.4</span> <span class="content">ResizeObservation</span></a>
      </li></ol>
     </li><li>
-     <a href="https://api.csswg.org/bikeshed/#processing-model"><span class="secno">3</span> <span class="content">Processing Model</span></a>
+     <a href="#processing-model"><span class="secno">3</span> <span class="content">Processing Model</span></a>
      <ol class="toc">
       <li>
-       <a href="https://api.csswg.org/bikeshed/#internal-slot-definitions"><span class="secno">3.1</span> <span class="content">Internal Slot Definitions</span></a>
+       <a href="#internal-slot-definitions"><span class="secno">3.1</span> <span class="content">Internal Slot Definitions</span></a>
        <ol class="toc">
-        <li><a href="https://api.csswg.org/bikeshed/#document-slots"><span class="secno">3.1.1</span> <span class="content">Document</span></a>
-        </li><li><a href="https://api.csswg.org/bikeshed/#resize-observer-slots"><span class="secno">3.1.2</span> <span class="content">ResizeObserver</span></a>
+        <li><a href="#document-slots"><span class="secno">3.1.1</span> <span class="content">Document</span></a>
+        </li><li><a href="#resize-observer-slots"><span class="secno">3.1.2</span> <span class="content">ResizeObserver</span></a>
        </li></ol>
       </li><li>
-       <a href="https://api.csswg.org/bikeshed/#algorithms"><span class="secno">3.2</span> <span class="content">Algorithms</span></a>
+       <a href="#algorithms"><span class="secno">3.2</span> <span class="content">Algorithms</span></a>
        <ol class="toc">
-        <li><a href="https://api.csswg.org/bikeshed/#gather-notification-entries-h"><span class="secno">3.2.1</span> <span class="content">Gather notifications entries</span></a>
-        </li><li><a href="https://api.csswg.org/bikeshed/#has-notification-entries-h"><span class="secno">3.2.2</span> <span class="content">Has notification entries</span></a>
-        </li><li><a href="https://api.csswg.org/bikeshed/#broadcast-resize-notifications-h"><span class="secno">3.2.3</span> <span class="content">Broadcast Resize notifications</span></a>
-        </li><li><a href="https://api.csswg.org/bikeshed/#deliver-resize-error"><span class="secno">3.2.4</span> <span class="content">Deliver Resize Limit Error</span></a>
+        <li><a href="#gather-notification-entries-h"><span class="secno">3.2.1</span> <span class="content">Gather notifications entries</span></a>
+        </li><li><a href="#has-notification-entries-h"><span class="secno">3.2.2</span> <span class="content">Has notification entries</span></a>
+        </li><li><a href="#broadcast-resize-notifications-h"><span class="secno">3.2.3</span> <span class="content">Broadcast Resize notifications</span></a>
+        </li><li><a href="#deliver-resize-error"><span class="secno">3.2.4</span> <span class="content">Deliver Resize Limit Error</span></a>
        </li></ol>
-      </li><li><a href="https://api.csswg.org/bikeshed/#lifetime"><span class="secno">3.3</span> <span class="content">ResizeObserver Lifetime</span></a>
+      </li><li><a href="#lifetime"><span class="secno">3.3</span> <span class="content">ResizeObserver Lifetime</span></a>
       </li><li>
-       <a href="https://api.csswg.org/bikeshed/#integrations"><span class="secno">3.4</span> <span class="content">External Spec Integrations</span></a>
+       <a href="#integrations"><span class="secno">3.4</span> <span class="content">External Spec Integrations</span></a>
        <ol class="toc">
-        <li><a href="https://api.csswg.org/bikeshed/#html-event-loop"><span class="secno">3.4.1</span> <span class="content"> HTML Processing Model: Event Loop</span></a>
+        <li><a href="#html-event-loop"><span class="secno">3.4.1</span> <span class="content"> HTML Processing Model: Event Loop</span></a>
        </li></ol>
      </li></ol>
-    </li><li><a href="https://api.csswg.org/bikeshed/#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
+    </li><li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     </li><li>
-     <a href="https://api.csswg.org/bikeshed/#index"><span class="secno"></span> <span class="content">Index</span></a>
+     <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
      <ol class="toc">
-      <li><a href="https://api.csswg.org/bikeshed/#index-defined-here"><span class="secno"></span> <span class="content">Terms defined by this specification</span></a>
-      </li><li><a href="https://api.csswg.org/bikeshed/#index-defined-elsewhere"><span class="secno"></span> <span class="content">Terms defined by reference</span></a>
+      <li><a href="#index-defined-here"><span class="secno"></span> <span class="content">Terms defined by this specification</span></a>
+      </li><li><a href="#index-defined-elsewhere"><span class="secno"></span> <span class="content">Terms defined by reference</span></a>
      </li></ol>
     </li><li>
-     <a href="https://api.csswg.org/bikeshed/#references"><span class="secno"></span> <span class="content">References</span></a>
+     <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
-      <li><a href="https://api.csswg.org/bikeshed/#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
+      <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
      </li></ol>
-    </li><li><a href="https://api.csswg.org/bikeshed/#idl-index"><span class="secno"></span> <span class="content">IDL Index</span></a>
+    </li><li><a href="#idl-index"><span class="secno"></span> <span class="content">IDL Index</span></a>
    </li></ol>
   </nav>
   <main>
-   <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="https://api.csswg.org/bikeshed/#intro"></a></h2>
+   <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
    <p><em>This section is non-normative.</em></p>
    <p>Responsive Web Components need to respond to <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#content-box">content box</a> size changes. An example is an <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code> that displays a map:</p>
    <ul>
@@ -1472,10 +1472,10 @@ Parts of this work may be from another specification document.  If so, those par
    <p>Responsive Web Applications can already respond to <a data-link-type="dfn" href="https://www.w3.org/TR/css3-positioning/#viewport">viewport</a> size changes.
 This is done with CSS media queries, or window.<code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-view-1/#eventdef-window-resize">resize</a></code> event.</p>
    <p>The ResizeObserver API is an interface for observing changes
-to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-1">clientWidth</a></code> and <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientheight" id="ref-for-dom-resizeobserverentry-clientheight-1">clientHeight</a></code>. It is an <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code> counterpart to window.<code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-view-1/#eventdef-window-resize">resize</a></code> event.</p>
-   <p><code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-2">clientWidth</a></code> and <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientheight" id="ref-for-dom-resizeobserverentry-clientheight-2">clientHeight</a></code> are observed because
+to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-1">clientWidth</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientheight" id="ref-for-dom-resizeobserverentry-clientheight-1">clientHeight</a></code>. It is an <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code> counterpart to window.<code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-view-1/#eventdef-window-resize">resize</a></code> event.</p>
+   <p><code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-2">clientWidth</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientheight" id="ref-for-dom-resizeobserverentry-clientheight-2">clientHeight</a></code> are observed because
 they are the best match for size of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#content-box">content box</a>.</p>
-   <p>Desirable side effects of watching <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-3">clientWidth</a></code> are:</p>
+   <p>Desirable side effects of watching <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-3">clientWidth</a></code> are:</p>
    <ul>
     <li data-md="">
      <p>observation will fire when watched element is inserted/removed from DOM.</p>
@@ -1490,7 +1490,7 @@ they are the best match for size of the <code class="idl"><a data-link-type="idl
 it contained width of the scroller. Scroller width is dependent
 upon Element’s children, and this can cause notification loops.</p>
    <div class="example" id="example-e305b6a4">
-    <a class="self-link" href="https://api.csswg.org/bikeshed/#example-e305b6a4"></a> 
+    <a class="self-link" href="#example-e305b6a4"></a>
 <pre class="highlight"><span></span><span class="kd">var</span> <span class="nx">ro</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ResizeObserver</span><span class="p">(</span> <span class="nx">entries</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="k">for</span> <span class="p">(</span><span class="nx">entry</span> <span class="k">of</span> <span class="nx">entries</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span>
@@ -1516,128 +1516,128 @@ upon Element’s children, and this can cause notification loops.</p>
 
 <span class="c1">// All these size changes would trigger ResizeObserver</span></pre>
    </div>
-   <h2 class="heading settled" data-level="2" id="api"><span class="secno">2. </span><span class="content">Resize Observer API</span><a class="self-link" href="https://api.csswg.org/bikeshed/#api"></a></h2>
-   <h3 class="heading settled" data-level="2.1" id="resize-observer-interface"><span class="secno">2.1. </span><span class="content">ResizeObserver interface</span><a class="self-link" href="https://api.csswg.org/bikeshed/#resize-observer-interface"></a></h3>
-   <p>The ResizeObserver interface is used to observe changes to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-4">clientWidth</a></code> and <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientheight" id="ref-for-dom-resizeobserverentry-clientheight-3">clientHeight</a></code>.</p>
+   <h2 class="heading settled" data-level="2" id="api"><span class="secno">2. </span><span class="content">Resize Observer API</span><a class="self-link" href="#api"></a></h2>
+   <h3 class="heading settled" data-level="2.1" id="resize-observer-interface"><span class="secno">2.1. </span><span class="content">ResizeObserver interface</span><a class="self-link" href="#resize-observer-interface"></a></h3>
+   <p>The ResizeObserver interface is used to observe changes to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-4">clientWidth</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientheight" id="ref-for-dom-resizeobserverentry-clientheight-3">clientHeight</a></code>.</p>
    <p>It is modeled after <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#mutationobserver">MutationObserver</a></code> and <a data-link-type="dfn" href="https://github.com/WICG/IntersectionObserver/index.html#intersection-observer-interface">IntersectionObserver</a>.</p>
-<pre class="idl def">[<a class="idl-code" data-link-type="constructor" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-resizeobserver" id="ref-for-dom-resizeobserver-resizeobserver-1">Constructor</a>(<a data-link-type="idl-name" href="https://api.csswg.org/bikeshed/#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-1">ResizeObserverCallback</a> <dfn class="idl-code" data-dfn-for="ResizeObserver/ResizeObserver(callback)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-resizeobserver-callback-callback">callback<a class="self-link" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-resizeobserver-callback-callback"></a></dfn>),
+<pre class="idl def">[<a class="idl-code" data-link-type="constructor" href="#dom-resizeobserver-resizeobserver" id="ref-for-dom-resizeobserver-resizeobserver-1">Constructor</a>(<a data-link-type="idl-name" href="#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-1">ResizeObserverCallback</a> <dfn class="idl-code" data-dfn-for="ResizeObserver/ResizeObserver(callback)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-resizeobserver-callback-callback">callback<a class="self-link" href="#dom-resizeobserver-resizeobserver-callback-callback"></a></dfn>),
     Exposed=Window]
-interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export="" data-lt="ResizeObserver" id="resizeobserver">ResizeObserver<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#resizeobserver">#resizeobserver</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserver-1">2.1. ResizeObserver interface</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserver-2">2.2. ResizeObserverCallback</a> <a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserver-3">(2)</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserver-4">3.1.1. Document</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserver-5">3.1.2. ResizeObserver</a> <a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserver-6">(2)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserver-7">(3)</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserver-8">3.2.4. Deliver Resize Limit Error</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserver-9">3.3. ResizeObserver Lifetime</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserver-10">3.4.1.  HTML Processing Model: Event Loop</a> <a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserver-11">(2)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserver-12">(3)</a></span></span></dfn> {
-    void <a class="idl-code" data-link-type="method" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observe" id="ref-for-dom-resizeobserver-observe-1">observe</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="idl-code" data-dfn-for="ResizeObserver/observe(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-observe-target-target">target<a class="self-link" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observe-target-target"></a></dfn>);
-    void <a class="idl-code" data-link-type="method" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-unobserve" id="ref-for-dom-resizeobserver-unobserve-1">unobserve</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="idl-code" data-dfn-for="ResizeObserver/unobserve(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-unobserve-target-target">target<a class="self-link" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-unobserve-target-target"></a></dfn>);
-    void <a class="idl-code" data-link-type="method" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-disconnect" id="ref-for-dom-resizeobserver-disconnect-1">disconnect</a>();
+interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export="" data-lt="ResizeObserver" id="resizeobserver">ResizeObserver<span class="dfn-panel" data-deco=""><b><a href="#resizeobserver">#resizeobserver</a></b><b>Referenced in:</b><span><a href="#ref-for-resizeobserver-1">2.1. ResizeObserver interface</a></span><span><a href="#ref-for-resizeobserver-2">2.2. ResizeObserverCallback</a> <a href="#ref-for-resizeobserver-3">(2)</a></span><span><a href="#ref-for-resizeobserver-4">3.1.1. Document</a></span><span><a href="#ref-for-resizeobserver-5">3.1.2. ResizeObserver</a> <a href="#ref-for-resizeobserver-6">(2)</a> <a href="#ref-for-resizeobserver-7">(3)</a></span><span><a href="#ref-for-resizeobserver-8">3.2.4. Deliver Resize Limit Error</a></span><span><a href="#ref-for-resizeobserver-9">3.3. ResizeObserver Lifetime</a></span><span><a href="#ref-for-resizeobserver-10">3.4.1.  HTML Processing Model: Event Loop</a> <a href="#ref-for-resizeobserver-11">(2)</a> <a href="#ref-for-resizeobserver-12">(3)</a></span></span></dfn> {
+    void <a class="idl-code" data-link-type="method" href="#dom-resizeobserver-observe" id="ref-for-dom-resizeobserver-observe-1">observe</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="idl-code" data-dfn-for="ResizeObserver/observe(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-observe-target-target">target<a class="self-link" href="#dom-resizeobserver-observe-target-target"></a></dfn>);
+    void <a class="idl-code" data-link-type="method" href="#dom-resizeobserver-unobserve" id="ref-for-dom-resizeobserver-unobserve-1">unobserve</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="idl-code" data-dfn-for="ResizeObserver/unobserve(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-unobserve-target-target">target<a class="self-link" href="#dom-resizeobserver-unobserve-target-target"></a></dfn>);
+    void <a class="idl-code" data-link-type="method" href="#dom-resizeobserver-disconnect" id="ref-for-dom-resizeobserver-disconnect-1">disconnect</a>();
 };
 </pre>
    <div>
     <dl>
      <dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="constructor" data-export="" data-lt="ResizeObserver(callback)" id="dom-resizeobserver-resizeobserver">new ResizeObserver(callback)<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-resizeobserver">#dom-resizeobserver-resizeobserver</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-resizeobserver-1">2.1. ResizeObserver interface</a></span></span></dfn></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="constructor" data-export="" data-lt="ResizeObserver(callback)" id="dom-resizeobserver-resizeobserver">new ResizeObserver(callback)<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserver-resizeobserver">#dom-resizeobserver-resizeobserver</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserver-resizeobserver-1">2.1. ResizeObserver interface</a></span></span></dfn></p>
      </dt><dd data-md="">
       <ol>
        <li data-md="">
-        <p>Let <var>this</var> be a new <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobserver" id="ref-for-resizeobserver-1">ResizeObserver</a></code> object.</p>
+        <p>Let <var>this</var> be a new <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-1">ResizeObserver</a></code> object.</p>
        </li><li data-md="">
-        <p>Set <var>this</var> internal <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-callback" id="ref-for-dom-resizeobserver-callback-1">callback</a></code> slot to callback.</p>
+        <p>Set <var>this</var> internal <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-callback" id="ref-for-dom-resizeobserver-callback-1">callback</a></code> slot to callback.</p>
        </li><li data-md="">
-        <p>Add <var>this</var> to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code>'s <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-1">resizeObservers</a></code> slot.</p>
+        <p>Add <var>this</var> to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-1">resizeObservers</a></code> slot.</p>
       </li></ol>
      </dd><dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="method" data-export="" data-lt="observe(target)" id="dom-resizeobserver-observe">observe(target)<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observe">#dom-resizeobserver-observe</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-observe-1">2.1. ResizeObserver interface</a></span></span></dfn></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="method" data-export="" data-lt="observe(target)" id="dom-resizeobserver-observe">observe(target)<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserver-observe">#dom-resizeobserver-observe</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserver-observe-1">2.1. ResizeObserver interface</a></span></span></dfn></p>
      </dt><dd data-md="">
       <p>Adds target to the list of observed elements.</p>
       <ol>
        <li data-md="">
-        <p>If <var>target</var> is in <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observationtargets" id="ref-for-dom-resizeobserver-observationtargets-1">observationTargets</a></code> slot, return.</p>
+        <p>If <var>target</var> is in <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-observationtargets" id="ref-for-dom-resizeobserver-observationtargets-1">observationTargets</a></code> slot, return.</p>
        </li><li data-md="">
-        <p>Let <var>resizeObservation</var> be new <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobservation" id="ref-for-resizeobservation-1">ResizeObservation</a></code> with <var>target</var>.</p>
+        <p>Let <var>resizeObservation</var> be new <code class="idl"><a data-link-type="idl" href="#resizeobservation" id="ref-for-resizeobservation-1">ResizeObservation</a></code> with <var>target</var>.</p>
        </li><li data-md="">
-        <p>Add the <var>resizeObservation</var> to the <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observationtargets" id="ref-for-dom-resizeobserver-observationtargets-2">observationTargets</a></code> slot.</p>
+        <p>Add the <var>resizeObservation</var> to the <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-observationtargets" id="ref-for-dom-resizeobserver-observationtargets-2">observationTargets</a></code> slot.</p>
       </li></ol>
      </dd><dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="method" data-export="" data-lt="unobserve(target)" id="dom-resizeobserver-unobserve">unobserve(target)<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-unobserve">#dom-resizeobserver-unobserve</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-unobserve-1">2.1. ResizeObserver interface</a></span></span></dfn></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="method" data-export="" data-lt="unobserve(target)" id="dom-resizeobserver-unobserve">unobserve(target)<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserver-unobserve">#dom-resizeobserver-unobserve</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserver-unobserve-1">2.1. ResizeObserver interface</a></span></span></dfn></p>
      </dt><dd data-md="">
       <p>Removes <var>target</var> from the list of observed elements.</p>
       <ol>
        <li data-md="">
-        <p>Let <var>observation</var> be <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobservation" id="ref-for-resizeobservation-2">ResizeObservation</a></code> in <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observationtargets" id="ref-for-dom-resizeobserver-observationtargets-3">observationTargets</a></code> whose target slot is <var>target</var>.</p>
+        <p>Let <var>observation</var> be <code class="idl"><a data-link-type="idl" href="#resizeobservation" id="ref-for-resizeobservation-2">ResizeObservation</a></code> in <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-observationtargets" id="ref-for-dom-resizeobserver-observationtargets-3">observationTargets</a></code> whose target slot is <var>target</var>.</p>
        </li><li data-md="">
         <p>If <var>observation</var> is not found, return.</p>
        </li><li data-md="">
-        <p>Remove <var>observation</var> from <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observationtargets" id="ref-for-dom-resizeobserver-observationtargets-4">observationTargets</a></code></p>
+        <p>Remove <var>observation</var> from <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-observationtargets" id="ref-for-dom-resizeobserver-observationtargets-4">observationTargets</a></code></p>
       </li></ol>
      </dd><dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="method" data-export="" data-lt="disconnect()" id="dom-resizeobserver-disconnect">disconnect()<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-disconnect">#dom-resizeobserver-disconnect</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-disconnect-1">2.1. ResizeObserver interface</a></span></span></dfn></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="method" data-export="" data-lt="disconnect()" id="dom-resizeobserver-disconnect">disconnect()<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserver-disconnect">#dom-resizeobserver-disconnect</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserver-disconnect-1">2.1. ResizeObserver interface</a></span></span></dfn></p>
      </dt><dd data-md="">
-      <p>1) Clear the <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observationtargets" id="ref-for-dom-resizeobserver-observationtargets-5">observationTargets</a></code> list.</p>
-      <p>2) Clear the <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-1">activeEntries</a></code> list.</p>
+      <p>1) Clear the <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-observationtargets" id="ref-for-dom-resizeobserver-observationtargets-5">observationTargets</a></code> list.</p>
+      <p>2) Clear the <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-1">activeEntries</a></code> list.</p>
     </dd></dl>
    </div>
-   <h3 class="heading settled" data-level="2.2" id="resize-observer-callback"><span class="secno">2.2. </span><span class="content">ResizeObserverCallback</span><a class="self-link" href="https://api.csswg.org/bikeshed/#resize-observer-callback"></a></h3>
-<pre class="idl def">callback <dfn class="dfn-paneled idl-code" data-dfn-type="callback" data-export="" data-lt="ResizeObserverCallback" id="callbackdef-resizeobservercallback">ResizeObserverCallback<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#callbackdef-resizeobservercallback">#callbackdef-resizeobservercallback</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-callbackdef-resizeobservercallback-1">2.1. ResizeObserver interface</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-callbackdef-resizeobservercallback-2">2.3. ResizeObserverEntry</a> <a href="https://api.csswg.org/bikeshed/#ref-for-callbackdef-resizeobservercallback-3">(2)</a></span></span></dfn> = void (sequence&lt;<a data-link-type="idl-name" href="https://api.csswg.org/bikeshed/#resizeobserverentry" id="ref-for-resizeobserverentry-1">ResizeObserverEntry</a>&gt; <dfn class="idl-code" data-dfn-for="ResizeObserverCallback" data-dfn-type="argument" data-export="" id="dom-resizeobservercallback-entries">entries<a class="self-link" href="https://api.csswg.org/bikeshed/#dom-resizeobservercallback-entries"></a></dfn>, <a data-link-type="idl-name" href="https://api.csswg.org/bikeshed/#resizeobserver" id="ref-for-resizeobserver-2">ResizeObserver</a> <dfn class="idl-code" data-dfn-for="ResizeObserverCallback" data-dfn-type="argument" data-export="" id="dom-resizeobservercallback-observer">observer<a class="self-link" href="https://api.csswg.org/bikeshed/#dom-resizeobservercallback-observer"></a></dfn>)
+   <h3 class="heading settled" data-level="2.2" id="resize-observer-callback"><span class="secno">2.2. </span><span class="content">ResizeObserverCallback</span><a class="self-link" href="#resize-observer-callback"></a></h3>
+<pre class="idl def">callback <dfn class="dfn-paneled idl-code" data-dfn-type="callback" data-export="" data-lt="ResizeObserverCallback" id="callbackdef-resizeobservercallback">ResizeObserverCallback<span class="dfn-panel" data-deco=""><b><a href="#callbackdef-resizeobservercallback">#callbackdef-resizeobservercallback</a></b><b>Referenced in:</b><span><a href="#ref-for-callbackdef-resizeobservercallback-1">2.1. ResizeObserver interface</a></span><span><a href="#ref-for-callbackdef-resizeobservercallback-2">2.3. ResizeObserverEntry</a> <a href="#ref-for-callbackdef-resizeobservercallback-3">(2)</a></span></span></dfn> = void (sequence&lt;<a data-link-type="idl-name" href="#resizeobserverentry" id="ref-for-resizeobserverentry-1">ResizeObserverEntry</a>&gt; <dfn class="idl-code" data-dfn-for="ResizeObserverCallback" data-dfn-type="argument" data-export="" id="dom-resizeobservercallback-entries">entries<a class="self-link" href="#dom-resizeobservercallback-entries"></a></dfn>, <a data-link-type="idl-name" href="#resizeobserver" id="ref-for-resizeobserver-2">ResizeObserver</a> <dfn class="idl-code" data-dfn-for="ResizeObserverCallback" data-dfn-type="argument" data-export="" id="dom-resizeobservercallback-observer">observer<a class="self-link" href="#dom-resizeobservercallback-observer"></a></dfn>)
 </pre>
-   <p>This callback delivers <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobserver" id="ref-for-resizeobserver-3">ResizeObserver</a></code>'s notifications. It is invoked by a <a data-link-type="dfn" href="https://api.csswg.org/bikeshed/#broadcast-resize-notifications" id="ref-for-broadcast-resize-notifications-1">broadcast resize notifications</a> algorithm.</p>
-   <h3 class="heading settled" data-level="2.3" id="resize-observer-entry-interface"><span class="secno">2.3. </span><span class="content">ResizeObserverEntry</span><a class="self-link" href="https://api.csswg.org/bikeshed/#resize-observer-entry-interface"></a></h3>
-<pre class="idl def">[<a class="idl-code" data-link-type="constructor" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-resizeobserverentry" id="ref-for-dom-resizeobserverentry-resizeobserverentry-1">Constructor</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="idl-code" data-dfn-for="ResizeObserverEntry/ResizeObserverEntry(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserverentry-resizeobserverentry-target-target">target<a class="self-link" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-resizeobserverentry-target-target"></a></dfn>)
+   <p>This callback delivers <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-3">ResizeObserver</a></code>'s notifications. It is invoked by a <a data-link-type="dfn" href="#broadcast-resize-notifications" id="ref-for-broadcast-resize-notifications-1">broadcast resize notifications</a> algorithm.</p>
+   <h3 class="heading settled" data-level="2.3" id="resize-observer-entry-interface"><span class="secno">2.3. </span><span class="content">ResizeObserverEntry</span><a class="self-link" href="#resize-observer-entry-interface"></a></h3>
+<pre class="idl def">[<a class="idl-code" data-link-type="constructor" href="#dom-resizeobserverentry-resizeobserverentry" id="ref-for-dom-resizeobserverentry-resizeobserverentry-1">Constructor</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="idl-code" data-dfn-for="ResizeObserverEntry/ResizeObserverEntry(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserverentry-resizeobserverentry-target-target">target<a class="self-link" href="#dom-resizeobserverentry-resizeobserverentry-target-target"></a></dfn>)
 ]
-interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export="" data-lt="ResizeObserverEntry" id="resizeobserverentry">ResizeObserverEntry<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#resizeobserverentry">#resizeobserverentry</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserverentry-1">2.2. ResizeObserverCallback</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserverentry-2">2.3. ResizeObserverEntry</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-resizeobserverentry-3">3.1.2. ResizeObserver</a></span></span></dfn> {
-    readonly attribute <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-target" id="ref-for-dom-resizeobserverentry-target-1">target</a>;
-    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-5">clientWidth</a>;
-    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientheight" id="ref-for-dom-resizeobserverentry-clientheight-4">clientHeight</a>;
+interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export="" data-lt="ResizeObserverEntry" id="resizeobserverentry">ResizeObserverEntry<span class="dfn-panel" data-deco=""><b><a href="#resizeobserverentry">#resizeobserverentry</a></b><b>Referenced in:</b><span><a href="#ref-for-resizeobserverentry-1">2.2. ResizeObserverCallback</a></span><span><a href="#ref-for-resizeobserverentry-2">2.3. ResizeObserverEntry</a></span><span><a href="#ref-for-resizeobserverentry-3">3.1.2. ResizeObserver</a></span></span></dfn> {
+    readonly attribute <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobserverentry-target" id="ref-for-dom-resizeobserverentry-target-1">target</a>;
+    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-5">clientWidth</a>;
+    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="#dom-resizeobserverentry-clientheight" id="ref-for-dom-resizeobserverentry-clientheight-4">clientHeight</a>;
 };
 </pre>
    <div>
     <dl>
      <dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="attribute" data-export="" data-lt="target" id="dom-resizeobserverentry-target">target<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-target">#dom-resizeobserverentry-target</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-target-1">2.3. ResizeObserverEntry</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-target-2">(2)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a>, readonly</span></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="attribute" data-export="" data-lt="target" id="dom-resizeobserverentry-target">target<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserverentry-target">#dom-resizeobserverentry-target</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserverentry-target-1">2.3. ResizeObserverEntry</a> <a href="#ref-for-dom-resizeobserverentry-target-2">(2)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a>, readonly</span></p>
      </dt><dd data-md="">
       <p>The <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code> whose size has changed.</p>
      </dd><dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="attribute" data-export="" data-lt="clientWidth" id="dom-resizeobserverentry-clientwidth">clientWidth<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientwidth">#dom-resizeobserverentry-clientwidth</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-clientwidth-1">1. Introduction</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-clientwidth-2">(2)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-clientwidth-3">(3)</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-clientwidth-4">2.1. ResizeObserver interface</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-clientwidth-5">2.3. ResizeObserverEntry</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-clientwidth-6">(2)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-long">long</a>, readonly</span></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="attribute" data-export="" data-lt="clientWidth" id="dom-resizeobserverentry-clientwidth">clientWidth<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserverentry-clientwidth">#dom-resizeobserverentry-clientwidth</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserverentry-clientwidth-1">1. Introduction</a> <a href="#ref-for-dom-resizeobserverentry-clientwidth-2">(2)</a> <a href="#ref-for-dom-resizeobserverentry-clientwidth-3">(3)</a></span><span><a href="#ref-for-dom-resizeobserverentry-clientwidth-4">2.1. ResizeObserver interface</a></span><span><a href="#ref-for-dom-resizeobserverentry-clientwidth-5">2.3. ResizeObserverEntry</a> <a href="#ref-for-dom-resizeobserverentry-clientwidth-6">(2)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-long">long</a>, readonly</span></p>
      </dt><dd data-md="">
-      <p><code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-6">clientWidth</a></code> when <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-2">ResizeObserverCallback</a></code> is invoked.</p>
+      <p><code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-6">clientWidth</a></code> when <code class="idl"><a data-link-type="idl" href="#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-2">ResizeObserverCallback</a></code> is invoked.</p>
      </dd><dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="attribute" data-export="" data-lt="clientHeight" id="dom-resizeobserverentry-clientheight">clientHeight<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientheight">#dom-resizeobserverentry-clientheight</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-clientheight-1">1. Introduction</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-clientheight-2">(2)</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-clientheight-3">2.1. ResizeObserver interface</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-clientheight-4">2.3. ResizeObserverEntry</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-clientheight-5">(2)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-long">long</a>, readonly</span></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="attribute" data-export="" data-lt="clientHeight" id="dom-resizeobserverentry-clientheight">clientHeight<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserverentry-clientheight">#dom-resizeobserverentry-clientheight</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserverentry-clientheight-1">1. Introduction</a> <a href="#ref-for-dom-resizeobserverentry-clientheight-2">(2)</a></span><span><a href="#ref-for-dom-resizeobserverentry-clientheight-3">2.1. ResizeObserver interface</a></span><span><a href="#ref-for-dom-resizeobserverentry-clientheight-4">2.3. ResizeObserverEntry</a> <a href="#ref-for-dom-resizeobserverentry-clientheight-5">(2)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-long">long</a>, readonly</span></p>
      </dt><dd data-md="">
-      <p><code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientheight" id="ref-for-dom-resizeobserverentry-clientheight-5">clientHeight</a></code> when <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-3">ResizeObserverCallback</a></code> is invoked.</p>
+      <p><code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientheight" id="ref-for-dom-resizeobserverentry-clientheight-5">clientHeight</a></code> when <code class="idl"><a data-link-type="idl" href="#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-3">ResizeObserverCallback</a></code> is invoked.</p>
     </dd></dl>
    </div>
    <div>
     <dl>
      <dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="constructor" data-export="" data-lt="ResizeObserverEntry(target)" id="dom-resizeobserverentry-resizeobserverentry">new ResizeObserverEntry(target)<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-resizeobserverentry">#dom-resizeobserverentry-resizeobserverentry</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-resizeobserverentry-1">2.3. ResizeObserverEntry</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserverentry-resizeobserverentry-2">3.2.1. Gather notifications entries</a></span></span></dfn></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="constructor" data-export="" data-lt="ResizeObserverEntry(target)" id="dom-resizeobserverentry-resizeobserverentry">new ResizeObserverEntry(target)<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserverentry-resizeobserverentry">#dom-resizeobserverentry-resizeobserverentry</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserverentry-resizeobserverentry-1">2.3. ResizeObserverEntry</a></span><span><a href="#ref-for-dom-resizeobserverentry-resizeobserverentry-2">3.2.1. Gather notifications entries</a></span></span></dfn></p>
      </dt><dd data-md="">
       <ol>
        <li data-md="">
-        <p>Let <var>this</var> be a new <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobserverentry" id="ref-for-resizeobserverentry-2">ResizeObserverEntry</a></code>.</p>
+        <p>Let <var>this</var> be a new <code class="idl"><a data-link-type="idl" href="#resizeobserverentry" id="ref-for-resizeobserverentry-2">ResizeObserverEntry</a></code>.</p>
        </li><li data-md="">
-        <p>Set <var>this</var> <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-target" id="ref-for-dom-resizeobserverentry-target-2">target</a></code> slot to <var>target</var>.</p>
+        <p>Set <var>this</var> <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-target" id="ref-for-dom-resizeobserverentry-target-2">target</a></code> slot to <var>target</var>.</p>
       </li></ol>
     </dd></dl>
    </div>
-   <h3 class="heading settled" data-level="2.4" id="resize-observation-interface"><span class="secno">2.4. </span><span class="content">ResizeObservation</span><a class="self-link" href="https://api.csswg.org/bikeshed/#resize-observation-interface"></a></h3>
+   <h3 class="heading settled" data-level="2.4" id="resize-observation-interface"><span class="secno">2.4. </span><span class="content">ResizeObservation</span><a class="self-link" href="#resize-observation-interface"></a></h3>
     ResizeObservation holds observation information for a single <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>. This
-interface is not visible to Javascript. 
-<pre class="idl def">[<a class="idl-code" data-link-type="constructor" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-resizeobservation" id="ref-for-dom-resizeobservation-resizeobservation-1">Constructor</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="idl-code" data-dfn-for="ResizeObservation/ResizeObservation(target)" data-dfn-type="argument" data-export="" id="dom-resizeobservation-resizeobservation-target-target">target<a class="self-link" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-resizeobservation-target-target"></a></dfn>)
+interface is not visible to Javascript.
+<pre class="idl def">[<a class="idl-code" data-link-type="constructor" href="#dom-resizeobservation-resizeobservation" id="ref-for-dom-resizeobservation-resizeobservation-1">Constructor</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="idl-code" data-dfn-for="ResizeObservation/ResizeObservation(target)" data-dfn-type="argument" data-export="" id="dom-resizeobservation-resizeobservation-target-target">target<a class="self-link" href="#dom-resizeobservation-resizeobservation-target-target"></a></dfn>)
 ]
-interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export="" data-lt="ResizeObservation" id="resizeobservation">ResizeObservation<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#resizeobservation">#resizeobservation</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-resizeobservation-1">2.1. ResizeObserver interface</a> <a href="https://api.csswg.org/bikeshed/#ref-for-resizeobservation-2">(2)</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-resizeobservation-3">2.4. ResizeObservation</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-resizeobservation-4">3.1.2. ResizeObserver</a></span></span></dfn> {
-    readonly attribute <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-1">target</a>;
-    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientwidth" id="ref-for-dom-resizeobservation-lastclientwidth-1">lastClientWidth</a>;
-    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientheight" id="ref-for-dom-resizeobservation-lastclientheight-1">lastClientHeight</a>;
-    boolean <a class="idl-code" data-link-type="method" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-observesize" id="ref-for-dom-resizeobservation-observesize-1">observeSize</a>();
+interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export="" data-lt="ResizeObservation" id="resizeobservation">ResizeObservation<span class="dfn-panel" data-deco=""><b><a href="#resizeobservation">#resizeobservation</a></b><b>Referenced in:</b><span><a href="#ref-for-resizeobservation-1">2.1. ResizeObserver interface</a> <a href="#ref-for-resizeobservation-2">(2)</a></span><span><a href="#ref-for-resizeobservation-3">2.4. ResizeObservation</a></span><span><a href="#ref-for-resizeobservation-4">3.1.2. ResizeObserver</a></span></span></dfn> {
+    readonly attribute <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-1">target</a>;
+    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="#dom-resizeobservation-lastclientwidth" id="ref-for-dom-resizeobservation-lastclientwidth-1">lastClientWidth</a>;
+    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="#dom-resizeobservation-lastclientheight" id="ref-for-dom-resizeobservation-lastclientheight-1">lastClientHeight</a>;
+    boolean <a class="idl-code" data-link-type="method" href="#dom-resizeobservation-observesize" id="ref-for-dom-resizeobservation-observesize-1">observeSize</a>();
 };
 </pre>
    <div>
     <dl>
      <dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="attribute" data-export="" data-lt="target" id="dom-resizeobservation-target">target<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobservation-target">#dom-resizeobservation-target</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-target-1">2.4. ResizeObservation</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-target-2">(2)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-target-3">(3)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-target-4">(4)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-target-5">(5)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-target-6">(6)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a>, readonly</span></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="attribute" data-export="" data-lt="target" id="dom-resizeobservation-target">target<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobservation-target">#dom-resizeobservation-target</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobservation-target-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-target-2">(2)</a> <a href="#ref-for-dom-resizeobservation-target-3">(3)</a> <a href="#ref-for-dom-resizeobservation-target-4">(4)</a> <a href="#ref-for-dom-resizeobservation-target-5">(5)</a> <a href="#ref-for-dom-resizeobservation-target-6">(6)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a>, readonly</span></p>
      </dt><dd data-md="">
       <p>The observed <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>.</p>
      </dd><dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="attribute" data-export="" data-lt="lastClientWidth" id="dom-resizeobservation-lastclientwidth">lastClientWidth<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientwidth">#dom-resizeobservation-lastclientwidth</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-lastclientwidth-1">2.4. ResizeObservation</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-lastclientwidth-2">(2)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-lastclientwidth-3">(3)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-lastclientwidth-4">(4)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-long">long</a>, readonly</span></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="attribute" data-export="" data-lt="lastClientWidth" id="dom-resizeobservation-lastclientwidth">lastClientWidth<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobservation-lastclientwidth">#dom-resizeobservation-lastclientwidth</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobservation-lastclientwidth-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-lastclientwidth-2">(2)</a> <a href="#ref-for-dom-resizeobservation-lastclientwidth-3">(3)</a> <a href="#ref-for-dom-resizeobservation-lastclientwidth-4">(4)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-long">long</a>, readonly</span></p>
      </dt><dd data-md="">
       <p>Last observed clientWidth.</p>
      </dd><dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="attribute" data-export="" data-lt="lastClientHeight" id="dom-resizeobservation-lastclientheight">lastClientHeight<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientheight">#dom-resizeobservation-lastclientheight</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-lastclientheight-1">2.4. ResizeObservation</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-lastclientheight-2">(2)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-lastclientheight-3">(3)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-lastclientheight-4">(4)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-long">long</a>, readonly</span></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="attribute" data-export="" data-lt="lastClientHeight" id="dom-resizeobservation-lastclientheight">lastClientHeight<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobservation-lastclientheight">#dom-resizeobservation-lastclientheight</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobservation-lastclientheight-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-lastclientheight-2">(2)</a> <a href="#ref-for-dom-resizeobservation-lastclientheight-3">(3)</a> <a href="#ref-for-dom-resizeobservation-lastclientheight-4">(4)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-long">long</a>, readonly</span></p>
      </dt><dd data-md="">
       <p>Last observed clientHeight.</p>
     </dd></dl>
@@ -1645,38 +1645,38 @@ interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-expor
    <div>
     <dl>
      <dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="constructor" data-export="" data-lt="ResizeObservation(target)" id="dom-resizeobservation-resizeobservation">new ResizeObservation(target)<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobservation-resizeobservation">#dom-resizeobservation-resizeobservation</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-resizeobservation-1">2.4. ResizeObservation</a></span></span></dfn></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="constructor" data-export="" data-lt="ResizeObservation(target)" id="dom-resizeobservation-resizeobservation">new ResizeObservation(target)<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobservation-resizeobservation">#dom-resizeobservation-resizeobservation</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobservation-resizeobservation-1">2.4. ResizeObservation</a></span></span></dfn></p>
      </dt><dd data-md="">
       <ol>
        <li data-md="">
-        <p>Let <var>this</var> be a new <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobservation" id="ref-for-resizeobservation-3">ResizeObservation</a></code> object</p>
+        <p>Let <var>this</var> be a new <code class="idl"><a data-link-type="idl" href="#resizeobservation" id="ref-for-resizeobservation-3">ResizeObservation</a></code> object</p>
        </li><li data-md="">
-        <p>Set <var>this</var> internal <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-2">target</a></code> slot to <var>target</var></p>
+        <p>Set <var>this</var> internal <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-2">target</a></code> slot to <var>target</var></p>
        </li><li data-md="">
-        <p>Set <var>this</var> <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientwidth" id="ref-for-dom-resizeobservation-lastclientwidth-2">lastClientWidth</a></code> slot to <var>target</var>.clientWidth.</p>
+        <p>Set <var>this</var> <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-lastclientwidth" id="ref-for-dom-resizeobservation-lastclientwidth-2">lastClientWidth</a></code> slot to <var>target</var>.clientWidth.</p>
        </li><li data-md="">
-        <p>Set <var>this</var> <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientheight" id="ref-for-dom-resizeobservation-lastclientheight-2">lastClientHeight</a></code> slot to <var>target</var>.clientHeight.</p>
+        <p>Set <var>this</var> <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-lastclientheight" id="ref-for-dom-resizeobservation-lastclientheight-2">lastClientHeight</a></code> slot to <var>target</var>.clientHeight.</p>
       </li></ol>
      </dd><dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="method" data-export="" data-lt="observeSize()" id="dom-resizeobservation-observesize">observeSize()<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobservation-observesize">#dom-resizeobservation-observesize</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobservation-observesize-1">2.4. ResizeObservation</a></span></span></dfn></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="method" data-export="" data-lt="observeSize()" id="dom-resizeobservation-observesize">observeSize()<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobservation-observesize">#dom-resizeobservation-observesize</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobservation-observesize-1">2.4. ResizeObservation</a></span></span></dfn></p>
      </dt><dd data-md="">
       <p>Sets lastClientWidth and lastClientHeight to target’s clientWidth and clientHeight. Returns true if width/height have changed.</p>
       <ol>
        <li data-md="">
         <p>Set <var>sizeChanged</var> to false.</p>
        </li><li data-md="">
-        <p>If <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-3">target</a></code>.clientWidth == <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientwidth" id="ref-for-dom-resizeobservation-lastclientwidth-3">lastClientWidth</a></code> perform these steps:</p>
+        <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-3">target</a></code>.clientWidth == <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-lastclientwidth" id="ref-for-dom-resizeobservation-lastclientwidth-3">lastClientWidth</a></code> perform these steps:</p>
         <ol>
          <li data-md="">
-          <p>Set <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientwidth" id="ref-for-dom-resizeobservation-lastclientwidth-4">lastClientWidth</a></code> slot to <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-4">target</a></code>.clientWidth.</p>
+          <p>Set <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-lastclientwidth" id="ref-for-dom-resizeobservation-lastclientwidth-4">lastClientWidth</a></code> slot to <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-4">target</a></code>.clientWidth.</p>
          </li><li data-md="">
           <p>Set <var>sizeChanged</var> to true.</p>
         </li></ol>
        </li><li data-md="">
-        <p>If <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-5">target</a></code>.clientHeight == <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientheight" id="ref-for-dom-resizeobservation-lastclientheight-3">lastClientHeight</a></code> perform these steps:</p>
+        <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-5">target</a></code>.clientHeight == <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-lastclientheight" id="ref-for-dom-resizeobservation-lastclientheight-3">lastClientHeight</a></code> perform these steps:</p>
         <ol>
          <li data-md="">
-          <p>Set <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientheight" id="ref-for-dom-resizeobservation-lastclientheight-4">lastClientHeight</a></code> slot to <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-6">target</a></code>.clientHeight.</p>
+          <p>Set <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-lastclientheight" id="ref-for-dom-resizeobservation-lastclientheight-4">lastClientHeight</a></code> slot to <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-6">target</a></code>.clientHeight.</p>
          </li><li data-md="">
           <p>Set <var>sizeChanged</var> to true.</p>
         </li></ol>
@@ -1685,35 +1685,35 @@ interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-expor
       </li></ol>
     </dd></dl>
    </div>
-   <h2 class="heading settled" data-level="3" id="processing-model"><span class="secno">3. </span><span class="content">Processing Model</span><a class="self-link" href="https://api.csswg.org/bikeshed/#processing-model"></a></h2>
-   <h3 class="heading settled" data-level="3.1" id="internal-slot-definitions"><span class="secno">3.1. </span><span class="content">Internal Slot Definitions</span><a class="self-link" href="https://api.csswg.org/bikeshed/#internal-slot-definitions"></a></h3>
-   <h4 class="heading settled" data-level="3.1.1" id="document-slots"><span class="secno">3.1.1. </span><span class="content">Document</span><a class="self-link" href="https://api.csswg.org/bikeshed/#document-slots"></a></h4>
-   <p><a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document">Document</a> has a <dfn class="dfn-paneled idl-code" data-dfn-for="Document" data-dfn-type="attribute" data-export="" data-lt="resizeObservers" id="dom-document-resizeobservers">resizeObservers<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-document-resizeobservers">#dom-document-resizeobservers</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-document-resizeobservers-1">2.1. ResizeObserver interface</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-document-resizeobservers-2">3.2.1. Gather notifications entries</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-document-resizeobservers-3">3.2.3. Broadcast Resize notifications</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-document-resizeobservers-4">3.2.4. Deliver Resize Limit Error</a></span></span></dfn> slot that is a list of <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobserver" id="ref-for-resizeobserver-4">ResizeObserver</a></code>s in this document. It is initialized to empty.</p>
-   <h4 class="heading settled" data-level="3.1.2" id="resize-observer-slots"><span class="secno">3.1.2. </span><span class="content">ResizeObserver</span><a class="self-link" href="https://api.csswg.org/bikeshed/#resize-observer-slots"></a></h4>
-   <p><code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobserver" id="ref-for-resizeobserver-5">ResizeObserver</a></code> has a <dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="attribute" data-export="" data-lt="callback" id="dom-resizeobserver-callback">callback<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-callback">#dom-resizeobserver-callback</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-callback-1">2.1. ResizeObserver interface</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-callback-2">3.2.3. Broadcast Resize notifications</a></span></span></dfn> slot, initialized by constructor.</p>
-   <p><code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobserver" id="ref-for-resizeobserver-6">ResizeObserver</a></code> has a <dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="attribute" data-export="" data-lt="activeEntries" id="dom-resizeobserver-activeentries">activeEntries<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-activeentries">#dom-resizeobserver-activeentries</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-activeentries-1">2.1. ResizeObserver interface</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-activeentries-2">3.2.1. Gather notifications entries</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-activeentries-3">(2)</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-activeentries-4">3.2.2. Has notification entries</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-activeentries-5">3.2.3. Broadcast Resize notifications</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-activeentries-6">(2)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-activeentries-7">(3)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-activeentries-8">(4)</a></span></span></dfn> slot, which is a list of <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobserverentry" id="ref-for-resizeobserverentry-3">ResizeObserverEntry</a></code>s.</p>
-   <p><code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobserver" id="ref-for-resizeobserver-7">ResizeObserver</a></code> has an <dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="attribute" data-export="" data-lt="observationTargets" id="dom-resizeobserver-observationtargets">observationTargets<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observationtargets">#dom-resizeobserver-observationtargets</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-observationtargets-1">2.1. ResizeObserver interface</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-observationtargets-2">(2)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-observationtargets-3">(3)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-observationtargets-4">(4)</a> <a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-observationtargets-5">(5)</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-dom-resizeobserver-observationtargets-6">3.2.1. Gather notifications entries</a></span></span></dfn> slot, which is a list of <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobservation" id="ref-for-resizeobservation-4">ResizeObservation</a></code>s.</p>
-   <h3 class="heading settled" data-level="3.2" id="algorithms"><span class="secno">3.2. </span><span class="content">Algorithms</span><a class="self-link" href="https://api.csswg.org/bikeshed/#algorithms"></a></h3>
-   <h4 class="heading settled" data-level="3.2.1" id="gather-notification-entries-h"><span class="secno">3.2.1. </span><span class="content">Gather notifications entries</span><a class="self-link" href="https://api.csswg.org/bikeshed/#gather-notification-entries-h"></a></h4>
-   <p>It computes all pending resize notifications for a <var>document</var>. To <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="gather notification entries" data-noexport="" id="gather-notification-entries">gather notification entries<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#gather-notification-entries">#gather-notification-entries</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-gather-notification-entries-1">3.4.1.  HTML Processing Model: Event Loop</a> <a href="https://api.csswg.org/bikeshed/#ref-for-gather-notification-entries-2">(2)</a></span></span></dfn>, run these steps:</p>
+   <h2 class="heading settled" data-level="3" id="processing-model"><span class="secno">3. </span><span class="content">Processing Model</span><a class="self-link" href="#processing-model"></a></h2>
+   <h3 class="heading settled" data-level="3.1" id="internal-slot-definitions"><span class="secno">3.1. </span><span class="content">Internal Slot Definitions</span><a class="self-link" href="#internal-slot-definitions"></a></h3>
+   <h4 class="heading settled" data-level="3.1.1" id="document-slots"><span class="secno">3.1.1. </span><span class="content">Document</span><a class="self-link" href="#document-slots"></a></h4>
+   <p><a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document">Document</a> has a <dfn class="dfn-paneled idl-code" data-dfn-for="Document" data-dfn-type="attribute" data-export="" data-lt="resizeObservers" id="dom-document-resizeobservers">resizeObservers<span class="dfn-panel" data-deco=""><b><a href="#dom-document-resizeobservers">#dom-document-resizeobservers</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-document-resizeobservers-1">2.1. ResizeObserver interface</a></span><span><a href="#ref-for-dom-document-resizeobservers-2">3.2.1. Gather notifications entries</a></span><span><a href="#ref-for-dom-document-resizeobservers-3">3.2.3. Broadcast Resize notifications</a></span><span><a href="#ref-for-dom-document-resizeobservers-4">3.2.4. Deliver Resize Limit Error</a></span></span></dfn> slot that is a list of <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-4">ResizeObserver</a></code>s in this document. It is initialized to empty.</p>
+   <h4 class="heading settled" data-level="3.1.2" id="resize-observer-slots"><span class="secno">3.1.2. </span><span class="content">ResizeObserver</span><a class="self-link" href="#resize-observer-slots"></a></h4>
+   <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-5">ResizeObserver</a></code> has a <dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="attribute" data-export="" data-lt="callback" id="dom-resizeobserver-callback">callback<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserver-callback">#dom-resizeobserver-callback</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserver-callback-1">2.1. ResizeObserver interface</a></span><span><a href="#ref-for-dom-resizeobserver-callback-2">3.2.3. Broadcast Resize notifications</a></span></span></dfn> slot, initialized by constructor.</p>
+   <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-6">ResizeObserver</a></code> has a <dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="attribute" data-export="" data-lt="activeEntries" id="dom-resizeobserver-activeentries">activeEntries<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserver-activeentries">#dom-resizeobserver-activeentries</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserver-activeentries-1">2.1. ResizeObserver interface</a></span><span><a href="#ref-for-dom-resizeobserver-activeentries-2">3.2.1. Gather notifications entries</a> <a href="#ref-for-dom-resizeobserver-activeentries-3">(2)</a></span><span><a href="#ref-for-dom-resizeobserver-activeentries-4">3.2.2. Has notification entries</a></span><span><a href="#ref-for-dom-resizeobserver-activeentries-5">3.2.3. Broadcast Resize notifications</a> <a href="#ref-for-dom-resizeobserver-activeentries-6">(2)</a> <a href="#ref-for-dom-resizeobserver-activeentries-7">(3)</a> <a href="#ref-for-dom-resizeobserver-activeentries-8">(4)</a></span></span></dfn> slot, which is a list of <code class="idl"><a data-link-type="idl" href="#resizeobserverentry" id="ref-for-resizeobserverentry-3">ResizeObserverEntry</a></code>s.</p>
+   <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-7">ResizeObserver</a></code> has an <dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="attribute" data-export="" data-lt="observationTargets" id="dom-resizeobserver-observationtargets">observationTargets<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserver-observationtargets">#dom-resizeobserver-observationtargets</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserver-observationtargets-1">2.1. ResizeObserver interface</a> <a href="#ref-for-dom-resizeobserver-observationtargets-2">(2)</a> <a href="#ref-for-dom-resizeobserver-observationtargets-3">(3)</a> <a href="#ref-for-dom-resizeobserver-observationtargets-4">(4)</a> <a href="#ref-for-dom-resizeobserver-observationtargets-5">(5)</a></span><span><a href="#ref-for-dom-resizeobserver-observationtargets-6">3.2.1. Gather notifications entries</a></span></span></dfn> slot, which is a list of <code class="idl"><a data-link-type="idl" href="#resizeobservation" id="ref-for-resizeobservation-4">ResizeObservation</a></code>s.</p>
+   <h3 class="heading settled" data-level="3.2" id="algorithms"><span class="secno">3.2. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h3>
+   <h4 class="heading settled" data-level="3.2.1" id="gather-notification-entries-h"><span class="secno">3.2.1. </span><span class="content">Gather notifications entries</span><a class="self-link" href="#gather-notification-entries-h"></a></h4>
+   <p>It computes all pending resize notifications for a <var>document</var>. To <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="gather notification entries" data-noexport="" id="gather-notification-entries">gather notification entries<span class="dfn-panel" data-deco=""><b><a href="#gather-notification-entries">#gather-notification-entries</a></b><b>Referenced in:</b><span><a href="#ref-for-gather-notification-entries-1">3.4.1.  HTML Processing Model: Event Loop</a> <a href="#ref-for-gather-notification-entries-2">(2)</a></span></span></dfn>, run these steps:</p>
    <ol>
     <li data-md="">
-     <p>For each <var>observer</var> in <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-2">resizeObservers</a></code> run these steps:</p>
+     <p>For each <var>observer</var> in <code class="idl"><a data-link-type="idl" href="#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-2">resizeObservers</a></code> run these steps:</p>
      <ol>
       <li data-md="">
-       <p>Clear <var>observer</var>’s <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-2">activeEntries</a></code>.</p>
+       <p>Clear <var>observer</var>’s <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-2">activeEntries</a></code>.</p>
       </li><li data-md="">
-       <p>For each <var>observation</var> in <var>observer</var>.<code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observationtargets" id="ref-for-dom-resizeobserver-observationtargets-6">observationTargets</a></code> run these steps:</p>
+       <p>For each <var>observation</var> in <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-observationtargets" id="ref-for-dom-resizeobserver-observationtargets-6">observationTargets</a></code> run these steps:</p>
        <ol>
         <li data-md="">
          <p>Let <var>sizeChanged</var> be the result of calling <var>observation</var>.<code class="idl"><a data-link-type="idl">observeSize</a></code>.</p>
         </li><li data-md="">
-         <p>If <var>sizeChanged</var> is true then add new <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-resizeobserverentry" id="ref-for-dom-resizeobserverentry-resizeobserverentry-2">ResizeObserverEntry(target)</a></code> to <var>observer</var>.<code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-3">activeEntries</a></code>.</p>
+         <p>If <var>sizeChanged</var> is true then add new <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-resizeobserverentry" id="ref-for-dom-resizeobserverentry-resizeobserverentry-2">ResizeObserverEntry(target)</a></code> to <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-3">activeEntries</a></code>.</p>
        </li></ol>
      </li></ol>
    </li></ol>
-   <h4 class="heading settled" data-level="3.2.2" id="has-notification-entries-h"><span class="secno">3.2.2. </span><span class="content">Has notification entries</span><a class="self-link" href="https://api.csswg.org/bikeshed/#has-notification-entries-h"></a></h4>
-   <p>To determine if <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code> <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="has notification entries" data-noexport="" id="has-notification-entries">has notification entries<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#has-notification-entries">#has-notification-entries</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-has-notification-entries-1">3.4.1.  HTML Processing Model: Event Loop</a> <a href="https://api.csswg.org/bikeshed/#ref-for-has-notification-entries-2">(2)</a></span></span></dfn> run these steps:</p>
+   <h4 class="heading settled" data-level="3.2.2" id="has-notification-entries-h"><span class="secno">3.2.2. </span><span class="content">Has notification entries</span><a class="self-link" href="#has-notification-entries-h"></a></h4>
+   <p>To determine if <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code> <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="has notification entries" data-noexport="" id="has-notification-entries">has notification entries<span class="dfn-panel" data-deco=""><b><a href="#has-notification-entries">#has-notification-entries</a></b><b>Referenced in:</b><span><a href="#ref-for-has-notification-entries-1">3.4.1.  HTML Processing Model: Event Loop</a> <a href="#ref-for-has-notification-entries-2">(2)</a></span></span></dfn> run these steps:</p>
    <ol>
     <li data-md="">
      <p>Set <var>hasEntries</var> to false.</p>
@@ -1721,22 +1721,22 @@ interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-expor
      <p>For each <var>observer</var> in {Document/resizeObservers}} run these steps:</p>
      <ol>
       <li data-md="">
-       <p>If <var>observer</var>.<code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-4">activeEntries</a></code> is not empty, set <var>hasEntries</var> to true.</p>
+       <p>If <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-4">activeEntries</a></code> is not empty, set <var>hasEntries</var> to true.</p>
      </li></ol>
     </li><li data-md="">
      <p>return <var>hasEntries</var>.</p>
    </li></ol>
-   <h4 class="heading settled" data-level="3.2.3" id="broadcast-resize-notifications-h"><span class="secno">3.2.3. </span><span class="content">Broadcast Resize notifications</span><a class="self-link" href="https://api.csswg.org/bikeshed/#broadcast-resize-notifications-h"></a></h4>
-   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="broadcast resize notifications" data-noexport="" id="broadcast-resize-notifications">broadcast resize notifications<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#broadcast-resize-notifications">#broadcast-resize-notifications</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-broadcast-resize-notifications-1">2.2. ResizeObserverCallback</a></span><span><a href="https://api.csswg.org/bikeshed/#ref-for-broadcast-resize-notifications-2">3.4.1.  HTML Processing Model: Event Loop</a></span></span></dfn> for a <var>document</var>,
+   <h4 class="heading settled" data-level="3.2.3" id="broadcast-resize-notifications-h"><span class="secno">3.2.3. </span><span class="content">Broadcast Resize notifications</span><a class="self-link" href="#broadcast-resize-notifications-h"></a></h4>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="broadcast resize notifications" data-noexport="" id="broadcast-resize-notifications">broadcast resize notifications<span class="dfn-panel" data-deco=""><b><a href="#broadcast-resize-notifications">#broadcast-resize-notifications</a></b><b>Referenced in:</b><span><a href="#ref-for-broadcast-resize-notifications-1">2.2. ResizeObserverCallback</a></span><span><a href="#ref-for-broadcast-resize-notifications-2">3.4.1.  HTML Processing Model: Event Loop</a></span></span></dfn> for a <var>document</var>,
 run these steps:</p>
    <ol>
     <li data-md="">
-     <p>For each <var>observer</var> in <var>document</var>.<code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-3">resizeObservers</a></code> run these steps:</p>
+     <p>For each <var>observer</var> in <var>document</var>.<code class="idl"><a data-link-type="idl" href="#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-3">resizeObservers</a></code> run these steps:</p>
      <ol>
       <li data-md="">
-       <p>If <var>observer</var><code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-5">activeEntries</a></code> slot is empty, continue.</p>
+       <p>If <var>observer</var><code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-5">activeEntries</a></code> slot is empty, continue.</p>
       </li><li data-md="">
-       <p>For each <var>entry</var> in <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-6">activeEntries</a></code></p>
+       <p>For each <var>entry</var> in <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-6">activeEntries</a></code></p>
        <ol>
         <li data-md="">
          <p>Set <var>entry</var>.clientWidth slot to <var>entry</var>.target.clientWidth.</p>
@@ -1744,19 +1744,19 @@ run these steps:</p>
          <p>Set <var>entry</var>.clientHeight slot to <var>entry</var>.target.clientHeight.</p>
        </li></ol>
       </li><li data-md="">
-       <p>Invoke <var>observer</var>.<code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-callback" id="ref-for-dom-resizeobserver-callback-2">callback</a></code> with <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-7">activeEntries</a></code>.</p>
+       <p>Invoke <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-callback" id="ref-for-dom-resizeobserver-callback-2">callback</a></code> with <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-7">activeEntries</a></code>.</p>
       </li><li data-md="">
-       <p>Clear <var>observer</var>.<code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-8">activeEntries</a></code>.</p>
+       <p>Clear <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-8">activeEntries</a></code>.</p>
      </li></ol>
    </li></ol>
-   <h4 class="heading settled" data-level="3.2.4" id="deliver-resize-error"><span class="secno">3.2.4. </span><span class="content">Deliver Resize Limit Error</span><a class="self-link" href="https://api.csswg.org/bikeshed/#deliver-resize-error"></a></h4>
-   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="deliver resize limit error notification" data-noexport="" id="deliver-resize-limit-error-notification">deliver resize limit error notification<span class="dfn-panel" data-deco=""><b><a href="https://api.csswg.org/bikeshed/#deliver-resize-limit-error-notification">#deliver-resize-limit-error-notification</a></b><b>Referenced in:</b><span><a href="https://api.csswg.org/bikeshed/#ref-for-deliver-resize-limit-error-notification-1">3.4.1.  HTML Processing Model: Event Loop</a></span></span></dfn> run these steps:</p>
+   <h4 class="heading settled" data-level="3.2.4" id="deliver-resize-error"><span class="secno">3.2.4. </span><span class="content">Deliver Resize Limit Error</span><a class="self-link" href="#deliver-resize-error"></a></h4>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="deliver resize limit error notification" data-noexport="" id="deliver-resize-limit-error-notification">deliver resize limit error notification<span class="dfn-panel" data-deco=""><b><a href="#deliver-resize-limit-error-notification">#deliver-resize-limit-error-notification</a></b><b>Referenced in:</b><span><a href="#ref-for-deliver-resize-limit-error-notification-1">3.4.1.  HTML Processing Model: Event Loop</a></span></span></dfn> run these steps:</p>
    <ol>
     <li data-md="">
-     <p>For each <var>observer</var> in <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-4">resizeObservers</a></code> do this:</p>
+     <p>For each <var>observer</var> in <code class="idl"><a data-link-type="idl" href="#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-4">resizeObservers</a></code> do this:</p>
      <ol>
       <li data-md="">
-       <p>Clear <var>observer</var>.<code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobserver" id="ref-for-resizeobserver-8">ResizeObserver</a></code>.activeEntries</p>
+       <p>Clear <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-8">ResizeObserver</a></code>.activeEntries</p>
      </li></ol>
     </li><li data-md="">
      <p>Create a new <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#errorevent">ErrorEvent</a></code></p>
@@ -1765,17 +1765,17 @@ run these steps:</p>
     </li><li data-md="">
      <p>Dispach the event to document’s window.</p>
    </li></ol>
-   <h3 class="heading settled" data-level="3.3" id="lifetime"><span class="secno">3.3. </span><span class="content">ResizeObserver Lifetime</span><a class="self-link" href="https://api.csswg.org/bikeshed/#lifetime"></a></h3>
-   <p>A <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobserver" id="ref-for-resizeobserver-9">ResizeObserver</a></code> will remain alive until both of these conditions are met:</p>
+   <h3 class="heading settled" data-level="3.3" id="lifetime"><span class="secno">3.3. </span><span class="content">ResizeObserver Lifetime</span><a class="self-link" href="#lifetime"></a></h3>
+   <p>A <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-9">ResizeObserver</a></code> will remain alive until both of these conditions are met:</p>
    <ul>
     <li data-md="">
      <p>there are no scripting references to the observer.</p>
     </li><li data-md="">
      <p>the observer is not observing any targets.</p>
    </li></ul>
-   <h3 class="heading settled" data-level="3.4" id="integrations"><span class="secno">3.4. </span><span class="content">External Spec Integrations</span><a class="self-link" href="https://api.csswg.org/bikeshed/#integrations"></a></h3>
-   <h4 class="heading settled" data-level="3.4.1" id="html-event-loop"><span class="secno">3.4.1. </span><span class="content"> HTML Processing Model: Event Loop</span><a class="self-link" href="https://api.csswg.org/bikeshed/#html-event-loop"></a></h4>
-   <p><code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobserver" id="ref-for-resizeobserver-10">ResizeObserver</a></code> processing happens inside the step 7.12 of the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#processing-model-8">HTML Processing Model</a> event loop.</p>
+   <h3 class="heading settled" data-level="3.4" id="integrations"><span class="secno">3.4. </span><span class="content">External Spec Integrations</span><a class="self-link" href="#integrations"></a></h3>
+   <h4 class="heading settled" data-level="3.4.1" id="html-event-loop"><span class="secno">3.4.1. </span><span class="content"> HTML Processing Model: Event Loop</span><a class="self-link" href="#html-event-loop"></a></h4>
+   <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-10">ResizeObserver</a></code> processing happens inside the step 7.12 of the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#processing-model-8">HTML Processing Model</a> event loop.</p>
    <p>Step 12 is currently underspecified as:</p>
    <p><q>For each fully active Document in docs, update the rendering or user interface of that Document and its browsing context to reflect the current state.</q>.</p>
    <p>Existing step 12 can be fully specified as:</p>
@@ -1788,13 +1788,13 @@ run these steps:</p>
     </li><li data-md="">
      <p>paint</p>
    </li></ol>
-   <p><code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobserver" id="ref-for-resizeobserver-11">ResizeObserver</a></code> extends step 12 with resize notifications.
+   <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-11">ResizeObserver</a></code> extends step 12 with resize notifications.
 It tries to deliver all pending notifications by looping
 until no pending notifications are available. Infinite looping is prevented
 by limiting the number of times loop is repeated to RESIZE_OBSERVER_LOOP_LIMIT constant. Looping too many times generates an error.</p>
    <p class="note" role="note">Note: RESIZE_OBSERVER_LOOP_LIMIT is currently arbitrarily set to 16.
 It might get adjusted based on data we obtain from real-world usage.</p>
-   <p>Step 12 with <code class="idl"><a data-link-type="idl" href="https://api.csswg.org/bikeshed/#resizeobserver" id="ref-for-resizeobserver-12">ResizeObserver</a></code> notifications is:</p>
+   <p>Step 12 with <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-12">ResizeObserver</a></code> notifications is:</p>
    <p>For each fully active Document in docs, run the following steps for that Document and its browsing contentx:</p>
    <ol>
     <li data-md="">
@@ -1804,27 +1804,27 @@ It might get adjusted based on data we obtain from real-world usage.</p>
     </li><li data-md="">
      <p>let <var>resizeNotificationCount</var> be 0</p>
     </li><li data-md="">
-     <p><a data-link-type="dfn" href="https://api.csswg.org/bikeshed/#gather-notification-entries" id="ref-for-gather-notification-entries-1">gather notification entries</a> for <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code></p>
+     <p><a data-link-type="dfn" href="#gather-notification-entries" id="ref-for-gather-notification-entries-1">gather notification entries</a> for <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code></p>
     </li><li data-md="">
-     <p>repeat while (document <a data-link-type="dfn" href="https://api.csswg.org/bikeshed/#has-notification-entries" id="ref-for-has-notification-entries-1">has notification entries</a> &amp;&amp; <var>resizeNotificationCount</var> &lt; RESIZE_OBSERVER_LOOP_LIMIT)</p>
+     <p>repeat while (document <a data-link-type="dfn" href="#has-notification-entries" id="ref-for-has-notification-entries-1">has notification entries</a> &amp;&amp; <var>resizeNotificationCount</var> &lt; RESIZE_OBSERVER_LOOP_LIMIT)</p>
      <ol>
       <li data-md="">
        <p>increment <var>resizeNotificationCount</var> by 1</p>
       </li><li data-md="">
-       <p><a data-link-type="dfn" href="https://api.csswg.org/bikeshed/#broadcast-resize-notifications" id="ref-for-broadcast-resize-notifications-2">broadcast resize notifications</a></p>
+       <p><a data-link-type="dfn" href="#broadcast-resize-notifications" id="ref-for-broadcast-resize-notifications-2">broadcast resize notifications</a></p>
       </li><li data-md="">
        <p>recalc styles</p>
       </li><li data-md="">
        <p>update layout</p>
       </li><li data-md="">
-       <p><a data-link-type="dfn" href="https://api.csswg.org/bikeshed/#gather-notification-entries" id="ref-for-gather-notification-entries-2">gather notification entries</a> for <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code></p>
+       <p><a data-link-type="dfn" href="#gather-notification-entries" id="ref-for-gather-notification-entries-2">gather notification entries</a> for <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code></p>
       </li><li data-md="">
-       <p>if (document <a data-link-type="dfn" href="https://api.csswg.org/bikeshed/#has-notification-entries" id="ref-for-has-notification-entries-2">has notification entries</a> &amp;&amp; <var>resizeNotificationCount</var> is RESIZE_OBSERVER_LOOP_LIMIT) then <a data-link-type="dfn" href="https://api.csswg.org/bikeshed/#deliver-resize-limit-error-notification" id="ref-for-deliver-resize-limit-error-notification-1">deliver resize limit error notification</a></p>
+       <p>if (document <a data-link-type="dfn" href="#has-notification-entries" id="ref-for-has-notification-entries-2">has notification entries</a> &amp;&amp; <var>resizeNotificationCount</var> is RESIZE_OBSERVER_LOOP_LIMIT) then <a data-link-type="dfn" href="#deliver-resize-limit-error-notification" id="ref-for-deliver-resize-limit-error-notification-1">deliver resize limit error notification</a></p>
      </li></ol>
    </li></ol>
   </main>
   <div data-fill-with="conformance">
-   <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="https://api.csswg.org/bikeshed/#conformance"></a></h2>
+   <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
    <p> Conformance requirements are expressed with a combination of descriptive assertions and RFC 2119 terminology.
             The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL”
             in the normative parts of this document
@@ -1832,10 +1832,10 @@ It might get adjusted based on data we obtain from real-world usage.</p>
             However, for readability,
             these words do not appear in all uppercase letters in this specification. </p>
    <p> All of the text of this specification is normative
-            except sections explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="https://api.csswg.org/bikeshed/#biblio-rfc2119">[RFC2119]</a> </p>
+            except sections explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a> </p>
    <p> Examples in this specification are introduced with the words “for example”
             or are set apart from the normative text with <code>class="example"</code>, like this: </p>
-   <div class="example" id="example-ae2b6bc0"><a class="self-link" href="https://api.csswg.org/bikeshed/#example-ae2b6bc0"></a> This is an example of an informative example. </div>
+   <div class="example" id="example-ae2b6bc0"><a class="self-link" href="#example-ae2b6bc0"></a> This is an example of an informative example. </div>
    <p> Informative notes begin with the word “Note”
             and are set apart from the normative text with <code>class="note"</code>, like this: </p>
    <p class="note" role="note"> Note, this is an informative note. </p>
@@ -1969,40 +1969,40 @@ It might get adjusted based on data we obtain from real-world usage.</p>
 
 })();
 </script>
-  <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="https://api.csswg.org/bikeshed/#index"></a></h2>
-  <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="https://api.csswg.org/bikeshed/#index-defined-here"></a></h3>
+  <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-activeentries">activeEntries</a><span>, in §3.1.2</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#broadcast-resize-notifications">broadcast resize notifications</a><span>, in §3.2.3</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-callback">callback</a><span>, in §3.1.2</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientheight">clientHeight</a><span>, in §2.3</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientwidth">clientWidth</a><span>, in §2.3</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#deliver-resize-limit-error-notification">deliver resize limit error notification</a><span>, in §3.2.4</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-disconnect">disconnect()</a><span>, in §2.1</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#gather-notification-entries">gather notification entries</a><span>, in §3.2.1</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#has-notification-entries">has notification entries</a><span>, in §3.2.2</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientheight">lastClientHeight</a><span>, in §2.4</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientwidth">lastClientWidth</a><span>, in §2.4</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observationtargets">observationTargets</a><span>, in §3.1.2</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobservation-observesize">observeSize()</a><span>, in §2.4</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observe">observe(target)</a><span>, in §2.1</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#resizeobservation">ResizeObservation</a><span>, in §2.4</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobservation-resizeobservation">ResizeObservation(target)</a><span>, in §2.4</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#resizeobserver">ResizeObserver</a><span>, in §2.1</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-resizeobserver">ResizeObserver(callback)</a><span>, in §2.1</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#callbackdef-resizeobservercallback">ResizeObserverCallback</a><span>, in §2.2</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#resizeobserverentry">ResizeObserverEntry</a><span>, in §2.3</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-resizeobserverentry">ResizeObserverEntry(target)</a><span>, in §2.3</span>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-document-resizeobservers">resizeObservers</a><span>, in §3.1.1</span>
+   <li><a href="#dom-resizeobserver-activeentries">activeEntries</a><span>, in §3.1.2</span>
+   </li><li><a href="#broadcast-resize-notifications">broadcast resize notifications</a><span>, in §3.2.3</span>
+   </li><li><a href="#dom-resizeobserver-callback">callback</a><span>, in §3.1.2</span>
+   </li><li><a href="#dom-resizeobserverentry-clientheight">clientHeight</a><span>, in §2.3</span>
+   </li><li><a href="#dom-resizeobserverentry-clientwidth">clientWidth</a><span>, in §2.3</span>
+   </li><li><a href="#deliver-resize-limit-error-notification">deliver resize limit error notification</a><span>, in §3.2.4</span>
+   </li><li><a href="#dom-resizeobserver-disconnect">disconnect()</a><span>, in §2.1</span>
+   </li><li><a href="#gather-notification-entries">gather notification entries</a><span>, in §3.2.1</span>
+   </li><li><a href="#has-notification-entries">has notification entries</a><span>, in §3.2.2</span>
+   </li><li><a href="#dom-resizeobservation-lastclientheight">lastClientHeight</a><span>, in §2.4</span>
+   </li><li><a href="#dom-resizeobservation-lastclientwidth">lastClientWidth</a><span>, in §2.4</span>
+   </li><li><a href="#dom-resizeobserver-observationtargets">observationTargets</a><span>, in §3.1.2</span>
+   </li><li><a href="#dom-resizeobservation-observesize">observeSize()</a><span>, in §2.4</span>
+   </li><li><a href="#dom-resizeobserver-observe">observe(target)</a><span>, in §2.1</span>
+   </li><li><a href="#resizeobservation">ResizeObservation</a><span>, in §2.4</span>
+   </li><li><a href="#dom-resizeobservation-resizeobservation">ResizeObservation(target)</a><span>, in §2.4</span>
+   </li><li><a href="#resizeobserver">ResizeObserver</a><span>, in §2.1</span>
+   </li><li><a href="#dom-resizeobserver-resizeobserver">ResizeObserver(callback)</a><span>, in §2.1</span>
+   </li><li><a href="#callbackdef-resizeobservercallback">ResizeObserverCallback</a><span>, in §2.2</span>
+   </li><li><a href="#resizeobserverentry">ResizeObserverEntry</a><span>, in §2.3</span>
+   </li><li><a href="#dom-resizeobserverentry-resizeobserverentry">ResizeObserverEntry(target)</a><span>, in §2.3</span>
+   </li><li><a href="#dom-document-resizeobservers">resizeObservers</a><span>, in §3.1.1</span>
    </li><li>
     target
     <ul>
-     <li><a href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-target">attribute for ResizeObserverEntry</a><span>, in §2.3</span>
-     </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobservation-target">attribute for ResizeObservation</a><span>, in §2.4</span>
+     <li><a href="#dom-resizeobserverentry-target">attribute for ResizeObserverEntry</a><span>, in §2.3</span>
+     </li><li><a href="#dom-resizeobservation-target">attribute for ResizeObservation</a><span>, in §2.4</span>
     </li></ul>
-   </li><li><a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-unobserve">unobserve(target)</a><span>, in §2.1</span>
+   </li><li><a href="#dom-resizeobserver-unobserve">unobserve(target)</a><span>, in §2.1</span>
   </li></ul>
-  <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="https://api.csswg.org/bikeshed/#index-defined-elsewhere"></a></h3>
+  <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
     <a data-link-type="biblio">[cssom-view-1]</a> defines the following terms:
@@ -2029,8 +2029,8 @@ It might get adjusted based on data we obtain from real-world usage.</p>
      <li><a href="https://heycam.github.io/webidl/#dom-long">long</a>
     </li></ul>
   </li></ul>
-  <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="https://api.csswg.org/bikeshed/#references"></a></h2>
-  <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="https://api.csswg.org/bikeshed/#normative"></a></h3>
+  <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
    <dt id="biblio-cssom-view-1">[CSSOM-VIEW-1]
    </dt><dd>Simon Pieters. <a href="https://drafts.csswg.org/cssom-view/">CSSOM View Module</a>. 17 March 2016. WD. URL: <a href="https://drafts.csswg.org/cssom-view/">https://drafts.csswg.org/cssom-view/</a>
@@ -2043,32 +2043,32 @@ It might get adjusted based on data we obtain from real-world usage.</p>
    </dd><dt id="biblio-whatwg-dom">[WHATWG-DOM]
    </dt><dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
   </dd></dl>
-  <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="https://api.csswg.org/bikeshed/#idl-index"></a></h2>
-<pre class="idl def">[<a class="idl-code" data-link-type="constructor" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-resizeobserver">Constructor</a>(<a data-link-type="idl-name" href="https://api.csswg.org/bikeshed/#callbackdef-resizeobservercallback">ResizeObserverCallback</a> <a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-resizeobserver-callback-callback">callback</a>),
+  <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
+<pre class="idl def">[<a class="idl-code" data-link-type="constructor" href="#dom-resizeobserver-resizeobserver">Constructor</a>(<a data-link-type="idl-name" href="#callbackdef-resizeobservercallback">ResizeObserverCallback</a> <a href="#dom-resizeobserver-resizeobserver-callback-callback">callback</a>),
     Exposed=Window]
-interface <a href="https://api.csswg.org/bikeshed/#resizeobserver">ResizeObserver</a> {
-    void <a class="idl-code" data-link-type="method" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observe">observe</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-observe-target-target">target</a>);
-    void <a class="idl-code" data-link-type="method" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-unobserve">unobserve</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a href="https://api.csswg.org/bikeshed/#dom-resizeobserver-unobserve-target-target">target</a>);
-    void <a class="idl-code" data-link-type="method" href="https://api.csswg.org/bikeshed/#dom-resizeobserver-disconnect">disconnect</a>();
+interface <a href="#resizeobserver">ResizeObserver</a> {
+    void <a class="idl-code" data-link-type="method" href="#dom-resizeobserver-observe">observe</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a href="#dom-resizeobserver-observe-target-target">target</a>);
+    void <a class="idl-code" data-link-type="method" href="#dom-resizeobserver-unobserve">unobserve</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a href="#dom-resizeobserver-unobserve-target-target">target</a>);
+    void <a class="idl-code" data-link-type="method" href="#dom-resizeobserver-disconnect">disconnect</a>();
 };
 
-callback <a href="https://api.csswg.org/bikeshed/#callbackdef-resizeobservercallback">ResizeObserverCallback</a> = void (sequence&lt;<a data-link-type="idl-name" href="https://api.csswg.org/bikeshed/#resizeobserverentry">ResizeObserverEntry</a>&gt; <a href="https://api.csswg.org/bikeshed/#dom-resizeobservercallback-entries">entries</a>, <a data-link-type="idl-name" href="https://api.csswg.org/bikeshed/#resizeobserver">ResizeObserver</a> <a href="https://api.csswg.org/bikeshed/#dom-resizeobservercallback-observer">observer</a>)
+callback <a href="#callbackdef-resizeobservercallback">ResizeObserverCallback</a> = void (sequence&lt;<a data-link-type="idl-name" href="#resizeobserverentry">ResizeObserverEntry</a>&gt; <a href="#dom-resizeobservercallback-entries">entries</a>, <a data-link-type="idl-name" href="#resizeobserver">ResizeObserver</a> <a href="#dom-resizeobservercallback-observer">observer</a>)
 
-[<a class="idl-code" data-link-type="constructor" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-resizeobserverentry">Constructor</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-resizeobserverentry-target-target">target</a>)
+[<a class="idl-code" data-link-type="constructor" href="#dom-resizeobserverentry-resizeobserverentry">Constructor</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a href="#dom-resizeobserverentry-resizeobserverentry-target-target">target</a>)
 ]
-interface <a href="https://api.csswg.org/bikeshed/#resizeobserverentry">ResizeObserverEntry</a> {
-    readonly attribute <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-target">target</a>;
-    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientwidth">clientWidth</a>;
-    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="https://api.csswg.org/bikeshed/#dom-resizeobserverentry-clientheight">clientHeight</a>;
+interface <a href="#resizeobserverentry">ResizeObserverEntry</a> {
+    readonly attribute <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobserverentry-target">target</a>;
+    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="#dom-resizeobserverentry-clientwidth">clientWidth</a>;
+    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="#dom-resizeobserverentry-clientheight">clientHeight</a>;
 };
 
-[<a class="idl-code" data-link-type="constructor" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-resizeobservation">Constructor</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a href="https://api.csswg.org/bikeshed/#dom-resizeobservation-resizeobservation-target-target">target</a>)
+[<a class="idl-code" data-link-type="constructor" href="#dom-resizeobservation-resizeobservation">Constructor</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a href="#dom-resizeobservation-resizeobservation-target-target">target</a>)
 ]
-interface <a href="https://api.csswg.org/bikeshed/#resizeobservation">ResizeObservation</a> {
-    readonly attribute <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-target">target</a>;
-    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientwidth">lastClientWidth</a>;
-    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-lastclientheight">lastClientHeight</a>;
-    boolean <a class="idl-code" data-link-type="method" href="https://api.csswg.org/bikeshed/#dom-resizeobservation-observesize">observeSize</a>();
+interface <a href="#resizeobservation">ResizeObservation</a> {
+    readonly attribute <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobservation-target">target</a>;
+    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="#dom-resizeobservation-lastclientwidth">lastClientWidth</a>;
+    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="#dom-resizeobservation-lastclientheight">lastClientHeight</a>;
+    boolean <a class="idl-code" data-link-type="method" href="#dom-resizeobservation-observesize">observeSize</a>();
 };
 
 </pre>
