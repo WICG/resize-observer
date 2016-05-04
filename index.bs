@@ -9,6 +9,7 @@ Editor: Aleks Totic, Google, atotic@google.com
 Abstract: This specification describes an API for observing changes to element's size.
 </pre>
 <pre class="anchors">
+spec:dom; type:interface; text:Document
 urlPrefix: https://drafts.csswg.org/css-box-3/
     url: #content-box; type: dfn; text: content box
 urlPrefix: https://www.w3.org/TR/css3-positioning/
@@ -16,6 +17,9 @@ urlPrefix: https://www.w3.org/TR/css3-positioning/
 urlPrefix: https://html.spec.whatwg.org/multipage/
     urlPrefix: webappapis.html;
         url: #processing-model-8; type: dfn; text: HTML Processing Model
+urlPrefix: https://github.com/WICG/IntersectionObserver/
+    urlPrefix: index.html;
+        url: #intersection-observer-interface; type: dfn; text: IntersectionObserver
 </pre>
 
 <h2 id="intro">Introduction</h2>
@@ -78,7 +82,7 @@ notification loops.
 The ResizeObserver interface is used to observe changes to {{Element}}'s
 {{clientWidth}} and {{clientHeight}}.
 
-It is modeled after {{MutationObserver}} and {{IntersectionObserver}}.
+It is modeled after {{MutationObserver}} and <a>IntersectionObserver</a>.
 
 <pre class="idl">
 [Constructor(ResizeObserverCallback callback),
@@ -93,9 +97,9 @@ interface ResizeObserver {
 <div dfn-type="method" dfn-for="ResizeObserver">
     : <dfn constructor lt="ResizeObserver(callback)">new ResizeObserver(callback)</dfn>
     ::
-        1. Let |this| be a new {{ResizeObserver}} object
+        1. Let |this| be a new {{ResizeObserver}} object.
 
-        2. Set |this| internal {{ResizeObserver/callback}} slot to |callback|
+        2. Set |this| internal {{ResizeObserver/callback}} slot to callback.
 
         3. Add |this| to document's {{Document/resizeObservers}} slot.
 
@@ -106,7 +110,7 @@ interface ResizeObserver {
 
         1. If |target| is in {{ResizeObserver/observationTargets}} slot, return.
 
-        2. Create new {{ResizeObservation}} with |target|
+        2. Create new {{ResizeObservation}} with |target|.
 
         3. Add the resizeObservation to the {{ResizeObserver/observationTargets}} slot.
 
@@ -133,11 +137,13 @@ callback ResizeObserverCallback = void (sequence&lt;ResizeObserverEntry> entries
 </pre>
 
 This callback is invoked to deliver ResizeObserver's notifications by a
-<a>notify resize observers</a> algorithm.
+<a>broadcast resize notifications</a> algorithm.
 
 <h3 id="resize-observer-entry-interface">ResizeObserverEntry</h3>
 
 <pre class="idl">
+[Constructor(Element target)
+]
 interface ResizeObserverEntry {
     readonly attribute Element target;
     readonly attribute long clientWidth;
@@ -156,7 +162,72 @@ interface ResizeObserverEntry {
     ::
         {{Element}}'s {{clientHeight}} when entry was created.
 </div>
+<div dfn-type="method" dfn-for="ResizeObserverEntry">
+    : <dfn constructor lt="ResizeObserverEntry(target)">new ResizeObserverEntry(target)</dfn>
+    ::
+        1. Let |this| be a new {{ResizeObserverEntry}}.
 
+        2. Set |this| {{ResizeObserverEntry/target}} slot to |target|.
+
+        3. Set |this| {{ResizeObserverEntry/clientWidth}} slot to |target|.clientWidth.
+
+        4. Set |this| {{ResizeObserverEntry/clientHeight}} slot to |target|.clientHeight.
+
+</div>
+
+<h3 id="resize-observation-interface">ResizeObservation</h3>
+ResizeObservation holds observation information for a single {{Element}}.
+
+<pre class="idl">
+[Constructor(Element target)
+]
+interface ResizeObservation {
+    readonly attribute Element target;
+    readonly attribute long lastClientWidth;
+    readonly attribute long lastClientHeight;
+    boolean observeSize();
+};
+</pre>
+<div dfn-type="attribute" dfn-for="ResizeObservation">
+    : <dfn>target</dfn>
+    :: The observed {{Element}}.
+    : <dfn>lastClientWidth</dfn>
+    :: Last observed clientWidth.
+    : <dfn>lastClientHeight</dfn>
+    :: Last observed clientHeight.
+</div>
+<div dfn-type="method" dfn-for="ResizeObservation">
+    : <dfn constructor lt="ResizeObservation(target)">new ResizeObservation(target)</dfn>
+    ::
+        1. Let |this| be a new {{ResizeObservation}} object
+
+        2. Set |this| internal {{ResizeObservation/target}} slot to |target|
+
+        3. Set |this| {{ResizeObservation/lastClientWidth}} slot to |target|.clientWidth.
+
+        4. Set |this| {{ResizeObservation/lastClientHeight}} slot to |target|.clientHeight.
+
+
+    : <dfn method lt="observeSize()">observeSize()</dfn>
+    ::
+        Sets stored size to current target's size. Returns true if stored size has changed.
+
+        1. Set |sizeChanged| to false.
+
+        2. If {{ResizeObservation/target}}.clientWidth == {{ResizeObservation/lastClientWidth}} goto step 5.
+
+        3. Set {{ResizeObservation/lastClientWidth}} slot to {{ResizeObservation/target}}.clientWidth.
+
+        4. Set |sizeChanged| to true.
+
+        5. If {{ResizeObservation/target}}.clientHeight == {{ResizeObservation/lastClientHeight}} goto step 8.
+
+        6. Set {{ResizeObservation/lastClientHeight}} slot to {{ResizeObservation/target}}.clientHeight.
+
+        7. Set |sizeChanged| to true.
+
+        8. return |sizeChanged|.
+</div>
 
 <h2 id="processing-model">Processing Model</h2>
 
@@ -170,44 +241,74 @@ interface ResizeObserverEntry {
 
 {{ResizeObserver}} has a <dfn attribute for="ResizeObserver">callback</dfn> slot, initialized by constructor.
 
-{{ResizeObserver}} has an <dfn attribute for="ResizeObserver">observationTargets</dfn> slot, which is a list of {{ResizeObservations}}
+{{ResizeObserver}} has a <dfn attribute for="ResizeObserver">activeEntries</dfn> slot, which is a list of {{ResizeObserverEntry}}s.
 
-<dfn concept for="ResizeObserver">ResizeObservation</dfn> holds observation information for a single {{Element}}
-  * target, which the element
-  * lastClientWidth, which is last observed clientWidth
-  * lastClientHeight, which is last observed clientHeight
+{{ResizeObserver}} has an <dfn attribute for="ResizeObserver">observationTargets</dfn> slot, which is a list of {{ResizeObservation}}s.
 
-  When ResizeObservation is created:
-
-  * target must be a valid element.
-  * lastClientWidth/height must be initialized to element's clientWidth/height.
 
 <h3 id="algorithms">Algorithms</h3>
 
-<h4 id="notify-resize-observers">Notify Resize Observers</h4>
+<h4 id="gather-notification-entries-h">Gather notifications entries</h4>
 
-To <dfn>notify resize observers</dfn> for a |document|,
+It computes all pending resize notifications for a |document|. To <dfn>gather notification entries</dfn>, run these steps:
+
+1. For each |observer| in {{Document/resizeObservers}} run steps 2 through 5.
+
+2. Clear |observer|'s {{ResizeObserver/activeEntries}}.
+
+3. For each |observation| in {{ResizeObserver/observationTargets}} run these steps:
+
+    1. Let |sizeChanged| be the result of calling |observation|.{{ResizeObservation/observeSize}}.
+
+    2. If |sizeChanged| is true then add new {{ResizeObserverEntry(target)}} to |observer|.{{ResizeObserver/activeEntries}}.
+
+<h4 id="has-notification-entries-h">Has notification entries</h4>
+
+To determine if {{Document}} <dfn>has notification entries</dfn> run these steps:
+
+1. Set |hasEntries| to false.
+
+2. For each |observer| in {Document/resizeObservers}} run these steps:
+
+    1. If |observer|.{{ResizeObserver/activeEntries}} is not empty, set |hasEntries| to true.
+
+3. return |hasEntries|.
+
+<h4 id="broadcast-resize-notifications-h">Broadcast Resize notifications</h4>
+
+To <dfn>broadcast resize notifications</dfn> for a |document|,
 run these steps:
 
-XXXXXXXXXXXXXXXXXXXXXXXX
+1. For each |observer| in {{Document/resizeObservers}} run these steps:
 
-<h4 id="has-pending-resize-notifications">Has Pending Resize Notifications</h4>
+    1. If |observer|{{ResizeObserver/activeEntries}} slot is empty, continue.
 
-To determine if {{Document}} <dfn>has pending resize notifications</dfn> run these steps:
+    2. Invoke |observer|.{{ResizeObserver/callback}} with {{ResizeObserver/activeEntries}}.
 
-XXXXXXXXXXXXXXXXXXXXXXXX
+    3. Clear |observer|.{{ResizeObserver/activeEntries}}.
 
-<h4 id="deliver-resize-error-notification">Deliver Resize Error Notification</h4>
 
-To <dfn>deliver resize error notification</dfn> run these steps:
+<h4 id="deliver-resize-error">Deliver Resize Limit Error</h4>
 
-XXXXXXXXXXXXXXXXXXXXXXXX
+To <dfn>deliver resize limit error notification</dfn> run these steps:
+
+    1. Create a new {{ErrorEvent}}
+
+    2. Initialize event's message slot to "ResizeObserver loop limit exceeded.".
+
+    3. Dispach the event to document's window.
+
+    4. For each |observer| in {{Document/resizeObservers}} do this:
+
+        1. Clear |observer|.{{ResizeObserver}}.activeEntries
+
 
 <h3 id="lifetime">ResizeObserver Lifetime</h3>
 
 A {{ResizeObserver}} will remain alive until both of these conditions are met:
 
 * there are no scripting references to the observer
+
 * the observer is not observing any targets
 
 <h3 id="integrations">External Spec Integrations</h3>
@@ -217,36 +318,52 @@ A {{ResizeObserver}} will remain alive until both of these conditions are met:
 {{ResizeObserver}} processing happens inside the step 7.12 of the <a>HTML Processing Model</a> event loop.
 
 Step 12 is currently underspecified as:
+
 <q>For each fully active Document in docs, update the rendering or user interface of that Document and its browsing context to reflect the current state.</q>.
 
-Existing step 12 should be fully specified as:
+Existing step 12 can be fully specified as:
 
 For each fully active Document in docs, run the following steps for that Document and its browsing contents:
 
-    1. update layout
+    1. recalc styles
 
-    2. paint
+    2. update layout
 
-    3. draw bits on screen
+    3. paint
 
-{{ResizeObserver}} extends step 12 with resize notifications. It tries to deliver all pending notifications
-by looping until no pending notifications are available. Infinite looping is prevented
-by limiting the number of times loop is repeated to RESIZE_OBSERVER_LOOP_LIMIT constant. Looping too
-many times generates an error.
 
-Note: RESIZE_OBSERVER_LOOP_LIMIT is currently arbitrarily set to 16. It might get adjusted
-based on data we obtain from real-world usage.
+{{ResizeObserver}} extends step 12 with resize notifications.
+It tries to deliver all pending notifications by looping
+until no pending notifications are available. Infinite looping is prevented
+by limiting the number of times loop is repeated to RESIZE_OBSERVER_LOOP_LIMIT constant. Looping too many times generates an error.
+
+Note: RESIZE_OBSERVER_LOOP_LIMIT is currently arbitrarily set to 16.
+It might get adjusted based on data we obtain from real-world usage.
 
 Step 12 with {{ResizeObserver}} notifications is:
 
 For each fully active Document in docs, run the following steps for that Document and its browsing contentx:
 
-1. update layout
-2. let |resizeNotificationCount| be 0
-3. repeat while (resizeNotificationCount < RESIZE_OBSERVER_LOOP_LIMIT && document <a>has pending resize notifications</a>)
-   1. <a>Notify Resize Observers</a>
-   2. update layout
-   3. increment resizeNotificationCount by 1
-   4. if (resizeNotificationCount is RESIZE_OBSERVER_LOOP_LIMIT && document <a>has pending resize notifications</a>) then <a>deliver resize error notification</a>
+1. recalc styles
+
+2. update layout
+
+3. let |resizeNotificationCount| be 0
+
+4. <a>gather notification entries</a> for {{Document}}
+
+5. repeat while (document <a>has notification entries</a> && |resizeNotificationCount| < RESIZE_OBSERVER_LOOP_LIMIT)
+
+    1. increment |resizeNotificationCount| by 1
+
+    2. <a>broadcast resize notifications</a>
+
+    3. recalc styles
+
+    4. update layout
+
+    5. <a>gather notification entries</a> for {{Document}}
+
+    6. if (document <a>has notification entries</a> && |resizeNotificationCount| is RESIZE_OBSERVER_LOOP_LIMIT) then <a>deliver resize limit error notification</a>
 
 
