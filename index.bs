@@ -47,17 +47,25 @@ they are the best match for size of the {{Element}}'s <a>content box</a>.
 
 Desirable side effects of watching {{clientWidth}} are:
 
-* observation will fire when watched element is inserted/removed from DOM.
+* observation will fire when watched Element is inserted/removed from DOM.
 
-* observation will fire when watched element display is hidden.
+* observation will fire when watched Element display gets set to hidden.
 
-* observations do not fire for inline elements.
+* observations do not fire for inline Elements.
 
 * observations will not be triggered by CSS transforms.
 
+Undesirable side effect is that clientWidth can change even when {{Element}}'s size
+is constant. It can happen when its location changes because Element.{{clientWidth}}
+gets rounded from "true" clientWidth, and the rounding depends on location.
+
+Note: Undesirable "width depends on location" can be avoided if we observed
+float version of {{clientWidth}}. clientWidth is currently specified as long
+for historical reasons, and modern DOM APIs use floats. Using floats would avoid the gotcha where
+{{Element}} gets resized multiple times while its position is being animated.
+
 {{offsetWidth}} was also considered. It was rejected because
-it contained width of the scroller. Scroller width is dependent
-upon Element's children, and this can cause notification loops.
+it contained width of the scroller.
 
 <div class="example">
   <pre highlight="js">
@@ -293,7 +301,7 @@ run these steps:
 
 1. For each |observer| in |document|.{{Document/resizeObservers}} run these steps:
 
-    1. If |observer|{{ResizeObserver/activeEntries}} slot is empty, continue.
+    1. If |observer|.{{ResizeObserver/activeEntries}} slot is empty, continue.
 
     2. For each |entry| in {{ResizeObserver/activeEntries}}
 

@@ -1385,7 +1385,7 @@ Possible extra rowspan handling
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Resize Observer</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-05-04">4 May 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-05-10">10 May 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1397,7 +1397,7 @@ Possible extra rowspan handling
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="./index_files/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 4 May 2016,
+In addition, as of 10 May 2016,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1478,17 +1478,21 @@ they are the best match for size of the <code class="idl"><a data-link-type="idl
    <p>Desirable side effects of watching <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-3">clientWidth</a></code> are:</p>
    <ul>
     <li data-md="">
-     <p>observation will fire when watched element is inserted/removed from DOM.</p>
+     <p>observation will fire when watched Element is inserted/removed from DOM.</p>
     </li><li data-md="">
-     <p>observation will fire when watched element display is hidden.</p>
+     <p>observation will fire when watched Element display gets set to hidden.</p>
     </li><li data-md="">
-     <p>observations do not fire for inline elements.</p>
+     <p>observations do not fire for inline Elements.</p>
     </li><li data-md="">
      <p>observations will not be triggered by CSS transforms.</p>
    </li></ul>
+   <p>Undesirable side effect is that clientWidth can change even when <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s size
+is constant. It can happen when its location changes because Element.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-4">clientWidth</a></code> gets rounded from "true" clientWidth, and the rounding depends on location.</p>
+   <p class="note" role="note">Note: Undesirable "width depends on location" can be avoided if we observed
+float version of <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-5">clientWidth</a></code>. clientWidth is currently specified as long
+for historical reasons, and modern DOM APIs use floats. Using floats would avoid the gotcha where <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code> gets resized multiple times while its position is being animated.</p>
    <p><code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-view-1/#dom-htmlelement-offsetwidth">offsetWidth</a></code> was also considered. It was rejected because
-it contained width of the scroller. Scroller width is dependent
-upon Element’s children, and this can cause notification loops.</p>
+it contained width of the scroller.</p>
    <div class="example" id="example-e305b6a4">
     <a class="self-link" href="#example-e305b6a4"></a>
 <pre class="highlight"><span></span><span class="kd">var</span> <span class="nx">ro</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ResizeObserver</span><span class="p">(</span> <span class="nx">entries</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -1518,7 +1522,7 @@ upon Element’s children, and this can cause notification loops.</p>
    </div>
    <h2 class="heading settled" data-level="2" id="api"><span class="secno">2. </span><span class="content">Resize Observer API</span><a class="self-link" href="#api"></a></h2>
    <h3 class="heading settled" data-level="2.1" id="resize-observer-interface"><span class="secno">2.1. </span><span class="content">ResizeObserver interface</span><a class="self-link" href="#resize-observer-interface"></a></h3>
-   <p>The ResizeObserver interface is used to observe changes to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-4">clientWidth</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientheight" id="ref-for-dom-resizeobserverentry-clientheight-3">clientHeight</a></code>.</p>
+   <p>The ResizeObserver interface is used to observe changes to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-6">clientWidth</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientheight" id="ref-for-dom-resizeobserverentry-clientheight-3">clientHeight</a></code>.</p>
    <p>It is modeled after <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#mutationobserver">MutationObserver</a></code> and <a data-link-type="dfn" href="https://github.com/WICG/IntersectionObserver/index.html#intersection-observer-interface">IntersectionObserver</a>.</p>
 <pre class="idl def">[<a class="idl-code" data-link-type="constructor" href="#dom-resizeobserver-resizeobserver" id="ref-for-dom-resizeobserver-resizeobserver-1">Constructor</a>(<a data-link-type="idl-name" href="#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-1">ResizeObserverCallback</a> <dfn class="idl-code" data-dfn-for="ResizeObserver/ResizeObserver(callback)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-resizeobserver-callback-callback">callback<a class="self-link" href="#dom-resizeobserver-resizeobserver-callback-callback"></a></dfn>),
     Exposed=Window]
@@ -1581,7 +1585,7 @@ interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-expor
 ]
 interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export="" data-lt="ResizeObserverEntry" id="resizeobserverentry">ResizeObserverEntry<span class="dfn-panel" data-deco=""><b><a href="#resizeobserverentry">#resizeobserverentry</a></b><b>Referenced in:</b><span><a href="#ref-for-resizeobserverentry-1">2.2. ResizeObserverCallback</a></span><span><a href="#ref-for-resizeobserverentry-2">2.3. ResizeObserverEntry</a></span><span><a href="#ref-for-resizeobserverentry-3">3.1.2. ResizeObserver</a></span></span></dfn> {
     readonly attribute <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobserverentry-target" id="ref-for-dom-resizeobserverentry-target-1">target</a>;
-    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-5">clientWidth</a>;
+    readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-7">clientWidth</a>;
     readonly attribute long <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="long" href="#dom-resizeobserverentry-clientheight" id="ref-for-dom-resizeobserverentry-clientheight-4">clientHeight</a>;
 };
 </pre>
@@ -1592,9 +1596,9 @@ interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-expor
      </dt><dd data-md="">
       <p>The <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code> whose size has changed.</p>
      </dd><dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="attribute" data-export="" data-lt="clientWidth" id="dom-resizeobserverentry-clientwidth">clientWidth<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserverentry-clientwidth">#dom-resizeobserverentry-clientwidth</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserverentry-clientwidth-1">1. Introduction</a> <a href="#ref-for-dom-resizeobserverentry-clientwidth-2">(2)</a> <a href="#ref-for-dom-resizeobserverentry-clientwidth-3">(3)</a></span><span><a href="#ref-for-dom-resizeobserverentry-clientwidth-4">2.1. ResizeObserver interface</a></span><span><a href="#ref-for-dom-resizeobserverentry-clientwidth-5">2.3. ResizeObserverEntry</a> <a href="#ref-for-dom-resizeobserverentry-clientwidth-6">(2)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-long">long</a>, readonly</span></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="attribute" data-export="" data-lt="clientWidth" id="dom-resizeobserverentry-clientwidth">clientWidth<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserverentry-clientwidth">#dom-resizeobserverentry-clientwidth</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserverentry-clientwidth-1">1. Introduction</a> <a href="#ref-for-dom-resizeobserverentry-clientwidth-2">(2)</a> <a href="#ref-for-dom-resizeobserverentry-clientwidth-3">(3)</a> <a href="#ref-for-dom-resizeobserverentry-clientwidth-4">(4)</a> <a href="#ref-for-dom-resizeobserverentry-clientwidth-5">(5)</a></span><span><a href="#ref-for-dom-resizeobserverentry-clientwidth-6">2.1. ResizeObserver interface</a></span><span><a href="#ref-for-dom-resizeobserverentry-clientwidth-7">2.3. ResizeObserverEntry</a> <a href="#ref-for-dom-resizeobserverentry-clientwidth-8">(2)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-long">long</a>, readonly</span></p>
      </dt><dd data-md="">
-      <p><code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-6">clientWidth</a></code> when <code class="idl"><a data-link-type="idl" href="#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-2">ResizeObserverCallback</a></code> is invoked.</p>
+      <p><code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-clientwidth" id="ref-for-dom-resizeobserverentry-clientwidth-8">clientWidth</a></code> when <code class="idl"><a data-link-type="idl" href="#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-2">ResizeObserverCallback</a></code> is invoked.</p>
      </dd><dt data-md="">
       <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="attribute" data-export="" data-lt="clientHeight" id="dom-resizeobserverentry-clientheight">clientHeight<span class="dfn-panel" data-deco=""><b><a href="#dom-resizeobserverentry-clientheight">#dom-resizeobserverentry-clientheight</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-resizeobserverentry-clientheight-1">1. Introduction</a> <a href="#ref-for-dom-resizeobserverentry-clientheight-2">(2)</a></span><span><a href="#ref-for-dom-resizeobserverentry-clientheight-3">2.1. ResizeObserver interface</a></span><span><a href="#ref-for-dom-resizeobserverentry-clientheight-4">2.3. ResizeObserverEntry</a> <a href="#ref-for-dom-resizeobserverentry-clientheight-5">(2)</a></span></span></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-long">long</a>, readonly</span></p>
      </dt><dd data-md="">
@@ -1734,7 +1738,7 @@ run these steps:</p>
      <p>For each <var>observer</var> in <var>document</var>.<code class="idl"><a data-link-type="idl" href="#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-3">resizeObservers</a></code> run these steps:</p>
      <ol>
       <li data-md="">
-       <p>If <var>observer</var><code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-5">activeEntries</a></code> slot is empty, continue.</p>
+       <p>If <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-5">activeEntries</a></code> slot is empty, continue.</p>
       </li><li data-md="">
        <p>For each <var>entry</var> in <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activeentries" id="ref-for-dom-resizeobserver-activeentries-6">activeEntries</a></code></p>
        <ol>
