@@ -55,14 +55,11 @@ Desirable side effects of watching {{clientWidth}} are:
 
 * observations will not be triggered by CSS transforms.
 
-Undesirable side effect is that clientWidth can change even when {{Element}}'s size
-is constant. It can happen when its location changes because Element.{{clientWidth}}
-gets rounded from "true" clientWidth, and the rounding depends on location.
-
-Note: Undesirable "width depends on location" can be avoided if we observed
-float version of {{clientWidth}}. clientWidth is currently specified as long
-for historical reasons, and modern DOM APIs use floats. Using floats would avoid the gotcha where
-{{Element}} gets resized multiple times while its position is being animated.
+{{clientWidth}} DOM API rounds its value to |long|. We will observe
+<a>computed clientWidth</a>, and not the DOM API rounded value.
+This prevents an undesirable side effect of rounded clientWidth
+changing even when <a>computed clientWidth</a> is constant.
+This happens because rounding can also depend on location.
 
 {{offsetWidth}} was also considered. It was rejected because
 it contained width of the scroller.
@@ -131,7 +128,7 @@ interface ResizeObserver {
 
         1. If |target| is in {{ResizeObserver/observationTargets}} slot, return.
 
-        2. Let |resizeObservation| be new {{ResizeObservation}} with |target|.
+        2. Let |resizeObservation| be new {{ResizeObservation}}(|target|).
 
         3. Add the |resizeObservation| to the {{ResizeObserver/observationTargets}} slot.
 
@@ -149,7 +146,7 @@ interface ResizeObserver {
     ::
         1) Clear the {{ResizeObserver/observationTargets}} list.
 
-        2) Clear the {{ResizeObserver/activeEntries}} list.
+        2) Clear the {{ResizeObserver/activeTargets}} list.
 
 </div>
 
@@ -160,7 +157,7 @@ callback ResizeObserverCallback = void (sequence&lt;ResizeObserverEntry> entries
 </pre>
 
 This callback delivers {{ResizeObserver}}'s notifications. It is invoked by a
-<a>broadcast resize notifications</a> algorithm.
+<a>broadcast active observations</a> algorithm.
 
 <h3 id="resize-observer-entry-interface">ResizeObserverEntry</h3>
 
@@ -169,8 +166,8 @@ This callback delivers {{ResizeObserver}}'s notifications. It is invoked by a
 ]
 interface ResizeObserverEntry {
     readonly attribute Element target;
-    readonly attribute long clientWidth;
-    readonly attribute long clientHeight;
+    readonly attribute float clientWidth;
+    readonly attribute float clientHeight;
 };
 </pre>
 
@@ -180,11 +177,12 @@ interface ResizeObserverEntry {
         The {{Element}} whose size has changed.
     : <dfn>clientWidth</dfn>
     ::
-        {{Element}}'s {{clientWidth}} when {{ResizeObserverCallback}} is invoked.
+        {{Element}}'s <a>computed clientWidth</a> when {{ResizeObserverCallback}} is invoked.
     : <dfn>clientHeight</dfn>
     ::
-        {{Element}}'s {{clientHeight}} when {{ResizeObserverCallback}} is invoked.
+        {{Element}}'s <a>computed clientHeight</a> when {{ResizeObserverCallback}} is invoked.
 </div>
+
 <div dfn-type="method" dfn-for="ResizeObserverEntry">
     : <dfn constructor lt="ResizeObserverEntry(target)">new ResizeObserverEntry(target)</dfn>
     ::
@@ -192,6 +190,9 @@ interface ResizeObserverEntry {
 
         2. Set |this| {{ResizeObserverEntry/target}} slot to |target|.
 
+        3. Set |this|.clientWidth to |target|.<a>computed clientWidth</a>.
+
+        4. Set |this|.clientHeight to |target|.<a>computed clientHeight</a>
 </div>
 
 <h3 id="resize-observation-interface">ResizeObservation</h3>
@@ -203,18 +204,18 @@ interface is not visible to Javascript.
 ]
 interface ResizeObservation {
     readonly attribute Element target;
-    readonly attribute long lastClientWidth;
-    readonly attribute long lastClientHeight;
-    boolean observeSize();
+    readonly attribute float lastBroadcastWidth;
+    readonly attribute float lastBroadcastHeight;
+    boolean isActive();
 };
 </pre>
 <div dfn-type="attribute" dfn-for="ResizeObservation">
     : <dfn>target</dfn>
     :: The observed {{Element}}.
-    : <dfn>lastClientWidth</dfn>
-    :: Last observed clientWidth.
-    : <dfn>lastClientHeight</dfn>
-    :: Last observed clientHeight.
+    : <dfn>lastBroadcastWidth</dfn>
+    :: Last broadcast <a>computed clientWidth</a>.
+    : <dfn>lastBroadcastHeight</dfn>
+    :: Last broadcast <a>computed clientHeight</a>.
 </div>
 <div dfn-type="method" dfn-for="ResizeObservation">
     : <dfn constructor lt="ResizeObservation(target)">new ResizeObservation(target)</dfn>
@@ -223,30 +224,20 @@ interface ResizeObservation {
 
         2. Set |this| internal {{ResizeObservation/target}} slot to |target|
 
-        3. Set |this| {{ResizeObservation/lastClientWidth}} slot to |target|.clientWidth.
+        3. Set |this| {{ResizeObservation/lastBroadcastWidth}} slot to |target|.<a>computed clientWidth</a>.
 
-        4. Set |this| {{ResizeObservation/lastClientHeight}} slot to |target|.clientHeight.
+        4. Set |this| {{ResizeObservation/lastBroadcastHeight}} slot to |target|.<a>computed clientHeight</a>.
 
 
-    : <dfn method lt="observeSize()">observeSize()</dfn>
+    : <dfn method lt="isActive()">isActive()</dfn>
     ::
-        Sets lastClientWidth and lastClientHeight to target's clientWidth and clientHeight. Returns true if width/height have changed.
 
-        1. Set |sizeChanged| to false.
+        1. If {{ResizeObservation/target}}.<a>computed clientWidth</a> != {{ResizeObservation/lastBroadcastWidth}} return true.
 
-        2. If {{ResizeObservation/target}}.clientWidth == {{ResizeObservation/lastClientWidth}} perform these steps:
+        2. If {{ResizeObservation/target}}.<a>computed clientHeight</a> != {{ResizeObservation/lastBroadcastHeight}} return true.
 
-            1. Set {{ResizeObservation/lastClientWidth}} slot to {{ResizeObservation/target}}.clientWidth.
+        3. return false.
 
-            2. Set |sizeChanged| to true.
-
-        3. If {{ResizeObservation/target}}.clientHeight == {{ResizeObservation/lastClientHeight}} perform these steps:
-
-            1. Set {{ResizeObservation/lastClientHeight}} slot to {{ResizeObservation/target}}.clientHeight.
-
-            2. Set |sizeChanged| to true.
-
-        8. return |sizeChanged|.
 </div>
 
 <h2 id="processing-model">Processing Model</h2>
@@ -261,72 +252,86 @@ interface ResizeObservation {
 
 {{ResizeObserver}} has a <dfn attribute for="ResizeObserver">callback</dfn> slot, initialized by constructor.
 
-{{ResizeObserver}} has a <dfn attribute for="ResizeObserver">activeEntries</dfn> slot, which is a list of {{ResizeObserverEntry}}s.
-
 {{ResizeObserver}} has an <dfn attribute for="ResizeObserver">observationTargets</dfn> slot, which is a list of {{ResizeObservation}}s.
+It represents all Elements being observed.
 
+{{ResizeObserver}} has a <dfn attribute for="ResizeObserver">activeTargets</dfn> slot, which is a list of {{ResizeObservation}}s. It represents all Elements whose size has changed since last observation broadcast.
+
+
+<h3 id="css-modifications">CSS Modifications</h3>
+CSS defines how {{clientWidth}} is computed, and a DOM API to access it.
+The compute algorithm generates a float.
+DOM API rounds the computed value, and returns a |long|. Rounding algorithm can also depend on Element's location.
+
+This dependence on location is undesirable: rounded clientWidth can change when computed clientWidth stays constant. This happens if Element moves.
+
+To avoid spurious notifications, ResizeObserver will watch the <a>computed clientWidth</a>, and <a>computed clientHeight</a>, and not the rounded ones.
+
+<h4 id="client-width-computed">computed clientWidth</h4>
+<dfn>computed clientWidth</dfn> is value generated by CSS {{clientWidth}} algorithm. The value is not rounded.
+<h4 id="client-height-computed">computed clientHeight</h4>
+<dfn>computed clientHeight</dfn> is value generated by CSS {{clientHeight}} algorithm. The value is not rounded.
 
 <h3 id="algorithms">Algorithms</h3>
 
-<h4 id="gather-notification-entries-h">Gather notifications entries</h4>
+<h4 id="gather-active-observations-h">Gather active observations</h4>
 
-It computes all pending resize notifications for a |document|. To <dfn>gather notification entries</dfn>, run these steps:
+It computes all active observations for a |document|. To <dfn>gather active observations</dfn>, run these steps:
 
 1. For each |observer| in {{Document/resizeObservers}} run these steps:
 
-    1. Clear |observer|'s {{ResizeObserver/activeEntries}}.
+    1. Clear |observer|'s {{ResizeObserver/activeTargets}}.
 
-    2. For each |observation| in |observer|.{{ResizeObserver/observationTargets}} run these steps:
+    2. For each |observation| in |observer|.{{ResizeObserver/observationTargets}} run this step:
 
-        1. Let |sizeChanged| be the result of calling |observation|.{{ResizeObservation/observeSize}}.
+        1. If |observation|.{{ResizeObservation/isActive()}} is true, add |observation| to {{ResizeObserver/activeTargets}}
 
-        2. If |sizeChanged| is true then add new {{ResizeObserverEntry(target)}} to |observer|.{{ResizeObserver/activeEntries}}.
 
-<h4 id="has-notification-entries-h">Has notification entries</h4>
+<h4 id="has-active-observations-h">Has active observations</h4>
 
-To determine if {{Document}} <dfn>has notification entries</dfn> run these steps:
+To determine if {{Document}} <dfn>has active observations</dfn> run these steps:
 
-1. Set |hasEntries| to false.
+1. For each |observer| in {Document/resizeObservers}} run this step:
 
-2. For each |observer| in {Document/resizeObservers}} run these steps:
+    1. If |observer|.{{ResizeObserver/activeTargets}} is not empty, return true.
 
-    1. If |observer|.{{ResizeObserver/activeEntries}} is not empty, set |hasEntries| to true.
+2. return false.
 
-3. return |hasEntries|.
+<h4 id="broadcast-resize-notifications-h">Broadcast active observations</h4>
 
-<h4 id="broadcast-resize-notifications-h">Broadcast Resize notifications</h4>
-
-To <dfn>broadcast resize notifications</dfn> for a |document|,
+To <dfn>broadcast active observations</dfn> for a |document|,
 run these steps:
 
 1. For each |observer| in |document|.{{Document/resizeObservers}} run these steps:
 
-    1. If |observer|.{{ResizeObserver/activeEntries}} slot is empty, continue.
+    1. If |observer|.{{ResizeObserver/activeTargets}} slot is empty, continue.
 
-    2. For each |entry| in {{ResizeObserver/activeEntries}}
+    2. Let |entries| be an empty list of {{ResizeObserverEntry}}ies.
 
-        1. Set |entry|.clientWidth slot to |entry|.target.clientWidth.
+    3. For each |observation| in {{ResizeObserver/activeTargets}} perform these steps:
 
-        2. Set |entry|.clientHeight slot to |entry|.target.clientHeight.
+        1. Let |entry| be new {{ResizeObserverEntry}}(|observation|.target
 
-    3. Invoke |observer|.{{ResizeObserver/callback}} with {{ResizeObserver/activeEntries}}.
+        2. Add |entry| to |entries|
 
-    4. Clear |observer|.{{ResizeObserver/activeEntries}}.
+        3. Set |observation|.{{ResizeObservation/lastBroadcastWidth}} to |entry|.clientWidth.
+
+        4. Set |observation|.{{ResizeObservation/lastBroadcastHeight}} to |entry|.clientHeight.
+
+    4. Invoke |observer|.{{ResizeObserver/callback}} with |entries|.
+
+    5. Clear |observer|.{{ResizeObserver/activeTargets}}.
 
 
 <h4 id="deliver-resize-error">Deliver Resize Limit Error</h4>
 
 To <dfn>deliver resize limit error notification</dfn> run these steps:
 
-    1. For each |observer| in {{Document/resizeObservers}} do this:
+    1. Create a new {{ErrorEvent}}.
 
-        1. Clear |observer|.{{ResizeObserver}}.activeEntries
+    2. Initialize event's message slot to "ResizeObserver loop limit exceeded.".
 
-    2. Create a new {{ErrorEvent}}
-
-    3. Initialize event's message slot to "ResizeObserver loop limit exceeded.".
-
-    4. Dispach the event to document's window.
+    3. Dispach the event to document's window.
 
 <h3 id="lifetime">ResizeObserver Lifetime</h3>
 
@@ -375,20 +380,20 @@ For each fully active Document in docs, run the following steps for that Documen
 
 3. let |resizeNotificationCount| be 0
 
-4. <a>gather notification entries</a> for {{Document}}
+4. <a>gather active observations</a> for {{Document}}
 
-5. repeat while (document <a>has notification entries</a> && |resizeNotificationCount| < RESIZE_OBSERVER_LOOP_LIMIT)
+5. repeat while (document <a>has active observations</a> && |resizeNotificationCount| < RESIZE_OBSERVER_LOOP_LIMIT)
 
     1. increment |resizeNotificationCount| by 1
 
-    2. <a>broadcast resize notifications</a>
+    2. <a>broadcast active observations</a>
 
     3. recalc styles
 
     4. update layout
 
-    5. <a>gather notification entries</a> for {{Document}}
+    5. <a>gather active observations</a> for {{Document}}
 
-    6. if (document <a>has notification entries</a> && |resizeNotificationCount| is RESIZE_OBSERVER_LOOP_LIMIT) then <a>deliver resize limit error notification</a>
+    6. if (document <a>has active observations</a> && |resizeNotificationCount| is RESIZE_OBSERVER_LOOP_LIMIT) then <a>deliver resize limit error notification</a>
 
 
