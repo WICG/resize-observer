@@ -54,9 +54,11 @@
   background-color: rgba(0,0,255, 0.5);
 }
 </pre>
-<li>offsetWidth: css width + border + padding + scrollbar
-<li>clientWidth: css width + border + padding
+<li>offsetWidth: border edge:
+<li>clientWidth: padding edge - scrollbar
 <li>scrollWidth: max(offsetWidth, content area width)
+<li>box-sizing: content-box, css width is content edge
+<li>box-sizing: border-box, css width is border edge
 
 </pre>
 <div id="measurements" style="margin-top: 16px">

@@ -10,7 +10,13 @@ Abstract: This specification describes an API for observing changes to Element's
 </pre>
 <pre class="anchors">
 urlPrefix: https://drafts.csswg.org/css-box-3/
-    url: #content-box; type: dfn; text: content box
+    url: #width; type: dfn; text: content width
+urlPrefix: https://drafts.csswg.org/css-box-3/
+    url: #height; type: dfn; text: content height
+urlPrefix: https://drafts.csswg.org/css-box-3/
+    url: #padding-top; type: dfn; text: padding top
+urlPrefix: https://drafts.csswg.org/css-box-3/
+    url: #padding-left; type: dfn; text: padding left
 urlPrefix: https://www.w3.org/TR/css3-positioning/
     url: #viewport; type: dfn; text: viewport
 urlPrefix: https://html.spec.whatwg.org/multipage/
@@ -28,7 +34,7 @@ spec:dom; type:interface; text:Document
 
 <em>This section is non-normative.</em>
 
-Responsive Web Components need to respond to <a>content box</a>
+Responsive Web Components need to respond to <a>content rect</a>
 size changes. An example is an {{Element}} that displays a map:
 
 * it displays a map by tiling its content box with {{Element}} tiles.
@@ -39,57 +45,62 @@ Responsive Web Applications can already respond to <a>viewport</a> size changes.
 This is done with CSS media queries, or window.{{resize}} event.
 
 The ResizeObserver API is an interface for observing changes
-to {{Element}}'s {{clientWidth}} and {{clientHeight}}. It is an {{Element}}'s
+to {{Element}}'s <a>content rect</a>'s width and height. It is an {{Element}}'s
 counterpart to window.{{resize}} event.
 
-{{clientWidth}} and {{clientHeight}} are observed because
-they are the best match for size of the {{Element}}'s <a>content box</a>.
-
-Desirable side effects of watching {{clientWidth}} are:
+ResizeObserver's notifications can be used to respond to changes in {{Element}}'s size. Some interesting facts about these observations:
 
 * observation will fire when watched Element is inserted/removed from DOM.
 
 * observation will fire when watched Element display gets set to hidden.
 
-* observations do not fire for inline Elements.
+* observations do not fire for non-replaced inline Elements.
 
 * observations will not be triggered by CSS transforms.
 
-{{clientWidth}} DOM API rounds its value to |long|. We will observe
-<a>computed clientWidth</a>, and not the DOM API rounded value.
-This prevents an undesirable side effect of rounded clientWidth
-changing even when <a>computed clientWidth</a> is constant.
-This happens because rounding can also depend on location.
-
-{{offsetWidth}} was also considered. It was rejected because
-it contained width of the scroller.
+* observation will fire when observation starts if Element has display, and Element's size is not 0,0.
 
 <div class="example">
+  <pre highlight="html">
+    &lt;canvas id="elipse" style="display:block">&lt;/canvas>
+    &lt;div id="menu" style="display:block;width:100px">
+        &lt;img src="hamburger.jpg" style="width:24px;height:24px">
+        &lt;p class="title">menu title&lt;/p>
+    &lt;/div>
+  </pre>
   <pre highlight="js">
+    // In response to resize, elipse paints an elipse inside a canvas
+    document.querySelector('#elipse').handleResize = entry => {
+        let rx = Math.floor(entry.contentRect.width / 2);
+        let ry = Math.floor(entry.contentRect.height / 2);
+        let ctx = entry.target.getContext('2d');
+        ctx.beginPath();
+        ctx.ellipse(rx, ry, rx, ry, 0, 0, 2 * Math.PI);
+        ctx.stroke();
+    }
+    // In response to resize, change title visibility depending on width
+    document.querySelector('#menu').handleResize = entry => {
+        let title = entry.target.querySelector(".title")
+        if (entry.contentRect.width < 40)
+            title.style.display = "none";
+        else
+            title.style.display = "inline-block";
+    }
+
     var ro = new ResizeObserver( entries => {
       for (entry of entries) {
-        console.log(
-            'element:', entry.target,
-            'width: ', entry.clientWidth,
-            ' height: ', entry.clientHeight);
+        let cs = window.getComputedStyle(entry.target);
+        console.log('watching element:', entry.target);
+        console.log(entry.contentRect.width,' is ', cs.width);
+        console.log(entry.contentRect.height,' is ', cs.height);
+        console.log(entry.contentRect.top,' is ', cs.paddingTop);
+        console.log(entry.contentRect.left,' is ', cs.paddignLeft);
+        if (entry.handleResize)
+            entry.handleResize(entry);
       }
     });
-
-    let el = document.createElement('div');
-    document.body.appendChild(el);
-    ro.observe(el);
-    el.appendChild(document.createElement('input'));
-    // el.clientWidth changes after el.appendChild
-
-    el = document.createElement('div');
-    ro.observe(el);
-    document.body.appendChild(el);
-    // el.clientWidht changes after el is inserted into body.
-
-    el.style.display = 'none';
-    // el.clientWidth changes after el was hidden.
-
-    // All these size changes would trigger ResizeObserver
+    ro.observe(document.querySelector('#elipse');
+    ro.observe(document.querySelector('#menu');
   </pre>
 </div>
 
@@ -98,7 +109,7 @@ it contained width of the scroller.
 <h3 id="resize-observer-interface">ResizeObserver interface</h3>
 
 The ResizeObserver interface is used to observe changes to {{Element}}'s
-{{clientWidth}} and {{clientHeight}}.
+<a>content rect</a>.
 
 It is modeled after {{MutationObserver}} and <a>IntersectionObserver</a>.
 
@@ -120,7 +131,6 @@ interface ResizeObserver {
         2. Set |this| internal {{ResizeObserver/callback}} slot to callback.
 
         3. Add |this| to {{Document}}'s {{Document/resizeObservers}} slot.
-
 
     : <dfn method>observe(target)</dfn>
     ::
@@ -166,8 +176,7 @@ This callback delivers {{ResizeObserver}}'s notifications. It is invoked by a
 ]
 interface ResizeObserverEntry {
     readonly attribute Element target;
-    readonly attribute float clientWidth;
-    readonly attribute float clientHeight;
+    readonly attribute DOMReadOnlyRect contentRect;
 };
 </pre>
 
@@ -175,12 +184,9 @@ interface ResizeObserverEntry {
     : <dfn>target</dfn>
     ::
         The {{Element}} whose size has changed.
-    : <dfn>clientWidth</dfn>
+    : <dfn>contentRect</dfn>
     ::
-        {{Element}}'s <a>computed clientWidth</a> when {{ResizeObserverCallback}} is invoked.
-    : <dfn>clientHeight</dfn>
-    ::
-        {{Element}}'s <a>computed clientHeight</a> when {{ResizeObserverCallback}} is invoked.
+        {{Element}}'s <a>content rect</a> when {{ResizeObserverCallback}} is invoked.
 </div>
 
 <div dfn-type="method" dfn-for="ResizeObserverEntry">
@@ -190,9 +196,13 @@ interface ResizeObserverEntry {
 
         2. Set |this| {{ResizeObserverEntry/target}} slot to |target|.
 
-        3. Set |this|.clientWidth to |target|.<a>computed clientWidth</a>.
+        3. Set |this|.contentRect.width to |target|.<a>content width</a>.
 
-        4. Set |this|.clientHeight to |target|.<a>computed clientHeight</a>
+        4. Set |this|.contentRect.height to |target|.<a>content height</a>.
+
+        5. Set |this|.contentRect.top to |target|.<a>padding top</a>.
+
+        6. Set |this|.contentRect.left to |target|.<a>padding left</a>.
 </div>
 
 <h3 id="resize-observation-interface">ResizeObservation</h3>
@@ -204,18 +214,18 @@ interface is not visible to Javascript.
 ]
 interface ResizeObservation {
     readonly attribute Element target;
-    readonly attribute float lastBroadcastWidth;
-    readonly attribute float lastBroadcastHeight;
+    readonly attribute float broadcastWidth;
+    readonly attribute float broadcastHeight;
     boolean isActive();
 };
 </pre>
 <div dfn-type="attribute" dfn-for="ResizeObservation">
     : <dfn>target</dfn>
     :: The observed {{Element}}.
-    : <dfn>lastBroadcastWidth</dfn>
-    :: Last broadcast <a>computed clientWidth</a>.
-    : <dfn>lastBroadcastHeight</dfn>
-    :: Last broadcast <a>computed clientHeight</a>.
+    : <dfn>broadcastWidth</dfn>
+    :: Width of last broadcast <a>content width</a>.
+    : <dfn>broadcastHeight</dfn>
+    :: Width of last broadcast <a>content height</a>.
 </div>
 <div dfn-type="method" dfn-for="ResizeObservation">
     : <dfn constructor lt="ResizeObservation(target)">new ResizeObservation(target)</dfn>
@@ -224,17 +234,17 @@ interface ResizeObservation {
 
         2. Set |this| internal {{ResizeObservation/target}} slot to |target|
 
-        3. Set |this| {{ResizeObservation/lastBroadcastWidth}} slot to |target|.<a>computed clientWidth</a>.
+        3. Set |this| {{ResizeObservation/broadcastWidth}} slot to 0.
 
-        4. Set |this| {{ResizeObservation/lastBroadcastHeight}} slot to |target|.<a>computed clientHeight</a>.
+        4. Set |this| {{ResizeObservation/broadcastHeight}} slot to 0.
 
 
     : <dfn method lt="isActive()">isActive()</dfn>
     ::
 
-        1. If {{ResizeObservation/target}}.<a>computed clientWidth</a> != {{ResizeObservation/lastBroadcastWidth}} return true.
+        1. If {{ResizeObservation/target}}.<a>content width</a> != {{ResizeObservation/broadcastWidth}} return true.
 
-        2. If {{ResizeObservation/target}}.<a>computed clientHeight</a> != {{ResizeObservation/lastBroadcastHeight}} return true.
+        2. If {{ResizeObservation/target}}.<a>content height</a> != {{ResizeObservation/broadcastHeight}} return true.
 
         3. return false.
 
@@ -257,20 +267,26 @@ It represents all Elements being observed.
 
 {{ResizeObserver}} has a <dfn attribute for="ResizeObserver">activeTargets</dfn> slot, which is a list of {{ResizeObservation}}s. It represents all Elements whose size has changed since last observation broadcast.
 
+<h3 id="css-definitions">CSS Definitions</h3>
+<h4 id="content-rect">content rect</h4>
+<dfn>content rect</dfn> is a rect whose:
 
-<h3 id="css-modifications">CSS Modifications</h3>
-CSS defines how {{clientWidth}} is computed, and a DOM API to access it.
-The compute algorithm generates a float.
-DOM API rounds the computed value, and returns a |long|. Rounding algorithm can also depend on Element's location.
+* |width| is <a>content width</a>
+* |height| is <a>content height</a>
+* |top| is <a>padding top</a>
+* |left| is <a>padding left</a>
 
-This dependence on location is undesirable: rounded clientWidth can change when computed clientWidth stays constant. This happens if Element moves.
+Having content rect position be padding-top/left is useful for absolute positioning of target's children. Absolute position coordinate space origin is topLeft of the padding rect.
 
-To avoid spurious notifications, ResizeObserver will watch the <a>computed clientWidth</a>, and <a>computed clientHeight</a>, and not the rounded ones.
+Watching content rect means that:
 
-<h4 id="client-width-computed">computed clientWidth</h4>
-<dfn>computed clientWidth</dfn> is value generated by CSS {{clientWidth}} algorithm. The value is not rounded.
-<h4 id="client-height-computed">computed clientHeight</h4>
-<dfn>computed clientHeight</dfn> is value generated by CSS {{clientHeight}} algorithm. The value is not rounded.
+* observation will fire when watched Element is inserted/removed from DOM.
+
+* observation will fire when watched Element display gets set to hidden.
+
+* observations do not fire for non-replaced inline Elements.
+
+* observations will not be triggered by CSS transforms.
 
 <h3 id="algorithms">Algorithms</h3>
 
@@ -314,9 +330,9 @@ run these steps:
 
         2. Add |entry| to |entries|
 
-        3. Set |observation|.{{ResizeObservation/lastBroadcastWidth}} to |entry|.clientWidth.
+        3. Set |observation|.{{ResizeObservation/broadcastWidth}} to |entry|.contentRect.width.
 
-        4. Set |observation|.{{ResizeObservation/lastBroadcastHeight}} to |entry|.clientHeight.
+        4. Set |observation|.{{ResizeObservation/broadcastHeight}} to |entry|.contentRect.height.
 
     4. Invoke |observer|.{{ResizeObserver/callback}} with |entries|.
 
