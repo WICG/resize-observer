@@ -1698,9 +1698,21 @@ interface is not visible to Javascript.
      </dt><dd data-md="">
       <ol>
        <li data-md="">
-        <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-3">target</a></code>.<a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#width">content width</a> != <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastwidth" id="ref-for-dom-resizeobservation-broadcastwidth-3">broadcastWidth</a></code> return true.</p>
+        <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-3">target</a></code> is an HTML element do these steps:</p>
+        <ol>
+         <li data-md="">
+          <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-4">target</a></code>.<a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#width">content width</a> != <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastwidth" id="ref-for-dom-resizeobservation-broadcastwidth-3">broadcastWidth</a></code> return true.</p>
+         </li><li data-md="">
+          <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-5">target</a></code>.<a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#height">content height</a> != <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastheight" id="ref-for-dom-resizeobservation-broadcastheight-3">broadcastHeight</a></code> return true.</p>
+        </li></ol>
        </li><li data-md="">
-        <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-4">target</a></code>.<a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#height">content height</a> != <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastheight" id="ref-for-dom-resizeobservation-broadcastheight-3">broadcastHeight</a></code> return true.</p>
+        <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-6">target</a></code> is an SVGGraphicsElement do these steps:</p>
+        <ol>
+         <li data-md="">
+          <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-7">target</a></code>.bounding box width != <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastwidth" id="ref-for-dom-resizeobservation-broadcastwidth-4">broadcastWidth</a></code> return true.</p>
+         </li><li data-md="">
+          <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-8">target</a></code>.bounding box height != <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastheight" id="ref-for-dom-resizeobservation-broadcastheight-4">broadcastHeight</a></code> return true.</p>
+        </li></ol>
        </li><li data-md="">
         <p>return false.</p>
       </li></ol>
@@ -1718,7 +1730,7 @@ It represents all Elements being observed.</p>
    <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-8">ResizeObserver</a></code> has a <dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="attribute" data-export="" id="dom-resizeobserver-skippedtargets">skippedTargets</dfn> slot, which is a list of <code class="idl"><a data-link-type="idl" href="#resizeobservation" id="ref-for-resizeobservation-6">ResizeObservation</a></code>s. It represents all Elements whose size has changed since last observation broadcast that are **not** eligible for broadcast</p>
    <h3 class="heading settled" data-level="3.2" id="css-definitions"><span class="secno">3.2. </span><span class="content">CSS Definitions</span><a class="self-link" href="#css-definitions"></a></h3>
    <h4 class="heading settled" data-level="3.2.1" id="content-rect-h"><span class="secno">3.2.1. </span><span class="content">content rect</span><a class="self-link" href="#content-rect-h"></a></h4>
-    <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="content-rect">content rect</dfn> is a rect whose:
+    DOM <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="content-rect">content rect</dfn> is a rect whose:
    <ul>
     <li data-md="">
      <p>width is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#width">content width</a></p>
@@ -1741,6 +1753,16 @@ It represents all Elements being observed.</p>
     </li><li data-md="">
      <p>observations will not be triggered by CSS transforms.</p>
    </li></ul>
+   <p>Web content can also contain SVG elements. SVG Elements define <a data-link-type="dfn" href="https://www.w3.org/TR/SVG2/coords.html#BoundingBoxes">bounding box</a> instead of a content box.
+Content rect for <a data-link-type="dfn" href="https://www.w3.org/TR/SVG2/#InterfaceSVGGraphicsElementtypes.html#InterfaceSVGGraphicsElement">SVGGraphicsElement</a>s is a rect whose:</p>
+   <ul>
+    <li data-md="">
+     <p>width is <a data-link-type="dfn" href="https://www.w3.org/TR/SVG2/coords.html#BoundingBoxes">bounding box</a> width</p>
+    </li><li data-md="">
+     <p>height is <a data-link-type="dfn" href="https://www.w3.org/TR/SVG2/coords.html#BoundingBoxes">bounding box</a> height</p>
+    </li><li data-md="">
+     <p>top and left are 0</p>
+   </li></ul>
    <h3 class="heading settled" data-level="3.3" id="algorithms"><span class="secno">3.3. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h3>
    <h4 class="heading settled" data-level="3.3.1" id="gather-active-observations-h"><span class="secno">3.3.1. </span><span class="content">Gather active observations at depth</span><a class="self-link" href="#gather-active-observations-h"></a></h4>
    <p>It computes all active observations for a <var>document</var>. To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="gather-active-observations-at-depth">gather active observations at depth</dfn>, run these steps:</p>
@@ -1759,7 +1781,7 @@ It represents all Elements being observed.</p>
          <p>If <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-isactive" id="ref-for-dom-resizeobservation-isactive-2">isActive()</a></code> is true</p>
          <ol>
           <li data-md="">
-           <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-5">target</a></code>.<var>depth</var> is greater than <var>depth</var> then add <var>observation</var> to <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activetargets" id="ref-for-dom-resizeobserver-activetargets-3">activeTargets</a></code>.</p>
+           <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-9">target</a></code>.<var>depth</var> is greater than <var>depth</var> then add <var>observation</var> to <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activetargets" id="ref-for-dom-resizeobserver-activetargets-3">activeTargets</a></code>.</p>
           </li><li data-md="">
            <p>Else add <var>observation</var> to <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-skippedtargets" id="ref-for-dom-resizeobserver-skippedtargets-2">skippedTargets</a></code>.</p>
          </li></ol>
@@ -1809,15 +1831,15 @@ run these steps:</p>
        <p>For each <var>observation</var> in <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activetargets" id="ref-for-dom-resizeobserver-activetargets-6">activeTargets</a></code> perform these steps:</p>
        <ol>
         <li data-md="">
-         <p>Let <var>entry</var> be new <code class="idl"><a data-link-type="idl" href="#resizeobserverentry" id="ref-for-resizeobserverentry-4">ResizeObserverEntry</a></code>(<var>observation</var>.target</p>
+         <p>Let <var>entry</var> be new <code class="idl"><a data-link-type="idl" href="#resizeobserverentry" id="ref-for-resizeobserverentry-4">ResizeObserverEntry</a></code>(<var>observation</var>.target)</p>
         </li><li data-md="">
          <p>Add <var>entry</var> to <var>entries</var></p>
         </li><li data-md="">
-         <p>Set <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastwidth" id="ref-for-dom-resizeobservation-broadcastwidth-4">broadcastWidth</a></code> to <var>entry</var>.contentRect.width.</p>
+         <p>Set <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastwidth" id="ref-for-dom-resizeobservation-broadcastwidth-5">broadcastWidth</a></code> to <var>entry</var>.contentRect.width.</p>
         </li><li data-md="">
-         <p>Set <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastheight" id="ref-for-dom-resizeobservation-broadcastheight-4">broadcastHeight</a></code> to <var>entry</var>.contentRect.height.</p>
+         <p>Set <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastheight" id="ref-for-dom-resizeobservation-broadcastheight-5">broadcastHeight</a></code> to <var>entry</var>.contentRect.height.</p>
         </li><li data-md="">
-         <p>Set <var>shallowestTargetDepth</var> to <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-6">target</a></code>.depth if <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-7">target</a></code>.depth &lt; <var>shallowestTargetDepth</var></p>
+         <p>Set <var>shallowestTargetDepth</var> to <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-10">target</a></code>.depth if <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-11">target</a></code>.depth &lt; <var>shallowestTargetDepth</var></p>
        </li></ol>
       </li><li data-md="">
        <p>Invoke <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-callback" id="ref-for-dom-resizeobserver-callback-2">callback</a></code> with <var>entries</var>.</p>
@@ -2225,23 +2247,23 @@ are undelivered notifications.</p>
   <aside class="dfn-panel" data-for="dom-resizeobservation-target">
    <b><a href="#dom-resizeobservation-target">#dom-resizeobservation-target</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-resizeobservation-target-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-target-2">(2)</a> <a href="#ref-for-dom-resizeobservation-target-3">(3)</a> <a href="#ref-for-dom-resizeobservation-target-4">(4)</a>
-    </li><li><a href="#ref-for-dom-resizeobservation-target-5">3.3.1. Gather active observations at depth</a>
-    </li><li><a href="#ref-for-dom-resizeobservation-target-6">3.3.4. Broadcast active observations</a> <a href="#ref-for-dom-resizeobservation-target-7">(2)</a>
+    <li><a href="#ref-for-dom-resizeobservation-target-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-target-2">(2)</a> <a href="#ref-for-dom-resizeobservation-target-3">(3)</a> <a href="#ref-for-dom-resizeobservation-target-4">(4)</a> <a href="#ref-for-dom-resizeobservation-target-5">(5)</a> <a href="#ref-for-dom-resizeobservation-target-6">(6)</a> <a href="#ref-for-dom-resizeobservation-target-7">(7)</a> <a href="#ref-for-dom-resizeobservation-target-8">(8)</a>
+    </li><li><a href="#ref-for-dom-resizeobservation-target-9">3.3.1. Gather active observations at depth</a>
+    </li><li><a href="#ref-for-dom-resizeobservation-target-10">3.3.4. Broadcast active observations</a> <a href="#ref-for-dom-resizeobservation-target-11">(2)</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobservation-broadcastwidth">
    <b><a href="#dom-resizeobservation-broadcastwidth">#dom-resizeobservation-broadcastwidth</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-resizeobservation-broadcastwidth-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-broadcastwidth-2">(2)</a> <a href="#ref-for-dom-resizeobservation-broadcastwidth-3">(3)</a>
-    </li><li><a href="#ref-for-dom-resizeobservation-broadcastwidth-4">3.3.4. Broadcast active observations</a>
+    <li><a href="#ref-for-dom-resizeobservation-broadcastwidth-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-broadcastwidth-2">(2)</a> <a href="#ref-for-dom-resizeobservation-broadcastwidth-3">(3)</a> <a href="#ref-for-dom-resizeobservation-broadcastwidth-4">(4)</a>
+    </li><li><a href="#ref-for-dom-resizeobservation-broadcastwidth-5">3.3.4. Broadcast active observations</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobservation-broadcastheight">
    <b><a href="#dom-resizeobservation-broadcastheight">#dom-resizeobservation-broadcastheight</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-resizeobservation-broadcastheight-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-broadcastheight-2">(2)</a> <a href="#ref-for-dom-resizeobservation-broadcastheight-3">(3)</a>
-    </li><li><a href="#ref-for-dom-resizeobservation-broadcastheight-4">3.3.4. Broadcast active observations</a>
+    <li><a href="#ref-for-dom-resizeobservation-broadcastheight-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-broadcastheight-2">(2)</a> <a href="#ref-for-dom-resizeobservation-broadcastheight-3">(3)</a> <a href="#ref-for-dom-resizeobservation-broadcastheight-4">(4)</a>
+    </li><li><a href="#ref-for-dom-resizeobservation-broadcastheight-5">3.3.4. Broadcast active observations</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobservation-resizeobservation">

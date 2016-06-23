@@ -25,6 +25,12 @@ urlPrefix: https://html.spec.whatwg.org/multipage/
 urlPrefix: https://github.com/WICG/IntersectionObserver/
     urlPrefix: index.html;
         url: #intersection-observer-interface; type: dfn; text: IntersectionObserver
+urlPrefix: https://www.w3.org/TR/SVG2/
+    urlPrefix: coords.html
+        url: #BoundingBoxes; type: dfn; text: bounding box
+urlPrefix: https://www.w3.org/TR/SVG2/#InterfaceSVGGraphicsElement
+    urlPrefix: types.html
+        url: #InterfaceSVGGraphicsElement; type: dfn; text: SVGGraphicsElement
 </pre>
 <pre class=link-defaults>
 spec:dom; type:interface; text:Document
@@ -242,9 +248,17 @@ interface ResizeObservation {
     : <dfn method lt="isActive()">isActive()</dfn>
     ::
 
-        1. If {{ResizeObservation/target}}.<a>content width</a> != {{ResizeObservation/broadcastWidth}} return true.
+        1. If {{ResizeObservation/target}} is an HTML element do these steps:
 
-        2. If {{ResizeObservation/target}}.<a>content height</a> != {{ResizeObservation/broadcastHeight}} return true.
+            1. If {{ResizeObservation/target}}.<a>content width</a> != {{ResizeObservation/broadcastWidth}} return true.
+
+            2. If {{ResizeObservation/target}}.<a>content height</a> != {{ResizeObservation/broadcastHeight}} return true.
+
+        2. If {{ResizeObservation/target}} is an SVGGraphicsElement do these steps:
+
+            1. If {{ResizeObservation/target}}.bounding box width != {{ResizeObservation/broadcastWidth}} return true.
+
+            2. If {{ResizeObservation/target}}.bounding box height != {{ResizeObservation/broadcastHeight}} return true.
 
         3. return false.
 
@@ -271,7 +285,7 @@ It represents all Elements being observed.
 
 <h3 id="css-definitions">CSS Definitions</h3>
 <h4 id="content-rect-h">content rect</h4>
-<dfn>content rect</dfn> is a rect whose:
+DOM <dfn>content rect</dfn> is a rect whose:
 
 * width is <a>content width</a>
 * height is <a>content height</a>
@@ -289,6 +303,13 @@ Watching content rect means that:
 * observations do not fire for non-replaced inline Elements.
 
 * observations will not be triggered by CSS transforms.
+
+Web content can also contain SVG elements. SVG Elements define <a>bounding box</a> instead of a content box.
+Content rect for <a>SVGGraphicsElement</a>s is a rect whose:
+
+* width is <a>bounding box</a> width
+* height is <a>bounding box</a> height
+* top and left are 0
 
 <h3 id="algorithms">Algorithms</h3>
 
@@ -348,7 +369,7 @@ run these steps:
 
     3. For each |observation| in {{ResizeObserver/activeTargets}} perform these steps:
 
-        1. Let |entry| be new {{ResizeObserverEntry}}(|observation|.target
+        1. Let |entry| be new {{ResizeObserverEntry}}(|observation|.target)
 
         2. Add |entry| to |entries|
 
