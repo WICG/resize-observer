@@ -273,10 +273,10 @@ It represents all Elements being observed.
 <h4 id="content-rect-h">content rect</h4>
 <dfn>content rect</dfn> is a rect whose:
 
-* |width| is <a>content width</a>
-* |height| is <a>content height</a>
-* |top| is <a>padding top</a>
-* |left| is <a>padding left</a>
+* width is <a>content width</a>
+* height is <a>content height</a>
+* top is <a>padding top</a>
+* left is <a>padding left</a>
 
 Having content rect position be padding-top/left is useful for absolute positioning of target's children. Absolute position coordinate space origin is topLeft of the padding rect.
 
@@ -338,7 +338,7 @@ in a document, and returns the depth of the shallowest broadcast target depth.
 To broadcast active observations for a |document|,
 run these steps:
 
-1. Let |shallowestTargetDepth| be 65536
+1. Let |shallowestTargetDepth| be ∞
 
 2. For each |observer| in |document|.{{Document/resizeObservers}} run these steps:
 
@@ -355,6 +355,8 @@ run these steps:
         3. Set |observation|.{{ResizeObservation/broadcastWidth}} to |entry|.contentRect.width.
 
         4. Set |observation|.{{ResizeObservation/broadcastHeight}} to |entry|.contentRect.height.
+
+        5. Set |shallowestTargetDepth| to |observation|.{{ResizeObservation/target}}.depth if |observation|.{{ResizeObservation/target}}.depth < |shallowestTargetDepth|
 
     4. Invoke |observer|.{{ResizeObserver/callback}} with |entries|.
 

@@ -1721,13 +1721,13 @@ It represents all Elements being observed.</p>
     <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="content-rect">content rect</dfn> is a rect whose:
    <ul>
     <li data-md="">
-     <p><var>width</var> is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#width">content width</a></p>
+     <p>width is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#width">content width</a></p>
     </li><li data-md="">
-     <p><var>height</var> is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#height">content height</a></p>
+     <p>height is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#height">content height</a></p>
     </li><li data-md="">
-     <p><var>top</var> is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#padding-top">padding top</a></p>
+     <p>top is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#padding-top">padding top</a></p>
     </li><li data-md="">
-     <p><var>left</var> is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#padding-left">padding left</a></p>
+     <p>left is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#padding-left">padding left</a></p>
    </li></ul>
    <p>Having content rect position be padding-top/left is useful for absolute positioning of target’s children. Absolute position coordinate space origin is topLeft of the padding rect.</p>
    <p>Watching content rect means that:</p>
@@ -1797,7 +1797,7 @@ in a document, and returns the depth of the shallowest broadcast target depth.</
 run these steps:</p>
    <ol>
     <li data-md="">
-     <p>Let <var>shallowestTargetDepth</var> be 65536</p>
+     <p>Let <var>shallowestTargetDepth</var> be ∞</p>
     </li><li data-md="">
      <p>For each <var>observer</var> in <var>document</var>.<code class="idl"><a data-link-type="idl" href="#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-3">resizeObservers</a></code> run these steps:</p>
      <ol>
@@ -1816,6 +1816,8 @@ run these steps:</p>
          <p>Set <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastwidth" id="ref-for-dom-resizeobservation-broadcastwidth-4">broadcastWidth</a></code> to <var>entry</var>.contentRect.width.</p>
         </li><li data-md="">
          <p>Set <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastheight" id="ref-for-dom-resizeobservation-broadcastheight-4">broadcastHeight</a></code> to <var>entry</var>.contentRect.height.</p>
+        </li><li data-md="">
+         <p>Set <var>shallowestTargetDepth</var> to <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-6">target</a></code>.depth if <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-7">target</a></code>.depth &lt; <var>shallowestTargetDepth</var></p>
        </li></ol>
       </li><li data-md="">
        <p>Invoke <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-callback" id="ref-for-dom-resizeobserver-callback-2">callback</a></code> with <var>entries</var>.</p>
@@ -2225,6 +2227,7 @@ are undelivered notifications.</p>
    <ul>
     <li><a href="#ref-for-dom-resizeobservation-target-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-target-2">(2)</a> <a href="#ref-for-dom-resizeobservation-target-3">(3)</a> <a href="#ref-for-dom-resizeobservation-target-4">(4)</a>
     </li><li><a href="#ref-for-dom-resizeobservation-target-5">3.3.1. Gather active observations at depth</a>
+    </li><li><a href="#ref-for-dom-resizeobservation-target-6">3.3.4. Broadcast active observations</a> <a href="#ref-for-dom-resizeobservation-target-7">(2)</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobservation-broadcastwidth">
