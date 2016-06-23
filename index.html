@@ -1232,7 +1232,7 @@ Possible extra rowspan handling
                 content: "Invalid Example" counter(example);
             }
 
-            figure {
+            figcaption {
                 counter-increment: figure;
             }
             figcaption:not(.no-marker)::before {
@@ -1338,71 +1338,68 @@ Possible extra rowspan handling
         .dfn-paneled { cursor: pointer; }
         </style>
 <style>/* style-syntax-highlighting */
-.highlight .hll { background-color: #ffffcc }
-.highlight  { background: #ffffff; }
-.highlight .c { color: #708090 } /* Comment */
-.highlight .k { color: #990055 } /* Keyword */
-.highlight .l { color: #000000 } /* Literal */
-.highlight .n { color: #0077aa } /* Name */
-.highlight .o { color: #999999 } /* Operator */
-.highlight .p { color: #999999 } /* Punctuation */
-.highlight .ch { color: #708090 } /* Comment.Hashbang */
-.highlight .cm { color: #708090 } /* Comment.Multiline */
-.highlight .cp { color: #708090 } /* Comment.Preproc */
-.highlight .cpf { color: #708090 } /* Comment.PreprocFile */
-.highlight .c1 { color: #708090 } /* Comment.Single */
-.highlight .cs { color: #708090 } /* Comment.Special */
-.highlight .kc { color: #990055 } /* Keyword.Constant */
-.highlight .kd { color: #990055 } /* Keyword.Declaration */
-.highlight .kn { color: #990055 } /* Keyword.Namespace */
-.highlight .kp { color: #990055 } /* Keyword.Pseudo */
-.highlight .kr { color: #990055 } /* Keyword.Reserved */
-.highlight .kt { color: #990055 } /* Keyword.Type */
-.highlight .ld { color: #000000 } /* Literal.Date */
-.highlight .m { color: #000000 } /* Literal.Number */
-.highlight .s { color: #a67f59 } /* Literal.String */
-.highlight .na { color: #0077aa } /* Name.Attribute */
-.highlight .nc { color: #0077aa } /* Name.Class */
-.highlight .no { color: #0077aa } /* Name.Constant */
-.highlight .nd { color: #0077aa } /* Name.Decorator */
-.highlight .ni { color: #0077aa } /* Name.Entity */
-.highlight .ne { color: #0077aa } /* Name.Exception */
-.highlight .nf { color: #0077aa } /* Name.Function */
-.highlight .nl { color: #0077aa } /* Name.Label */
-.highlight .nn { color: #0077aa } /* Name.Namespace */
-.highlight .py { color: #0077aa } /* Name.Property */
-.highlight .nt { color: #669900 } /* Name.Tag */
-.highlight .nv { color: #0077aa } /* Name.Variable */
-.highlight .ow { color: #999999 } /* Operator.Word */
-.highlight .mb { color: #000000 } /* Literal.Number.Bin */
-.highlight .mf { color: #000000 } /* Literal.Number.Float */
-.highlight .mh { color: #000000 } /* Literal.Number.Hex */
-.highlight .mi { color: #000000 } /* Literal.Number.Integer */
-.highlight .mo { color: #000000 } /* Literal.Number.Oct */
-.highlight .sb { color: #a67f59 } /* Literal.String.Backtick */
-.highlight .sc { color: #a67f59 } /* Literal.String.Char */
-.highlight .sd { color: #a67f59 } /* Literal.String.Doc */
-.highlight .s2 { color: #a67f59 } /* Literal.String.Double */
-.highlight .se { color: #a67f59 } /* Literal.String.Escape */
-.highlight .sh { color: #a67f59 } /* Literal.String.Heredoc */
-.highlight .si { color: #a67f59 } /* Literal.String.Interpol */
-.highlight .sx { color: #a67f59 } /* Literal.String.Other */
-.highlight .sr { color: #a67f59 } /* Literal.String.Regex */
-.highlight .s1 { color: #a67f59 } /* Literal.String.Single */
-.highlight .ss { color: #a67f59 } /* Literal.String.Symbol */
-.highlight .vc { color: #0077aa } /* Name.Variable.Class */
-.highlight .vg { color: #0077aa } /* Name.Variable.Global */
-.highlight .vi { color: #0077aa } /* Name.Variable.Instance */
-.highlight .il { color: #000000 } /* Literal.Number.Integer.Long */
-        .highlight { background: hsl(24, 20%, 95%); }
+pre.idl.highlight { color: #708090; }
+        .highlight:not(.idl) { background: hsl(24, 20%, 95%); }
         code.highlight { padding: .1em; border-radius: .3em; }
-        xmp.highlight, pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
+        pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
+        .highlight .c { color: #708090 } /* Comment */
+        .highlight .k { color: #990055 } /* Keyword */
+        .highlight .l { color: #000000 } /* Literal */
+        .highlight .n { color: #0077aa } /* Name */
+        .highlight .o { color: #999999 } /* Operator */
+        .highlight .p { color: #999999 } /* Punctuation */
+        .highlight .cm { color: #708090 } /* Comment.Multiline */
+        .highlight .cp { color: #708090 } /* Comment.Preproc */
+        .highlight .c1 { color: #708090 } /* Comment.Single */
+        .highlight .cs { color: #708090 } /* Comment.Special */
+        .highlight .kc { color: #990055 } /* Keyword.Constant */
+        .highlight .kd { color: #990055 } /* Keyword.Declaration */
+        .highlight .kn { color: #990055 } /* Keyword.Namespace */
+        .highlight .kp { color: #990055 } /* Keyword.Pseudo */
+        .highlight .kr { color: #990055 } /* Keyword.Reserved */
+        .highlight .kt { color: #990055 } /* Keyword.Type */
+        .highlight .ld { color: #000000 } /* Literal.Date */
+        .highlight .m { color: #000000 } /* Literal.Number */
+        .highlight .s { color: #a67f59 } /* Literal.String */
+        .highlight .na { color: #0077aa } /* Name.Attribute */
+        .highlight .nc { color: #0077aa } /* Name.Class */
+        .highlight .no { color: #0077aa } /* Name.Constant */
+        .highlight .nd { color: #0077aa } /* Name.Decorator */
+        .highlight .ni { color: #0077aa } /* Name.Entity */
+        .highlight .ne { color: #0077aa } /* Name.Exception */
+        .highlight .nf { color: #0077aa } /* Name.Function */
+        .highlight .nl { color: #0077aa } /* Name.Label */
+        .highlight .nn { color: #0077aa } /* Name.Namespace */
+        .highlight .py { color: #0077aa } /* Name.Property */
+        .highlight .nt { color: #669900 } /* Name.Tag */
+        .highlight .nv { color: #222222 } /* Name.Variable */
+        .highlight .ow { color: #999999 } /* Operator.Word */
+        .highlight .mb { color: #000000 } /* Literal.Number.Bin */
+        .highlight .mf { color: #000000 } /* Literal.Number.Float */
+        .highlight .mh { color: #000000 } /* Literal.Number.Hex */
+        .highlight .mi { color: #000000 } /* Literal.Number.Integer */
+        .highlight .mo { color: #000000 } /* Literal.Number.Oct */
+        .highlight .sb { color: #a67f59 } /* Literal.String.Backtick */
+        .highlight .sc { color: #a67f59 } /* Literal.String.Char */
+        .highlight .sd { color: #a67f59 } /* Literal.String.Doc */
+        .highlight .s2 { color: #a67f59 } /* Literal.String.Double */
+        .highlight .se { color: #a67f59 } /* Literal.String.Escape */
+        .highlight .sh { color: #a67f59 } /* Literal.String.Heredoc */
+        .highlight .si { color: #a67f59 } /* Literal.String.Interpol */
+        .highlight .sx { color: #a67f59 } /* Literal.String.Other */
+        .highlight .sr { color: #a67f59 } /* Literal.String.Regex */
+        .highlight .s1 { color: #a67f59 } /* Literal.String.Single */
+        .highlight .ss { color: #a67f59 } /* Literal.String.Symbol */
+        .highlight .vc { color: #0077aa } /* Name.Variable.Class */
+        .highlight .vg { color: #0077aa } /* Name.Variable.Global */
+        .highlight .vi { color: #0077aa } /* Name.Variable.Instance */
+        .highlight .il { color: #000000 } /* Literal.Number.Integer.Long */
         </style>
  </head><body class="h-entry toc-inline"><p id="toc-nav"><a id="toc-jump" href="#toc"><span aria-hidden="true">↑</span> <span>Jump to Table of Contents</span></a><a id="toc-toggle" href="#toc"><span aria-hidden="true">→</span> <span>Pop Out Sidebar</span></a></p>
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Resize Observer</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-06-09">9 June 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-06-23">23 June 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1414,7 +1411,7 @@ Possible extra rowspan handling
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 9 June 2016,
+In addition, as of 23 June 2016,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1449,15 +1446,16 @@ Parts of this work may be from another specification document.  If so, those par
       </li><li>
        <a href="#css-definitions"><span class="secno">3.2</span> <span class="content">CSS Definitions</span></a>
        <ol class="toc">
-        <li><a href="#content-rect"><span class="secno">3.2.1</span> <span class="content">content rect</span></a>
+        <li><a href="#content-rect-h"><span class="secno">3.2.1</span> <span class="content">content rect</span></a>
        </li></ol>
       </li><li>
        <a href="#algorithms"><span class="secno">3.3</span> <span class="content">Algorithms</span></a>
        <ol class="toc">
-        <li><a href="#gather-active-observations-h"><span class="secno">3.3.1</span> <span class="content">Gather active observations</span></a>
+        <li><a href="#gather-active-observations-h"><span class="secno">3.3.1</span> <span class="content">Gather active observations at depth</span></a>
         </li><li><a href="#has-active-observations-h"><span class="secno">3.3.2</span> <span class="content">Has active observations</span></a>
-        </li><li><a href="#broadcast-resize-notifications-h"><span class="secno">3.3.3</span> <span class="content">Broadcast active observations</span></a>
-        </li><li><a href="#deliver-resize-error"><span class="secno">3.3.4</span> <span class="content">Deliver Resize Limit Error</span></a>
+        </li><li><a href="#has-skipped-observations-h"><span class="secno">3.3.3</span> <span class="content">Has skipped observations</span></a>
+        </li><li><a href="#broadcast-resize-notifications-h"><span class="secno">3.3.4</span> <span class="content">Broadcast active observations</span></a>
+        </li><li><a href="#deliver-resize-error"><span class="secno">3.3.5</span> <span class="content">Deliver Resize Loop Error</span></a>
        </li></ol>
       </li><li><a href="#lifetime"><span class="secno">3.4</span> <span class="content">ResizeObserver Lifetime</span></a>
       </li><li>
@@ -1484,7 +1482,7 @@ Parts of this work may be from another specification document.  If so, those par
   <main>
    <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
    <p><em>This section is non-normative.</em></p>
-   <p>Responsive Web Components need to respond to <a data-link-type="dfn" href="#content-rect0" id="ref-for-content-rect0-1">content rect</a> size changes. An example is an <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code> that displays a map:</p>
+   <p>Responsive Web Components need to respond to <a data-link-type="dfn" href="#content-rect" id="ref-for-content-rect-1">content rect</a> size changes. An example is an <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code> that displays a map:</p>
    <ul>
     <li data-md="">
      <p>it displays a map by tiling its content box with <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code> tiles.</p>
@@ -1494,7 +1492,7 @@ Parts of this work may be from another specification document.  If so, those par
    <p>Responsive Web Applications can already respond to <a data-link-type="dfn" href="https://www.w3.org/TR/css3-positioning/#viewport">viewport</a> size changes.
 This is done with CSS media queries, or window.<code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-view-1/#eventdef-window-resize">resize</a></code> event.</p>
    <p>The ResizeObserver API is an interface for observing changes
-to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <a data-link-type="dfn" href="#content-rect0" id="ref-for-content-rect0-2">content rect</a>’s width and height. It is an <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s
+to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <a data-link-type="dfn" href="#content-rect" id="ref-for-content-rect-2">content rect</a>’s width and height. It is an <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s
 counterpart to window.<code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-view-1/#eventdef-window-resize">resize</a></code> event.</p>
    <p>ResizeObserver’s notifications can be used to respond to changes in <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s size. Some interesting facts about these observations:</p>
    <ul>
@@ -1515,7 +1513,8 @@ counterpart to window.<code class="idl"><a data-link-type="idl" href="https://dr
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"menu"</span> <span class="na">style</span><span class="o">=</span><span class="s">"display:block;width:100px"</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">"hamburger.jpg"</span> <span class="na">style</span><span class="o">=</span><span class="s">"width:24px;height:24px"</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">"title"</span><span class="p">&gt;</span>menu title<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></pre>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
 <pre class="highlight"><span></span><span class="c1">// In response to resize, elipse paints an elipse inside a canvas</span>
 <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'#elipse'</span><span class="p">).</span><span class="nx">handleResize</span> <span class="o">=</span> <span class="nx">entry</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="kd">let</span> <span class="nx">rx</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">contentRect</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
@@ -1547,18 +1546,19 @@ counterpart to window.<code class="idl"><a data-link-type="idl" href="https://dr
   <span class="p">}</span>
 <span class="p">});</span>
 <span class="nx">ro</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'#elipse'</span><span class="p">);</span>
-<span class="nx">ro</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'#menu'</span><span class="p">);</span></pre>
+<span class="nx">ro</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'#menu'</span><span class="p">);</span>
+</pre>
    </div>
    <h2 class="heading settled" data-level="2" id="api"><span class="secno">2. </span><span class="content">Resize Observer API</span><a class="self-link" href="#api"></a></h2>
    <h3 class="heading settled" data-level="2.1" id="resize-observer-interface"><span class="secno">2.1. </span><span class="content">ResizeObserver interface</span><a class="self-link" href="#resize-observer-interface"></a></h3>
-   <p>The ResizeObserver interface is used to observe changes to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <a data-link-type="dfn" href="#content-rect0" id="ref-for-content-rect0-3">content rect</a>.</p>
+   <p>The ResizeObserver interface is used to observe changes to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <a data-link-type="dfn" href="#content-rect" id="ref-for-content-rect-3">content rect</a>.</p>
    <p>It is modeled after <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#mutationobserver">MutationObserver</a></code> and <a data-link-type="dfn" href="https://github.com/WICG/IntersectionObserver/index.html#intersection-observer-interface">IntersectionObserver</a>.</p>
-<pre class="idl def">[<a class="idl-code" data-link-type="constructor" href="#dom-resizeobserver-resizeobserver" id="ref-for-dom-resizeobserver-resizeobserver-1">Constructor</a>(<a data-link-type="idl-name" href="#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-1">ResizeObserverCallback</a> <dfn class="idl-code" data-dfn-for="ResizeObserver/ResizeObserver(callback)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-resizeobserver-callback-callback">callback<a class="self-link" href="#dom-resizeobserver-resizeobserver-callback-callback"></a></dfn>),
-    Exposed=Window]
-interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export="" id="resizeobserver">ResizeObserver</dfn> {
-    void <a class="idl-code" data-link-type="method" href="#dom-resizeobserver-observe" id="ref-for-dom-resizeobserver-observe-1">observe</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="idl-code" data-dfn-for="ResizeObserver/observe(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-observe-target-target">target<a class="self-link" href="#dom-resizeobserver-observe-target-target"></a></dfn>);
-    void <a class="idl-code" data-link-type="method" href="#dom-resizeobserver-unobserve" id="ref-for-dom-resizeobserver-unobserve-1">unobserve</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="idl-code" data-dfn-for="ResizeObserver/unobserve(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-unobserve-target-target">target<a class="self-link" href="#dom-resizeobserver-unobserve-target-target"></a></dfn>);
-    void <a class="idl-code" data-link-type="method" href="#dom-resizeobserver-disconnect" id="ref-for-dom-resizeobserver-disconnect-1">disconnect</a>();
+<pre class="idl highlight def">[<a class="nv idl-code" data-link-type="constructor" href="#dom-resizeobserver-resizeobserver" id="ref-for-dom-resizeobserver-resizeobserver-1">Constructor</a>(<a class="n" data-link-type="idl-name" href="#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-1">ResizeObserverCallback</a> <dfn class="nv idl-code" data-dfn-for="ResizeObserver/ResizeObserver(callback)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-resizeobserver-callback-callback">callback<a class="self-link" href="#dom-resizeobserver-resizeobserver-callback-callback"></a></dfn>),
+    <a class="nv idl-code" data-link-type="extended-attribute">Exposed</a>=<span class="n">Window</span>]
+<span class="kt">interface</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="interface" data-export="" id="resizeobserver">ResizeObserver</dfn> {
+    <span class="kt">void</span> <a class="nv idl-code" data-link-type="method" href="#dom-resizeobserver-observe" id="ref-for-dom-resizeobserver-observe-1">observe</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="nv idl-code" data-dfn-for="ResizeObserver/observe(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-observe-target-target">target<a class="self-link" href="#dom-resizeobserver-observe-target-target"></a></dfn>);
+    <span class="kt">void</span> <a class="nv idl-code" data-link-type="method" href="#dom-resizeobserver-unobserve" id="ref-for-dom-resizeobserver-unobserve-1">unobserve</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="nv idl-code" data-dfn-for="ResizeObserver/unobserve(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-unobserve-target-target">target<a class="self-link" href="#dom-resizeobserver-unobserve-target-target"></a></dfn>);
+    <span class="kt">void</span> <a class="nv idl-code" data-link-type="method" href="#dom-resizeobserver-disconnect" id="ref-for-dom-resizeobserver-disconnect-1">disconnect</a>();
 };
 </pre>
    <div>
@@ -1606,15 +1606,15 @@ interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-expor
     </dd></dl>
    </div>
    <h3 class="heading settled" data-level="2.2" id="resize-observer-callback"><span class="secno">2.2. </span><span class="content">ResizeObserverCallback</span><a class="self-link" href="#resize-observer-callback"></a></h3>
-<pre class="idl def">callback <dfn class="dfn-paneled idl-code" data-dfn-type="callback" data-export="" id="callbackdef-resizeobservercallback">ResizeObserverCallback</dfn> = void (sequence&lt;<a data-link-type="idl-name" href="#resizeobserverentry" id="ref-for-resizeobserverentry-1">ResizeObserverEntry</a>&gt; <dfn class="idl-code" data-dfn-for="ResizeObserverCallback" data-dfn-type="argument" data-export="" id="dom-resizeobservercallback-entries">entries<a class="self-link" href="#dom-resizeobservercallback-entries"></a></dfn>, <a data-link-type="idl-name" href="#resizeobserver" id="ref-for-resizeobserver-2">ResizeObserver</a> <dfn class="idl-code" data-dfn-for="ResizeObserverCallback" data-dfn-type="argument" data-export="" id="dom-resizeobservercallback-observer">observer<a class="self-link" href="#dom-resizeobservercallback-observer"></a></dfn>)
+<pre class="idl highlight def"><span class="kt">callback</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="callback" data-export="" id="callbackdef-resizeobservercallback">ResizeObserverCallback</dfn> = <span class="kt">void</span> (<span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#resizeobserverentry" id="ref-for-resizeobserverentry-1">ResizeObserverEntry</a>&gt; <dfn class="nv idl-code" data-dfn-for="ResizeObserverCallback" data-dfn-type="argument" data-export="" id="dom-resizeobservercallback-entries">entries<a class="self-link" href="#dom-resizeobservercallback-entries"></a></dfn>, <a class="n" data-link-type="idl-name" href="#resizeobserver" id="ref-for-resizeobserver-2">ResizeObserver</a> <dfn class="nv idl-code" data-dfn-for="ResizeObserverCallback" data-dfn-type="argument" data-export="" id="dom-resizeobservercallback-observer">observer<a class="self-link" href="#dom-resizeobservercallback-observer"></a></dfn>)
 </pre>
    <p>This callback delivers <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-3">ResizeObserver</a></code>'s notifications. It is invoked by a <a data-link-type="dfn" href="#broadcast-active-observations" id="ref-for-broadcast-active-observations-1">broadcast active observations</a> algorithm.</p>
    <h3 class="heading settled" data-level="2.3" id="resize-observer-entry-interface"><span class="secno">2.3. </span><span class="content">ResizeObserverEntry</span><a class="self-link" href="#resize-observer-entry-interface"></a></h3>
-<pre class="idl def">[<a class="idl-code" data-link-type="constructor" href="#dom-resizeobserverentry-resizeobserverentry" id="ref-for-dom-resizeobserverentry-resizeobserverentry-1">Constructor</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="idl-code" data-dfn-for="ResizeObserverEntry/ResizeObserverEntry(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserverentry-resizeobserverentry-target-target">target<a class="self-link" href="#dom-resizeobserverentry-resizeobserverentry-target-target"></a></dfn>)
+<pre class="idl highlight def">[<a class="nv idl-code" data-link-type="constructor" href="#dom-resizeobserverentry-resizeobserverentry" id="ref-for-dom-resizeobserverentry-resizeobserverentry-1">Constructor</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="nv idl-code" data-dfn-for="ResizeObserverEntry/ResizeObserverEntry(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserverentry-resizeobserverentry-target-target">target<a class="self-link" href="#dom-resizeobserverentry-resizeobserverentry-target-target"></a></dfn>)
 ]
-interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export="" id="resizeobserverentry">ResizeObserverEntry</dfn> {
-    readonly attribute <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobserverentry-target" id="ref-for-dom-resizeobserverentry-target-1">target</a>;
-    readonly attribute <a data-link-type="idl-name">DOMReadOnlyRect</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="DOMReadOnlyRect" href="#dom-resizeobserverentry-contentrect" id="ref-for-dom-resizeobserverentry-contentrect-1">contentRect</a>;
+<span class="kt">interface</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="interface" data-export="" id="resizeobserverentry">ResizeObserverEntry</dfn> {
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobserverentry-target" id="ref-for-dom-resizeobserverentry-target-1">target</a>;
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name">DOMReadOnlyRect</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="DOMReadOnlyRect" href="#dom-resizeobserverentry-contentrect" id="ref-for-dom-resizeobserverentry-contentrect-1">contentRect</a>;
 };
 </pre>
    <div>
@@ -1626,7 +1626,7 @@ interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-expor
      </dd><dt data-md="">
       <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="attribute" data-export="" id="dom-resizeobserverentry-contentrect">contentRect</dfn>, <span> of type <a data-link-type="idl-name">DOMReadOnlyRect</a>, readonly</span></p>
      </dt><dd data-md="">
-      <p><code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <a data-link-type="dfn" href="#content-rect0" id="ref-for-content-rect0-4">content rect</a> when <code class="idl"><a data-link-type="idl" href="#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-2">ResizeObserverCallback</a></code> is invoked.</p>
+      <p><code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <a data-link-type="dfn" href="#content-rect" id="ref-for-content-rect-4">content rect</a> when <code class="idl"><a data-link-type="idl" href="#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-2">ResizeObserverCallback</a></code> is invoked.</p>
     </dd></dl>
    </div>
    <div>
@@ -1653,13 +1653,13 @@ interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-expor
    <h3 class="heading settled" data-level="2.4" id="resize-observation-interface"><span class="secno">2.4. </span><span class="content">ResizeObservation</span><a class="self-link" href="#resize-observation-interface"></a></h3>
     ResizeObservation holds observation information for a single <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>. This
 interface is not visible to Javascript.
-<pre class="idl def">[<a class="idl-code" data-link-type="constructor" href="#dom-resizeobservation-resizeobservation" id="ref-for-dom-resizeobservation-resizeobservation-1">Constructor</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="idl-code" data-dfn-for="ResizeObservation/ResizeObservation(target)" data-dfn-type="argument" data-export="" id="dom-resizeobservation-resizeobservation-target-target">target<a class="self-link" href="#dom-resizeobservation-resizeobservation-target-target"></a></dfn>)
+<pre class="idl highlight def">[<a class="nv idl-code" data-link-type="constructor" href="#dom-resizeobservation-resizeobservation" id="ref-for-dom-resizeobservation-resizeobservation-1">Constructor</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="nv idl-code" data-dfn-for="ResizeObservation/ResizeObservation(target)" data-dfn-type="argument" data-export="" id="dom-resizeobservation-resizeobservation-target-target">target<a class="self-link" href="#dom-resizeobservation-resizeobservation-target-target"></a></dfn>)
 ]
-interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export="" id="resizeobservation">ResizeObservation</dfn> {
-    readonly attribute <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-1">target</a>;
-    readonly attribute float <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="float" href="#dom-resizeobservation-broadcastwidth" id="ref-for-dom-resizeobservation-broadcastwidth-1">broadcastWidth</a>;
-    readonly attribute float <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="float" href="#dom-resizeobservation-broadcastheight" id="ref-for-dom-resizeobservation-broadcastheight-1">broadcastHeight</a>;
-    boolean <a class="idl-code" data-link-type="method" href="#dom-resizeobservation-isactive" id="ref-for-dom-resizeobservation-isactive-1">isActive</a>();
+<span class="kt">interface</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="interface" data-export="" id="resizeobservation">ResizeObservation</dfn> {
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-1">target</a>;
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <span class="kt">float</span> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="float" href="#dom-resizeobservation-broadcastwidth" id="ref-for-dom-resizeobservation-broadcastwidth-1">broadcastWidth</a>;
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <span class="kt">float</span> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="float" href="#dom-resizeobservation-broadcastheight" id="ref-for-dom-resizeobservation-broadcastheight-1">broadcastHeight</a>;
+    <span class="kt">boolean</span> <a class="nv idl-code" data-link-type="method" href="#dom-resizeobservation-isactive" id="ref-for-dom-resizeobservation-isactive-1">isActive</a>();
 };
 </pre>
    <div>
@@ -1714,10 +1714,11 @@ interface <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-expor
    <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-5">ResizeObserver</a></code> has a <dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="attribute" data-export="" id="dom-resizeobserver-callback">callback</dfn> slot, initialized by constructor.</p>
    <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-6">ResizeObserver</a></code> has an <dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="attribute" data-export="" id="dom-resizeobserver-observationtargets">observationTargets</dfn> slot, which is a list of <code class="idl"><a data-link-type="idl" href="#resizeobservation" id="ref-for-resizeobservation-4">ResizeObservation</a></code>s.
 It represents all Elements being observed.</p>
-   <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-7">ResizeObserver</a></code> has a <dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="attribute" data-export="" id="dom-resizeobserver-activetargets">activeTargets</dfn> slot, which is a list of <code class="idl"><a data-link-type="idl" href="#resizeobservation" id="ref-for-resizeobservation-5">ResizeObservation</a></code>s. It represents all Elements whose size has changed since last observation broadcast.</p>
+   <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-7">ResizeObserver</a></code> has a <dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="attribute" data-export="" id="dom-resizeobserver-activetargets">activeTargets</dfn> slot, which is a list of <code class="idl"><a data-link-type="idl" href="#resizeobservation" id="ref-for-resizeobservation-5">ResizeObservation</a></code>s. It represents all Elements whose size has changed since last observation broadcast that are eligible for broadcast.</p>
+   <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-8">ResizeObserver</a></code> has a <dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="attribute" data-export="" id="dom-resizeobserver-skippedtargets">skippedTargets</dfn> slot, which is a list of <code class="idl"><a data-link-type="idl" href="#resizeobservation" id="ref-for-resizeobservation-6">ResizeObservation</a></code>s. It represents all Elements whose size has changed since last observation broadcast that are **not** eligible for broadcast</p>
    <h3 class="heading settled" data-level="3.2" id="css-definitions"><span class="secno">3.2. </span><span class="content">CSS Definitions</span><a class="self-link" href="#css-definitions"></a></h3>
-   <h4 class="heading settled" data-level="3.2.1" id="content-rect"><span class="secno">3.2.1. </span><span class="content">content rect</span><a class="self-link" href="#content-rect"></a></h4>
-    <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="content-rect0">content rect</dfn> is a rect whose:
+   <h4 class="heading settled" data-level="3.2.1" id="content-rect-h"><span class="secno">3.2.1. </span><span class="content">content rect</span><a class="self-link" href="#content-rect-h"></a></h4>
+    <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="content-rect">content rect</dfn> is a rect whose:
    <ul>
     <li data-md="">
      <p><var>width</var> is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#width">content width</a></p>
@@ -1741,19 +1742,27 @@ It represents all Elements being observed.</p>
      <p>observations will not be triggered by CSS transforms.</p>
    </li></ul>
    <h3 class="heading settled" data-level="3.3" id="algorithms"><span class="secno">3.3. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h3>
-   <h4 class="heading settled" data-level="3.3.1" id="gather-active-observations-h"><span class="secno">3.3.1. </span><span class="content">Gather active observations</span><a class="self-link" href="#gather-active-observations-h"></a></h4>
-   <p>It computes all active observations for a <var>document</var>. To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="gather-active-observations">gather active observations</dfn>, run these steps:</p>
+   <h4 class="heading settled" data-level="3.3.1" id="gather-active-observations-h"><span class="secno">3.3.1. </span><span class="content">Gather active observations at depth</span><a class="self-link" href="#gather-active-observations-h"></a></h4>
+   <p>It computes all active observations for a <var>document</var>. To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="gather-active-observations-at-depth">gather active observations at depth</dfn>, run these steps:</p>
    <ol>
     <li data-md="">
+     <p>Let <var>depth</var> be the depth passed in.</p>
+    </li><li data-md="">
      <p>For each <var>observer</var> in <code class="idl"><a data-link-type="idl" href="#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-2">resizeObservers</a></code> run these steps:</p>
      <ol>
       <li data-md="">
-       <p>Clear <var>observer</var>’s <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activetargets" id="ref-for-dom-resizeobserver-activetargets-2">activeTargets</a></code>.</p>
+       <p>Clear <var>observer</var>’s <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activetargets" id="ref-for-dom-resizeobserver-activetargets-2">activeTargets</a></code>, and <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-skippedtargets" id="ref-for-dom-resizeobserver-skippedtargets-1">skippedTargets</a></code></p>
       </li><li data-md="">
        <p>For each <var>observation</var> in <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-observationtargets" id="ref-for-dom-resizeobserver-observationtargets-6">observationTargets</a></code> run this step:</p>
        <ol>
         <li data-md="">
-         <p>If <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-isactive" id="ref-for-dom-resizeobservation-isactive-2">isActive()</a></code> is true, add <var>observation</var> to <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activetargets" id="ref-for-dom-resizeobserver-activetargets-3">activeTargets</a></code></p>
+         <p>If <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-isactive" id="ref-for-dom-resizeobservation-isactive-2">isActive()</a></code> is true</p>
+         <ol>
+          <li data-md="">
+           <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-5">target</a></code>.<var>depth</var> is greater than <var>depth</var> then add <var>observation</var> to <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activetargets" id="ref-for-dom-resizeobserver-activetargets-3">activeTargets</a></code>.</p>
+          </li><li data-md="">
+           <p>Else add <var>observation</var> to <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-skippedtargets" id="ref-for-dom-resizeobserver-skippedtargets-2">skippedTargets</a></code>.</p>
+         </li></ol>
        </li></ol>
      </li></ol>
    </li></ol>
@@ -1769,11 +1778,27 @@ It represents all Elements being observed.</p>
     </li><li data-md="">
      <p>return false.</p>
    </li></ol>
-   <h4 class="heading settled" data-level="3.3.3" id="broadcast-resize-notifications-h"><span class="secno">3.3.3. </span><span class="content">Broadcast active observations</span><a class="self-link" href="#broadcast-resize-notifications-h"></a></h4>
-   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="broadcast-active-observations">broadcast active observations</dfn> for a <var>document</var>,
+   <h4 class="heading settled" data-level="3.3.3" id="has-skipped-observations-h"><span class="secno">3.3.3. </span><span class="content">Has skipped observations</span><a class="self-link" href="#has-skipped-observations-h"></a></h4>
+   <p>To determine if <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code> <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="has-skipped-observations">has skipped observations</dfn> run these steps:</p>
+   <ol>
+    <li data-md="">
+     <p>For each <var>observer</var> in {Document/resizeObservers}} run this step:</p>
+     <ol>
+      <li data-md="">
+       <p>If <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-skippedtargets" id="ref-for-dom-resizeobserver-skippedtargets-3">skippedTargets</a></code> is not empty, return true.</p>
+     </li></ol>
+    </li><li data-md="">
+     <p>return false.</p>
+   </li></ol>
+   <h4 class="heading settled" data-level="3.3.4" id="broadcast-resize-notifications-h"><span class="secno">3.3.4. </span><span class="content">Broadcast active observations</span><a class="self-link" href="#broadcast-resize-notifications-h"></a></h4>
+   <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="broadcast-active-observations">broadcast active observations</dfn> delivers all active observations
+in a document, and returns the depth of the shallowest broadcast target depth.</p>
+   <p>To broadcast active observations for a <var>document</var>,
 run these steps:</p>
    <ol>
     <li data-md="">
+     <p>Let <var>shallowestTargetDepth</var> be 65536</p>
+    </li><li data-md="">
      <p>For each <var>observer</var> in <var>document</var>.<code class="idl"><a data-link-type="idl" href="#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-3">resizeObservers</a></code> run these steps:</p>
      <ol>
       <li data-md="">
@@ -1797,19 +1822,21 @@ run these steps:</p>
       </li><li data-md="">
        <p>Clear <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activetargets" id="ref-for-dom-resizeobserver-activetargets-7">activeTargets</a></code>.</p>
      </li></ol>
+    </li><li data-md="">
+     <p>Return <var>shallowestTargetDepth</var>.</p>
    </li></ol>
-   <h4 class="heading settled" data-level="3.3.4" id="deliver-resize-error"><span class="secno">3.3.4. </span><span class="content">Deliver Resize Limit Error</span><a class="self-link" href="#deliver-resize-error"></a></h4>
-   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="deliver-resize-limit-error-notification">deliver resize limit error notification</dfn> run these steps:</p>
+   <h4 class="heading settled" data-level="3.3.5" id="deliver-resize-error"><span class="secno">3.3.5. </span><span class="content">Deliver Resize Loop Error</span><a class="self-link" href="#deliver-resize-error"></a></h4>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="deliver-resize-loop-error-notification">deliver resize loop error notification</dfn> run these steps:</p>
    <ol>
     <li data-md="">
      <p>Create a new <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#errorevent">ErrorEvent</a></code>.</p>
     </li><li data-md="">
-     <p>Initialize event’s message slot to "ResizeObserver loop limit exceeded.".</p>
+     <p>Initialize event’s message slot to "ResizeObserver loop completed with undelivered notifications.".</p>
     </li><li data-md="">
      <p>Dispach the event to document’s window.</p>
    </li></ol>
    <h3 class="heading settled" data-level="3.4" id="lifetime"><span class="secno">3.4. </span><span class="content">ResizeObserver Lifetime</span><a class="self-link" href="#lifetime"></a></h3>
-   <p>A <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-8">ResizeObserver</a></code> will remain alive until both of these conditions are met:</p>
+   <p>A <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-9">ResizeObserver</a></code> will remain alive until both of these conditions are met:</p>
    <ul>
     <li data-md="">
      <p>there are no scripting references to the observer.</p>
@@ -1818,7 +1845,7 @@ run these steps:</p>
    </li></ul>
    <h3 class="heading settled" data-level="3.5" id="integrations"><span class="secno">3.5. </span><span class="content">External Spec Integrations</span><a class="self-link" href="#integrations"></a></h3>
    <h4 class="heading settled" data-level="3.5.1" id="html-event-loop"><span class="secno">3.5.1. </span><span class="content"> HTML Processing Model: Event Loop</span><a class="self-link" href="#html-event-loop"></a></h4>
-   <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-9">ResizeObserver</a></code> processing happens inside the step 7.12 of the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#processing-model-8">HTML Processing Model</a> event loop.</p>
+   <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-10">ResizeObserver</a></code> processing happens inside the step 7.12 of the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#processing-model-8">HTML Processing Model</a> event loop.</p>
    <p>Step 12 is currently underspecified as:</p>
    <p><q>For each fully active Document in docs, update the rendering or user interface of that Document and its browsing context to reflect the current state.</q>.</p>
    <p>Existing step 12 can be fully specified as:</p>
@@ -1831,13 +1858,17 @@ run these steps:</p>
     </li><li data-md="">
      <p>paint</p>
    </li></ol>
-   <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-10">ResizeObserver</a></code> extends step 12 with resize notifications.
+   <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-11">ResizeObserver</a></code> extends step 12 with resize notifications.
 It tries to deliver all pending notifications by looping
-until no pending notifications are available. Infinite looping is prevented
-by limiting the number of times loop is repeated to RESIZE_OBSERVER_LOOP_LIMIT constant. Looping too many times generates an error.</p>
-   <p class="note" role="note">Note: RESIZE_OBSERVER_LOOP_LIMIT is currently arbitrarily set to 32.
-It might get adjusted based on data we obtain from real-world usage.</p>
-   <p>Step 12 with <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-11">ResizeObserver</a></code> notifications is:</p>
+until no pending notifications are available. This can cause
+an infinite loop.</p>
+   <p>Infinite loop is prevented by shrinking the set of
+nodes that can notify at every iteration. In each iteration,
+only nodes deeper than the shallowest node in previous iteration
+can notify.</p>
+   <p>An error is generated if notification loop completes, and there
+are undelivered notifications.</p>
+   <p>Step 12 with <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-12">ResizeObserver</a></code> notifications is:</p>
    <p>For each fully active Document in docs, run the following steps for that Document and its browsing contentx:</p>
    <ol>
     <li data-md="">
@@ -1845,25 +1876,23 @@ It might get adjusted based on data we obtain from real-world usage.</p>
     </li><li data-md="">
      <p>update layout</p>
     </li><li data-md="">
-     <p>let <var>resizeNotificationCount</var> be 0</p>
+     <p>set <var>depth</var> to 0</p>
     </li><li data-md="">
-     <p><a data-link-type="dfn" href="#gather-active-observations" id="ref-for-gather-active-observations-1">gather active observations</a> for <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code></p>
+     <p><a data-link-type="dfn" href="#gather-active-observations-at-depth" id="ref-for-gather-active-observations-at-depth-1">gather active observations at depth</a> <var>depth</var> for <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code></p>
     </li><li data-md="">
-     <p>repeat while (document <a data-link-type="dfn" href="#has-active-observations" id="ref-for-has-active-observations-1">has active observations</a> &amp;&amp; <var>resizeNotificationCount</var> &lt; RESIZE_OBSERVER_LOOP_LIMIT)</p>
-     <ol>
+     <p>repeat while (document <a data-link-type="dfn" href="#has-active-observations" id="ref-for-has-active-observations-1">has active observations</a>)</p>
+     <ol start="2">
       <li data-md="">
-       <p>increment <var>resizeNotificationCount</var> by 1</p>
-      </li><li data-md="">
-       <p><a data-link-type="dfn" href="#broadcast-active-observations" id="ref-for-broadcast-active-observations-2">broadcast active observations</a></p>
+       <p>set <var>depth</var> to <a data-link-type="dfn" href="#broadcast-active-observations" id="ref-for-broadcast-active-observations-2">broadcast active observations</a></p>
       </li><li data-md="">
        <p>recalc styles</p>
       </li><li data-md="">
        <p>update layout</p>
       </li><li data-md="">
-       <p><a data-link-type="dfn" href="#gather-active-observations" id="ref-for-gather-active-observations-2">gather active observations</a> for <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code></p>
-      </li><li data-md="">
-       <p>if (document <a data-link-type="dfn" href="#has-active-observations" id="ref-for-has-active-observations-2">has active observations</a> &amp;&amp; <var>resizeNotificationCount</var> is RESIZE_OBSERVER_LOOP_LIMIT) then <a data-link-type="dfn" href="#deliver-resize-limit-error-notification" id="ref-for-deliver-resize-limit-error-notification-1">deliver resize limit error notification</a></p>
+       <p><a data-link-type="dfn" href="#gather-active-observations-at-depth" id="ref-for-gather-active-observations-at-depth-2">gather active observations at depth</a> <var>depth</var> for <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code></p>
      </li></ol>
+    </li><li data-md="">
+     <p>if <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code> <a data-link-type="dfn" href="#has-skipped-observations" id="ref-for-has-skipped-observations-1">has skipped observations</a> then <a data-link-type="dfn" href="#deliver-resize-loop-error-notification" id="ref-for-deliver-resize-loop-error-notification-1">deliver resize loop error notification</a></p>
    </li></ol>
   </main>
   <div data-fill-with="conformance">
@@ -2016,16 +2045,17 @@ It might get adjusted based on data we obtain from real-world usage.</p>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
    <li><a href="#dom-resizeobserver-activetargets">activeTargets</a><span>, in §3.1.2</span>
-   </li><li><a href="#broadcast-active-observations">broadcast active observations</a><span>, in §3.3.3</span>
+   </li><li><a href="#broadcast-active-observations">broadcast active observations</a><span>, in §3.3.4</span>
    </li><li><a href="#dom-resizeobservation-broadcastheight">broadcastHeight</a><span>, in §2.4</span>
    </li><li><a href="#dom-resizeobservation-broadcastwidth">broadcastWidth</a><span>, in §2.4</span>
    </li><li><a href="#dom-resizeobserver-callback">callback</a><span>, in §3.1.2</span>
-   </li><li><a href="#content-rect0">content rect</a><span>, in §3.2.1</span>
+   </li><li><a href="#content-rect">content rect</a><span>, in §3.2.1</span>
    </li><li><a href="#dom-resizeobserverentry-contentrect">contentRect</a><span>, in §2.3</span>
-   </li><li><a href="#deliver-resize-limit-error-notification">deliver resize limit error notification</a><span>, in §3.3.4</span>
+   </li><li><a href="#deliver-resize-loop-error-notification">deliver resize loop error notification</a><span>, in §3.3.5</span>
    </li><li><a href="#dom-resizeobserver-disconnect">disconnect()</a><span>, in §2.1</span>
-   </li><li><a href="#gather-active-observations">gather active observations</a><span>, in §3.3.1</span>
+   </li><li><a href="#gather-active-observations-at-depth">gather active observations at depth</a><span>, in §3.3.1</span>
    </li><li><a href="#has-active-observations">has active observations</a><span>, in §3.3.2</span>
+   </li><li><a href="#has-skipped-observations">has skipped observations</a><span>, in §3.3.3</span>
    </li><li><a href="#dom-resizeobservation-isactive">isActive()</a><span>, in §2.4</span>
    </li><li><a href="#dom-resizeobserver-observationtargets">observationTargets</a><span>, in §3.1.2</span>
    </li><li><a href="#dom-resizeobserver-observe">observe(target)</a><span>, in §2.1</span>
@@ -2037,6 +2067,7 @@ It might get adjusted based on data we obtain from real-world usage.</p>
    </li><li><a href="#resizeobserverentry">ResizeObserverEntry</a><span>, in §2.3</span>
    </li><li><a href="#dom-resizeobserverentry-resizeobserverentry">ResizeObserverEntry(target)</a><span>, in §2.3</span>
    </li><li><a href="#dom-document-resizeobservers">resizeObservers</a><span>, in §3.1.1</span>
+   </li><li><a href="#dom-resizeobserver-skippedtargets">skippedTargets</a><span>, in §3.1.2</span>
    </li><li>
     target
     <ul>
@@ -2086,30 +2117,30 @@ It might get adjusted based on data we obtain from real-world usage.</p>
    </dt><dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
   </dd></dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
-<pre class="idl def">[<a class="idl-code" data-link-type="constructor" href="#dom-resizeobserver-resizeobserver">Constructor</a>(<a data-link-type="idl-name" href="#callbackdef-resizeobservercallback">ResizeObserverCallback</a> <a href="#dom-resizeobserver-resizeobserver-callback-callback">callback</a>),
-    Exposed=Window]
-interface <a href="#resizeobserver">ResizeObserver</a> {
-    void <a class="idl-code" data-link-type="method" href="#dom-resizeobserver-observe">observe</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a href="#dom-resizeobserver-observe-target-target">target</a>);
-    void <a class="idl-code" data-link-type="method" href="#dom-resizeobserver-unobserve">unobserve</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a href="#dom-resizeobserver-unobserve-target-target">target</a>);
-    void <a class="idl-code" data-link-type="method" href="#dom-resizeobserver-disconnect">disconnect</a>();
+<pre class="idl def">[<a class="nv idl-code" data-link-type="constructor" href="#dom-resizeobserver-resizeobserver">Constructor</a>(<a class="n" data-link-type="idl-name" href="#callbackdef-resizeobservercallback">ResizeObserverCallback</a> <a class="nv" href="#dom-resizeobserver-resizeobserver-callback-callback">callback</a>),
+    <a class="nv idl-code" data-link-type="extended-attribute">Exposed</a>=<span class="n">Window</span>]
+<span class="kt">interface</span> <a class="nv" href="#resizeobserver">ResizeObserver</a> {
+    <span class="kt">void</span> <a class="nv idl-code" data-link-type="method" href="#dom-resizeobserver-observe">observe</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="nv" href="#dom-resizeobserver-observe-target-target">target</a>);
+    <span class="kt">void</span> <a class="nv idl-code" data-link-type="method" href="#dom-resizeobserver-unobserve">unobserve</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="nv" href="#dom-resizeobserver-unobserve-target-target">target</a>);
+    <span class="kt">void</span> <a class="nv idl-code" data-link-type="method" href="#dom-resizeobserver-disconnect">disconnect</a>();
 };
 
-callback <a href="#callbackdef-resizeobservercallback">ResizeObserverCallback</a> = void (sequence&lt;<a data-link-type="idl-name" href="#resizeobserverentry">ResizeObserverEntry</a>&gt; <a href="#dom-resizeobservercallback-entries">entries</a>, <a data-link-type="idl-name" href="#resizeobserver">ResizeObserver</a> <a href="#dom-resizeobservercallback-observer">observer</a>)
+<span class="kt">callback</span> <a class="nv" href="#callbackdef-resizeobservercallback">ResizeObserverCallback</a> = <span class="kt">void</span> (<span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#resizeobserverentry">ResizeObserverEntry</a>&gt; <a class="nv" href="#dom-resizeobservercallback-entries">entries</a>, <a class="n" data-link-type="idl-name" href="#resizeobserver">ResizeObserver</a> <a class="nv" href="#dom-resizeobservercallback-observer">observer</a>)
 
-[<a class="idl-code" data-link-type="constructor" href="#dom-resizeobserverentry-resizeobserverentry">Constructor</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a href="#dom-resizeobserverentry-resizeobserverentry-target-target">target</a>)
+[<a class="nv idl-code" data-link-type="constructor" href="#dom-resizeobserverentry-resizeobserverentry">Constructor</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="nv" href="#dom-resizeobserverentry-resizeobserverentry-target-target">target</a>)
 ]
-interface <a href="#resizeobserverentry">ResizeObserverEntry</a> {
-    readonly attribute <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobserverentry-target">target</a>;
-    readonly attribute <a data-link-type="idl-name">DOMReadOnlyRect</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="DOMReadOnlyRect" href="#dom-resizeobserverentry-contentrect">contentRect</a>;
+<span class="kt">interface</span> <a class="nv" href="#resizeobserverentry">ResizeObserverEntry</a> {
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobserverentry-target">target</a>;
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name">DOMReadOnlyRect</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="DOMReadOnlyRect" href="#dom-resizeobserverentry-contentrect">contentRect</a>;
 };
 
-[<a class="idl-code" data-link-type="constructor" href="#dom-resizeobservation-resizeobservation">Constructor</a>(<a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a href="#dom-resizeobservation-resizeobservation-target-target">target</a>)
+[<a class="nv idl-code" data-link-type="constructor" href="#dom-resizeobservation-resizeobservation">Constructor</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="nv" href="#dom-resizeobservation-resizeobservation-target-target">target</a>)
 ]
-interface <a href="#resizeobservation">ResizeObservation</a> {
-    readonly attribute <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobservation-target">target</a>;
-    readonly attribute float <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="float" href="#dom-resizeobservation-broadcastwidth">broadcastWidth</a>;
-    readonly attribute float <a class="idl-code" data-link-type="attribute" data-readonly="" data-type="float" href="#dom-resizeobservation-broadcastheight">broadcastHeight</a>;
-    boolean <a class="idl-code" data-link-type="method" href="#dom-resizeobservation-isactive">isActive</a>();
+<span class="kt">interface</span> <a class="nv" href="#resizeobservation">ResizeObservation</a> {
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobservation-target">target</a>;
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <span class="kt">float</span> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="float" href="#dom-resizeobservation-broadcastwidth">broadcastWidth</a>;
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <span class="kt">float</span> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="float" href="#dom-resizeobservation-broadcastheight">broadcastHeight</a>;
+    <span class="kt">boolean</span> <a class="nv idl-code" data-link-type="method" href="#dom-resizeobservation-isactive">isActive</a>();
 };
 
 </pre>
@@ -2119,9 +2150,9 @@ interface <a href="#resizeobservation">ResizeObservation</a> {
     <li><a href="#ref-for-resizeobserver-1">2.1. ResizeObserver interface</a>
     </li><li><a href="#ref-for-resizeobserver-2">2.2. ResizeObserverCallback</a> <a href="#ref-for-resizeobserver-3">(2)</a>
     </li><li><a href="#ref-for-resizeobserver-4">3.1.1. Document</a>
-    </li><li><a href="#ref-for-resizeobserver-5">3.1.2. ResizeObserver</a> <a href="#ref-for-resizeobserver-6">(2)</a> <a href="#ref-for-resizeobserver-7">(3)</a>
-    </li><li><a href="#ref-for-resizeobserver-8">3.4. ResizeObserver Lifetime</a>
-    </li><li><a href="#ref-for-resizeobserver-9">3.5.1.  HTML Processing Model: Event Loop</a> <a href="#ref-for-resizeobserver-10">(2)</a> <a href="#ref-for-resizeobserver-11">(3)</a>
+    </li><li><a href="#ref-for-resizeobserver-5">3.1.2. ResizeObserver</a> <a href="#ref-for-resizeobserver-6">(2)</a> <a href="#ref-for-resizeobserver-7">(3)</a> <a href="#ref-for-resizeobserver-8">(4)</a>
+    </li><li><a href="#ref-for-resizeobserver-9">3.4. ResizeObserver Lifetime</a>
+    </li><li><a href="#ref-for-resizeobserver-10">3.5.1.  HTML Processing Model: Event Loop</a> <a href="#ref-for-resizeobserver-11">(2)</a> <a href="#ref-for-resizeobserver-12">(3)</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobserver-resizeobserver">
@@ -2160,7 +2191,7 @@ interface <a href="#resizeobservation">ResizeObservation</a> {
    <ul>
     <li><a href="#ref-for-resizeobserverentry-1">2.2. ResizeObserverCallback</a>
     </li><li><a href="#ref-for-resizeobserverentry-2">2.3. ResizeObserverEntry</a>
-    </li><li><a href="#ref-for-resizeobserverentry-3">3.3.3. Broadcast active observations</a> <a href="#ref-for-resizeobserverentry-4">(2)</a>
+    </li><li><a href="#ref-for-resizeobserverentry-3">3.3.4. Broadcast active observations</a> <a href="#ref-for-resizeobserverentry-4">(2)</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobserverentry-target">
@@ -2186,27 +2217,28 @@ interface <a href="#resizeobservation">ResizeObservation</a> {
    <ul>
     <li><a href="#ref-for-resizeobservation-1">2.1. ResizeObserver interface</a> <a href="#ref-for-resizeobservation-2">(2)</a>
     </li><li><a href="#ref-for-resizeobservation-3">2.4. ResizeObservation</a>
-    </li><li><a href="#ref-for-resizeobservation-4">3.1.2. ResizeObserver</a> <a href="#ref-for-resizeobservation-5">(2)</a>
+    </li><li><a href="#ref-for-resizeobservation-4">3.1.2. ResizeObserver</a> <a href="#ref-for-resizeobservation-5">(2)</a> <a href="#ref-for-resizeobservation-6">(3)</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobservation-target">
    <b><a href="#dom-resizeobservation-target">#dom-resizeobservation-target</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-resizeobservation-target-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-target-2">(2)</a> <a href="#ref-for-dom-resizeobservation-target-3">(3)</a> <a href="#ref-for-dom-resizeobservation-target-4">(4)</a>
+    </li><li><a href="#ref-for-dom-resizeobservation-target-5">3.3.1. Gather active observations at depth</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobservation-broadcastwidth">
    <b><a href="#dom-resizeobservation-broadcastwidth">#dom-resizeobservation-broadcastwidth</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-resizeobservation-broadcastwidth-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-broadcastwidth-2">(2)</a> <a href="#ref-for-dom-resizeobservation-broadcastwidth-3">(3)</a>
-    </li><li><a href="#ref-for-dom-resizeobservation-broadcastwidth-4">3.3.3. Broadcast active observations</a>
+    </li><li><a href="#ref-for-dom-resizeobservation-broadcastwidth-4">3.3.4. Broadcast active observations</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobservation-broadcastheight">
    <b><a href="#dom-resizeobservation-broadcastheight">#dom-resizeobservation-broadcastheight</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-resizeobservation-broadcastheight-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-broadcastheight-2">(2)</a> <a href="#ref-for-dom-resizeobservation-broadcastheight-3">(3)</a>
-    </li><li><a href="#ref-for-dom-resizeobservation-broadcastheight-4">3.3.3. Broadcast active observations</a>
+    </li><li><a href="#ref-for-dom-resizeobservation-broadcastheight-4">3.3.4. Broadcast active observations</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobservation-resizeobservation">
@@ -2219,58 +2251,71 @@ interface <a href="#resizeobservation">ResizeObservation</a> {
    <b><a href="#dom-resizeobservation-isactive">#dom-resizeobservation-isactive</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-resizeobservation-isactive-1">2.4. ResizeObservation</a>
-    </li><li><a href="#ref-for-dom-resizeobservation-isactive-2">3.3.1. Gather active observations</a>
+    </li><li><a href="#ref-for-dom-resizeobservation-isactive-2">3.3.1. Gather active observations at depth</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-document-resizeobservers">
    <b><a href="#dom-document-resizeobservers">#dom-document-resizeobservers</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-document-resizeobservers-1">2.1. ResizeObserver interface</a>
-    </li><li><a href="#ref-for-dom-document-resizeobservers-2">3.3.1. Gather active observations</a>
-    </li><li><a href="#ref-for-dom-document-resizeobservers-3">3.3.3. Broadcast active observations</a>
+    </li><li><a href="#ref-for-dom-document-resizeobservers-2">3.3.1. Gather active observations at depth</a>
+    </li><li><a href="#ref-for-dom-document-resizeobservers-3">3.3.4. Broadcast active observations</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobserver-callback">
    <b><a href="#dom-resizeobserver-callback">#dom-resizeobserver-callback</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-resizeobserver-callback-1">2.1. ResizeObserver interface</a>
-    </li><li><a href="#ref-for-dom-resizeobserver-callback-2">3.3.3. Broadcast active observations</a>
+    </li><li><a href="#ref-for-dom-resizeobserver-callback-2">3.3.4. Broadcast active observations</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobserver-observationtargets">
    <b><a href="#dom-resizeobserver-observationtargets">#dom-resizeobserver-observationtargets</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-resizeobserver-observationtargets-1">2.1. ResizeObserver interface</a> <a href="#ref-for-dom-resizeobserver-observationtargets-2">(2)</a> <a href="#ref-for-dom-resizeobserver-observationtargets-3">(3)</a> <a href="#ref-for-dom-resizeobserver-observationtargets-4">(4)</a> <a href="#ref-for-dom-resizeobserver-observationtargets-5">(5)</a>
-    </li><li><a href="#ref-for-dom-resizeobserver-observationtargets-6">3.3.1. Gather active observations</a>
+    </li><li><a href="#ref-for-dom-resizeobserver-observationtargets-6">3.3.1. Gather active observations at depth</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobserver-activetargets">
    <b><a href="#dom-resizeobserver-activetargets">#dom-resizeobserver-activetargets</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-resizeobserver-activetargets-1">2.1. ResizeObserver interface</a>
-    </li><li><a href="#ref-for-dom-resizeobserver-activetargets-2">3.3.1. Gather active observations</a> <a href="#ref-for-dom-resizeobserver-activetargets-3">(2)</a>
+    </li><li><a href="#ref-for-dom-resizeobserver-activetargets-2">3.3.1. Gather active observations at depth</a> <a href="#ref-for-dom-resizeobserver-activetargets-3">(2)</a>
     </li><li><a href="#ref-for-dom-resizeobserver-activetargets-4">3.3.2. Has active observations</a>
-    </li><li><a href="#ref-for-dom-resizeobserver-activetargets-5">3.3.3. Broadcast active observations</a> <a href="#ref-for-dom-resizeobserver-activetargets-6">(2)</a> <a href="#ref-for-dom-resizeobserver-activetargets-7">(3)</a>
+    </li><li><a href="#ref-for-dom-resizeobserver-activetargets-5">3.3.4. Broadcast active observations</a> <a href="#ref-for-dom-resizeobserver-activetargets-6">(2)</a> <a href="#ref-for-dom-resizeobserver-activetargets-7">(3)</a>
    </li></ul>
   </aside>
-  <aside class="dfn-panel" data-for="content-rect0">
-   <b><a href="#content-rect0">#content-rect0</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dom-resizeobserver-skippedtargets">
+   <b><a href="#dom-resizeobserver-skippedtargets">#dom-resizeobserver-skippedtargets</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-content-rect0-1">1. Introduction</a> <a href="#ref-for-content-rect0-2">(2)</a>
-    </li><li><a href="#ref-for-content-rect0-3">2.1. ResizeObserver interface</a>
-    </li><li><a href="#ref-for-content-rect0-4">2.3. ResizeObserverEntry</a>
+    <li><a href="#ref-for-dom-resizeobserver-skippedtargets-1">3.3.1. Gather active observations at depth</a> <a href="#ref-for-dom-resizeobserver-skippedtargets-2">(2)</a>
+    </li><li><a href="#ref-for-dom-resizeobserver-skippedtargets-3">3.3.3. Has skipped observations</a>
    </li></ul>
   </aside>
-  <aside class="dfn-panel" data-for="gather-active-observations">
-   <b><a href="#gather-active-observations">#gather-active-observations</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="content-rect">
+   <b><a href="#content-rect">#content-rect</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-gather-active-observations-1">3.5.1.  HTML Processing Model: Event Loop</a> <a href="#ref-for-gather-active-observations-2">(2)</a>
+    <li><a href="#ref-for-content-rect-1">1. Introduction</a> <a href="#ref-for-content-rect-2">(2)</a>
+    </li><li><a href="#ref-for-content-rect-3">2.1. ResizeObserver interface</a>
+    </li><li><a href="#ref-for-content-rect-4">2.3. ResizeObserverEntry</a>
+   </li></ul>
+  </aside>
+  <aside class="dfn-panel" data-for="gather-active-observations-at-depth">
+   <b><a href="#gather-active-observations-at-depth">#gather-active-observations-at-depth</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-gather-active-observations-at-depth-1">3.5.1.  HTML Processing Model: Event Loop</a> <a href="#ref-for-gather-active-observations-at-depth-2">(2)</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="has-active-observations">
    <b><a href="#has-active-observations">#has-active-observations</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-has-active-observations-1">3.5.1.  HTML Processing Model: Event Loop</a> <a href="#ref-for-has-active-observations-2">(2)</a>
+    <li><a href="#ref-for-has-active-observations-1">3.5.1.  HTML Processing Model: Event Loop</a>
+   </li></ul>
+  </aside>
+  <aside class="dfn-panel" data-for="has-skipped-observations">
+   <b><a href="#has-skipped-observations">#has-skipped-observations</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-has-skipped-observations-1">3.5.1.  HTML Processing Model: Event Loop</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="broadcast-active-observations">
@@ -2280,10 +2325,10 @@ interface <a href="#resizeobservation">ResizeObservation</a> {
     </li><li><a href="#ref-for-broadcast-active-observations-2">3.5.1.  HTML Processing Model: Event Loop</a>
    </li></ul>
   </aside>
-  <aside class="dfn-panel" data-for="deliver-resize-limit-error-notification">
-   <b><a href="#deliver-resize-limit-error-notification">#deliver-resize-limit-error-notification</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="deliver-resize-loop-error-notification">
+   <b><a href="#deliver-resize-loop-error-notification">#deliver-resize-loop-error-notification</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-deliver-resize-limit-error-notification-1">3.5.1.  HTML Processing Model: Event Loop</a>
+    <li><a href="#ref-for-deliver-resize-loop-error-notification-1">3.5.1.  HTML Processing Model: Event Loop</a>
    </li></ul>
   </aside>
 <script>/* script-dfn-panel */

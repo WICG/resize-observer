@@ -265,10 +265,12 @@ interface ResizeObservation {
 {{ResizeObserver}} has an <dfn attribute for="ResizeObserver">observationTargets</dfn> slot, which is a list of {{ResizeObservation}}s.
 It represents all Elements being observed.
 
-{{ResizeObserver}} has a <dfn attribute for="ResizeObserver">activeTargets</dfn> slot, which is a list of {{ResizeObservation}}s. It represents all Elements whose size has changed since last observation broadcast.
+{{ResizeObserver}} has a <dfn attribute for="ResizeObserver">activeTargets</dfn> slot, which is a list of {{ResizeObservation}}s. It represents all Elements whose size has changed since last observation broadcast that are eligible for broadcast.
+
+{{ResizeObserver}} has a <dfn attribute for="ResizeObserver">skippedTargets</dfn> slot, which is a list of {{ResizeObservation}}s. It represents all Elements whose size has changed since last observation broadcast that are **not** eligible for broadcast
 
 <h3 id="css-definitions">CSS Definitions</h3>
-<h4 id="content-rect">content rect</h4>
+<h4 id="content-rect-h">content rect</h4>
 <dfn>content rect</dfn> is a rect whose:
 
 * |width| is <a>content width</a>
@@ -290,18 +292,23 @@ Watching content rect means that:
 
 <h3 id="algorithms">Algorithms</h3>
 
-<h4 id="gather-active-observations-h">Gather active observations</h4>
+<h4 id="gather-active-observations-h">Gather active observations at depth</h4>
 
-It computes all active observations for a |document|. To <dfn>gather active observations</dfn>, run these steps:
+It computes all active observations for a |document|. To <dfn>gather active observations at depth</dfn>, run these steps:
+
+1. Let |depth| be the depth passed in.
 
 1. For each |observer| in {{Document/resizeObservers}} run these steps:
 
-    1. Clear |observer|'s {{ResizeObserver/activeTargets}}.
+    1. Clear |observer|'s {{ResizeObserver/activeTargets}}, and {{ResizeObserver/skippedTargets}}
 
     2. For each |observation| in |observer|.{{ResizeObserver/observationTargets}} run this step:
 
-        1. If |observation|.{{ResizeObservation/isActive()}} is true, add |observation| to {{ResizeObserver/activeTargets}}
+        1. If |observation|.{{ResizeObservation/isActive()}} is true
 
+            1. If {{ResizeObservation/target}}.|depth| is greater than |depth| then add |observation| to {{ResizeObserver/activeTargets}}.
+
+            2. Else add |observation| to {{ResizeObserver/skippedTargets}}.
 
 <h4 id="has-active-observations-h">Has active observations</h4>
 
@@ -313,12 +320,27 @@ To determine if {{Document}} <dfn>has active observations</dfn> run these steps:
 
 2. return false.
 
+<h4 id="has-skipped-observations-h">Has skipped observations</h4>
+
+To determine if {{Document}} <dfn>has skipped observations</dfn> run these steps:
+
+1. For each |observer| in {Document/resizeObservers}} run this step:
+
+    1. If |observer|.{{ResizeObserver/skippedTargets}} is not empty, return true.
+
+2. return false.
+
 <h4 id="broadcast-resize-notifications-h">Broadcast active observations</h4>
 
-To <dfn>broadcast active observations</dfn> for a |document|,
+<dfn>broadcast active observations</dfn> delivers all active observations
+in a document, and returns the depth of the shallowest broadcast target depth.
+
+To broadcast active observations for a |document|,
 run these steps:
 
-1. For each |observer| in |document|.{{Document/resizeObservers}} run these steps:
+1. Let |shallowestTargetDepth| be 65536
+
+2. For each |observer| in |document|.{{Document/resizeObservers}} run these steps:
 
     1. If |observer|.{{ResizeObserver/activeTargets}} slot is empty, continue.
 
@@ -338,14 +360,15 @@ run these steps:
 
     5. Clear |observer|.{{ResizeObserver/activeTargets}}.
 
+3. Return |shallowestTargetDepth|.
 
-<h4 id="deliver-resize-error">Deliver Resize Limit Error</h4>
+<h4 id="deliver-resize-error">Deliver Resize Loop Error</h4>
 
-To <dfn>deliver resize limit error notification</dfn> run these steps:
+To <dfn>deliver resize loop error notification</dfn> run these steps:
 
     1. Create a new {{ErrorEvent}}.
 
-    2. Initialize event's message slot to "ResizeObserver loop limit exceeded.".
+    2. Initialize event's message slot to "ResizeObserver loop completed with undelivered notifications.".
 
     3. Dispach the event to document's window.
 
@@ -377,14 +400,19 @@ For each fully active Document in docs, run the following steps for that Documen
 
     3. paint
 
-
 {{ResizeObserver}} extends step 12 with resize notifications.
 It tries to deliver all pending notifications by looping
-until no pending notifications are available. Infinite looping is prevented
-by limiting the number of times loop is repeated to RESIZE_OBSERVER_LOOP_LIMIT constant. Looping too many times generates an error.
+until no pending notifications are available. This can cause
+an infinite loop.
 
-Note: RESIZE_OBSERVER_LOOP_LIMIT is currently arbitrarily set to 32.
-It might get adjusted based on data we obtain from real-world usage.
+Infinite loop is prevented by shrinking the set of
+nodes that can notify at every iteration. In each iteration,
+only nodes deeper than the shallowest node in previous iteration
+can notify.
+
+An error is generated if notification loop completes, and there
+are undelivered notifications.
+
 
 Step 12 with {{ResizeObserver}} notifications is:
 
@@ -394,22 +422,20 @@ For each fully active Document in docs, run the following steps for that Documen
 
 2. update layout
 
-3. let |resizeNotificationCount| be 0
+3. set |depth| to 0
 
-4. <a>gather active observations</a> for {{Document}}
+4. <a>gather active observations at depth</a> |depth| for {{Document}}
 
-5. repeat while (document <a>has active observations</a> && |resizeNotificationCount| < RESIZE_OBSERVER_LOOP_LIMIT)
+5. repeat while (document <a>has active observations</a>)
 
-    1. increment |resizeNotificationCount| by 1
-
-    2. <a>broadcast active observations</a>
+    2. set |depth| to <a>broadcast active observations</a>
 
     3. recalc styles
 
     4. update layout
 
-    5. <a>gather active observations</a> for {{Document}}
+    5. <a>gather active observations at depth</a> |depth| for {{Document}}
 
-    6. if (document <a>has active observations</a> && |resizeNotificationCount| is RESIZE_OBSERVER_LOOP_LIMIT) then <a>deliver resize limit error notification</a>
+6. if {{Document}} <a>has skipped observations</a> then <a>deliver resize loop error notification</a>
 
 
