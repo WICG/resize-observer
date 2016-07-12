@@ -9,10 +9,10 @@ Editor: Aleks Totic, Google, atotic@google.com
 Abstract: This specification describes an API for observing changes to Element's size.
 </pre>
 <pre class="anchors">
-urlPrefix: https://drafts.csswg.org/css-box-3/
-    url: #width; type: dfn; text: content width
-urlPrefix: https://drafts.csswg.org/css-box-3/
-    url: #height; type: dfn; text: content height
+urlPrefix: https://www.w3.org/TR/CSS2/box.html
+    url: #content-width; type: dfn; text: content width
+urlPrefix: https://www.w3.org/TR/CSS2/box.html
+    url: #content-height; type: dfn; text: content height
 urlPrefix: https://drafts.csswg.org/css-box-3/
     url: #padding-top; type: dfn; text: padding top
 urlPrefix: https://drafts.csswg.org/css-box-3/
@@ -379,7 +379,9 @@ run these steps:
 
         4. Set |observation|.{{ResizeObservation/broadcastHeight}} to |entry|.contentRect.height.
 
-        5. Set |shallowestTargetDepth| to |observation|.{{ResizeObservation/target}}.depth if |observation|.{{ResizeObservation/target}}.depth < |shallowestTargetDepth|
+        5. Set |targetDepth| to the result of <a>calculate depth for node</a> for |observation|.{{ResizeObservation/target}}.
+
+        6. Set |shallowestTargetDepth| to |targetDepth| if |targetDepth| < |shallowestTargetDepth|
 
     4. Invoke |observer|.{{ResizeObserver/callback}} with |entries|.
 
