@@ -31,6 +31,9 @@ urlPrefix: https://www.w3.org/TR/SVG2/
 urlPrefix: https://www.w3.org/TR/SVG2/#InterfaceSVGGraphicsElement
     urlPrefix: types.html
         url: #InterfaceSVGGraphicsElement; type: dfn; text: SVGGraphicsElement
+urlPrefix: https://www.w3.org/TR/css3-multicol/
+    url: #; type: dfn; text: Multi column
+
 </pre>
 <pre class=link-defaults>
 spec:dom; type:interface; text:Document
@@ -291,6 +294,8 @@ DOM <dfn>content rect</dfn> is a rect whose:
 * height is <a>content height</a>
 * top is <a>padding top</a>
 * left is <a>padding left</a>
+
+<a>content width</a> spec does not mention how <a>multi column</a> layout affects content box. In this spec, content width of an {{Element}} inside <a>multi column</a> is the result of getComputedStyle({{Element}}).width. This currently evaluates to width of the first column.
 
 Having content rect position be padding-top/left is useful for absolute positioning of target's children. Absolute position coordinate space origin is topLeft of the padding rect.
 
