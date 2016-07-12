@@ -327,9 +327,11 @@ It computes all active observations for a |document|. To <dfn>gather active obse
 
         1. If |observation|.{{ResizeObservation/isActive()}} is true
 
-            1. If {{ResizeObservation/target}}.|depth| is greater than |depth| then add |observation| to {{ResizeObserver/activeTargets}}.
+            1. Let |targetDepth| be result of <a>calculate depth for node</a> for |observation|.{{ResizeObservation/target}}.
 
-            2. Else add |observation| to {{ResizeObserver/skippedTargets}}.
+            2. If |targetDepth| is greater than |depth| then add |observation| to {{ResizeObserver/activeTargets}}.
+
+            3. Else add |observation| to {{ResizeObserver/skippedTargets}}.
 
 <h4 id="has-active-observations-h">Has active observations</h4>
 
@@ -394,6 +396,14 @@ To <dfn>deliver resize loop error notification</dfn> run these steps:
     2. Initialize event's message slot to "ResizeObserver loop completed with undelivered notifications.".
 
     3. Dispach the event to document's window.
+
+<h4 id="calculate-depth-for-node">Calculate depth for node</h4>
+
+To <dfn>calculate depth for node</dfn> |node| run these steps:
+
+    1. Let |p| be the parent-traversal path from |node| to enclosing {{Document}}.
+
+    2. Return length of |p|.
 
 <h3 id="lifetime">ResizeObserver Lifetime</h3>
 
