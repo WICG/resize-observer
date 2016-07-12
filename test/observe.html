@@ -1,0 +1,139 @@
+<!doctype html>
+<head>
+  <script src="../resources/testharness.js"></script>
+  <script src="../resources/testharnessreport.js"></script>
+  <script src="./resources/resizeTestHelper.js"></script>
+</head>
+<p>ResizeObserver tests</p>
+<div id="target1" style="width:100px;height:100px;">t1</div>
+<div id="target2" style="width:100px;height:100px;">t2</div>
+<svg height="100" width="100">
+  <circle id="targetC" cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+  Sorry, your browser does not support inline SVG.
+</svg>
+<script>
+'use strict';
+
+var helper = new ResizeTestHelper();
+
+let t1 = document.querySelector('#target1');
+let t2 = document.querySelector('#target2');
+
+// allow uncaught exception because ResizeObserver posts exceptions
+// to window error handler when limit is exceeded.
+setup({allow_uncaught_exception: true});
+
+function test0() {
+  helper.createTest(
+    "simple observation",
+    _ => {
+      helper.observer.disconnect();
+      helper.observer.observe(t1);
+      t1.style.width = "5px";
+    },
+    entries => {
+      assert_equals(entries.length, 1, "1 pending notification");
+      assert_equals(entries[0].target, t1, "target is t1");
+      assert_equals(entries[0].contentRect.width, 5, "target width");
+      test1();
+    }
+  );
+  helper.nextTest();
+}
+
+function test1() {
+  helper.createTest(
+    "multiple observation on same element trigger only one",
+    _ => {
+      helper.observer.observe(t1);
+      helper.observer.observe(t1);
+      t1.style.width = "10px";
+    },
+    entries => {
+      assert_equals(entries.length, 1, "1 pending notification");
+      helper.observer.disconnect();
+      test2();
+    }
+  );
+  helper.nextTestRaf();
+}
+
+function test2() {
+  test(_ => {
+      assert_throws(null, _=> {
+        helper.observer.observe({});
+      });
+      test3();
+    },
+    "throw exception when observing non-element"
+  );
+}
+
+function test3() {
+  helper.createTest(
+    "disconnect stops all notifications",
+    _ => {
+      helper.observer.observe(t1);
+      helper.observer.observe(t2);
+      helper.observer.disconnect();
+      t1.style.width = "30px";
+    },
+    entries => {
+      assert_unreached("no entries should happen");
+    },
+    _ => {
+      // timeout happened, all is well.
+      test4();
+    }
+  );
+  helper.nextTestRaf();
+}
+
+function test4() {
+  helper.createTest(
+    "unobserve target stops notifications, unobserve non-observed does nothing",
+    _ => {
+      helper.observer.observe(t1);
+      helper.observer.observe(t2);
+      helper.observer.unobserve(t1);
+      helper.observer.unobserve(document.body);
+      t1.style.width = "40px";
+      t2.style.width = "40px";
+    },
+    entries => {
+      assert_equals(entries.length, 1, "only t2");
+      assert_equals(entries[0].target, t2, "t2 was observed");
+      helper.observer.disconnect();
+      test5();
+    }
+  );
+  helper.nextTestRaf();
+}
+
+function test5() {
+  let circle = document.querySelector('#targetC');
+  helper.createTest(
+    "observe svg",
+    setup => {
+      helper.observer.observe(circle);
+    },
+    entries => {
+      helper.nextTest();
+    }
+  );
+  helper.createTest(
+    "observe svg, pt 2",
+    setup => {
+      circle.setAttribute('r', 50);
+    },
+    entries => {
+      assert_equals(entries.length, 1);
+      helper.observer.disconnect();
+    }
+  );
+  helper.nextTestRaf();
+}
+
+test0();
+
+</script>

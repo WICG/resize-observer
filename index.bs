@@ -404,7 +404,7 @@ To <dfn>deliver resize loop error notification</dfn> run these steps:
 
     3. Dispach the event to document's window.
 
-<h4 id="calculate-depth-for-node">Calculate depth for node</h4>
+<h4 id="calculate-depth-for-node-h">Calculate depth for node</h4>
 
 To <dfn>calculate depth for node</dfn> |node| run these steps:
 
