@@ -1395,11 +1395,11 @@ pre.idl.highlight { color: #708090; }
         .highlight .vi { color: #0077aa } /* Name.Variable.Instance */
         .highlight .il { color: #000000 } /* Literal.Number.Integer.Long */
         </style>
- </head><body class="h-entry toc-inline"><p id="toc-nav"><a id="toc-jump" href="#toc"><span aria-hidden="true">↑</span> <span>Jump to Table of Contents</span></a><a id="toc-toggle" href="#toc"><span aria-hidden="true">→</span> <span>Pop Out Sidebar</span></a></p>
+ </head><body class="h-entry toc-sidebar"><p id="toc-nav"><a id="toc-jump" href="#toc"><span aria-hidden="true">↑</span> <span>Jump to Table of Contents</span></a><a id="toc-toggle" href="#toc"><span aria-hidden="true">←</span> <span>Collapse Sidebar</span></a></p>
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Resize Observer</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-06-23">23 June 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-07-12">12 July 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1411,7 +1411,7 @@ pre.idl.highlight { color: #708090; }
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 23 June 2016,
+In addition, as of 12 July 2016,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1456,6 +1456,7 @@ Parts of this work may be from another specification document.  If so, those par
         </li><li><a href="#has-skipped-observations-h"><span class="secno">3.3.3</span> <span class="content">Has skipped observations</span></a>
         </li><li><a href="#broadcast-resize-notifications-h"><span class="secno">3.3.4</span> <span class="content">Broadcast active observations</span></a>
         </li><li><a href="#deliver-resize-error"><span class="secno">3.3.5</span> <span class="content">Deliver Resize Loop Error</span></a>
+        </li><li><a href="#calculate-depth-for-node-h"><span class="secno">3.3.6</span> <span class="content">Calculate depth for node</span></a>
        </li></ol>
       </li><li><a href="#lifetime"><span class="secno">3.4</span> <span class="content">ResizeObserver Lifetime</span></a>
       </li><li>
@@ -1614,7 +1615,7 @@ counterpart to window.<code class="idl"><a data-link-type="idl" href="https://dr
 ]
 <span class="kt">interface</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="interface" data-export="" id="resizeobserverentry">ResizeObserverEntry</dfn> {
     <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobserverentry-target" id="ref-for-dom-resizeobserverentry-target-1">target</a>;
-    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name">DOMReadOnlyRect</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="DOMReadOnlyRect" href="#dom-resizeobserverentry-contentrect" id="ref-for-dom-resizeobserverentry-contentrect-1">contentRect</a>;
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://drafts.fxtf.org/geometry-1/#domrectreadonly">DOMRectReadOnly</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="DOMRectReadOnly" href="#dom-resizeobserverentry-contentrect" id="ref-for-dom-resizeobserverentry-contentrect-1">contentRect</a>;
 };
 </pre>
    <div>
@@ -1624,7 +1625,7 @@ counterpart to window.<code class="idl"><a data-link-type="idl" href="https://dr
      </dt><dd data-md="">
       <p>The <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code> whose size has changed.</p>
      </dd><dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="attribute" data-export="" id="dom-resizeobserverentry-contentrect">contentRect</dfn>, <span> of type <a data-link-type="idl-name">DOMReadOnlyRect</a>, readonly</span></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserverEntry" data-dfn-type="attribute" data-export="" id="dom-resizeobserverentry-contentrect">contentRect</dfn>, <span> of type <a data-link-type="idl-name" href="https://drafts.fxtf.org/geometry-1/#domrectreadonly">DOMRectReadOnly</a>, readonly</span></p>
      </dt><dd data-md="">
       <p><code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <a data-link-type="dfn" href="#content-rect" id="ref-for-content-rect-4">content rect</a> when <code class="idl"><a data-link-type="idl" href="#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-2">ResizeObserverCallback</a></code> is invoked.</p>
     </dd></dl>
@@ -1640,9 +1641,9 @@ counterpart to window.<code class="idl"><a data-link-type="idl" href="https://dr
        </li><li data-md="">
         <p>Set <var>this</var> <code class="idl"><a data-link-type="idl" href="#dom-resizeobserverentry-target" id="ref-for-dom-resizeobserverentry-target-2">target</a></code> slot to <var>target</var>.</p>
        </li><li data-md="">
-        <p>Set <var>this</var>.contentRect.width to <var>target</var>.<a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#width">content width</a>.</p>
+        <p>Set <var>this</var>.contentRect.width to <var>target</var>.<a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/box.html#content-width">content width</a>.</p>
        </li><li data-md="">
-        <p>Set <var>this</var>.contentRect.height to <var>target</var>.<a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#height">content height</a>.</p>
+        <p>Set <var>this</var>.contentRect.height to <var>target</var>.<a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/box.html#content-height">content height</a>.</p>
        </li><li data-md="">
         <p>Set <var>this</var>.contentRect.top to <var>target</var>.<a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#padding-top">padding top</a>.</p>
        </li><li data-md="">
@@ -1671,11 +1672,11 @@ interface is not visible to Javascript.
      </dd><dt data-md="">
       <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="attribute" data-export="" id="dom-resizeobservation-broadcastwidth">broadcastWidth</dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-float">float</a>, readonly</span></p>
      </dt><dd data-md="">
-      <p>Width of last broadcast <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#width">content width</a>.</p>
+      <p>Width of last broadcast <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/box.html#content-width">content width</a>.</p>
      </dd><dt data-md="">
       <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="attribute" data-export="" id="dom-resizeobservation-broadcastheight">broadcastHeight</dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-float">float</a>, readonly</span></p>
      </dt><dd data-md="">
-      <p>Width of last broadcast <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#height">content height</a>.</p>
+      <p>Width of last broadcast <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/box.html#content-height">content height</a>.</p>
     </dd></dl>
    </div>
    <div>
@@ -1701,9 +1702,9 @@ interface is not visible to Javascript.
         <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-3">target</a></code> is an HTML element do these steps:</p>
         <ol>
          <li data-md="">
-          <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-4">target</a></code>.<a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#width">content width</a> != <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastwidth" id="ref-for-dom-resizeobservation-broadcastwidth-3">broadcastWidth</a></code> return true.</p>
+          <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-4">target</a></code>.<a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/box.html#content-width">content width</a> != <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastwidth" id="ref-for-dom-resizeobservation-broadcastwidth-3">broadcastWidth</a></code> return true.</p>
          </li><li data-md="">
-          <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-5">target</a></code>.<a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#height">content height</a> != <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastheight" id="ref-for-dom-resizeobservation-broadcastheight-3">broadcastHeight</a></code> return true.</p>
+          <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-5">target</a></code>.<a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/box.html#content-height">content height</a> != <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastheight" id="ref-for-dom-resizeobservation-broadcastheight-3">broadcastHeight</a></code> return true.</p>
         </li></ol>
        </li><li data-md="">
         <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-6">target</a></code> is an SVGGraphicsElement do these steps:</p>
@@ -1733,14 +1734,15 @@ It represents all Elements being observed.</p>
     DOM <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="content-rect">content rect</dfn> is a rect whose:
    <ul>
     <li data-md="">
-     <p>width is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#width">content width</a></p>
+     <p>width is <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/box.html#content-width">content width</a></p>
     </li><li data-md="">
-     <p>height is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#height">content height</a></p>
+     <p>height is <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/box.html#content-height">content height</a></p>
     </li><li data-md="">
      <p>top is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#padding-top">padding top</a></p>
     </li><li data-md="">
      <p>left is <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-3/#padding-left">padding left</a></p>
    </li></ul>
+   <p><a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/box.html#content-width">content width</a> spec does not mention how <a data-link-type="dfn" href="https://www.w3.org/TR/css3-multicol/#">multi column</a> layout affects content box. In this spec, content width of an <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code> inside <a data-link-type="dfn" href="https://www.w3.org/TR/css3-multicol/#">multi column</a> is the result of getComputedStyle(<code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>).width. This currently evaluates to width of the first column.</p>
    <p>Having content rect position be padding-top/left is useful for absolute positioning of target’s children. Absolute position coordinate space origin is topLeft of the padding rect.</p>
    <p>Watching content rect means that:</p>
    <ul>
@@ -1781,7 +1783,9 @@ Content rect for <a data-link-type="dfn" href="https://www.w3.org/TR/SVG2/#Inter
          <p>If <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-isactive" id="ref-for-dom-resizeobservation-isactive-2">isActive()</a></code> is true</p>
          <ol>
           <li data-md="">
-           <p>If <code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-9">target</a></code>.<var>depth</var> is greater than <var>depth</var> then add <var>observation</var> to <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activetargets" id="ref-for-dom-resizeobserver-activetargets-3">activeTargets</a></code>.</p>
+           <p>Let <var>targetDepth</var> be result of <a data-link-type="dfn" href="#calculate-depth-for-node" id="ref-for-calculate-depth-for-node-1">calculate depth for node</a> for <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-9">target</a></code>.</p>
+          </li><li data-md="">
+           <p>If <var>targetDepth</var> is greater than <var>depth</var> then add <var>observation</var> to <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activetargets" id="ref-for-dom-resizeobserver-activetargets-3">activeTargets</a></code>.</p>
           </li><li data-md="">
            <p>Else add <var>observation</var> to <code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-skippedtargets" id="ref-for-dom-resizeobserver-skippedtargets-2">skippedTargets</a></code>.</p>
          </li></ol>
@@ -1792,7 +1796,7 @@ Content rect for <a data-link-type="dfn" href="https://www.w3.org/TR/SVG2/#Inter
    <p>To determine if <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code> <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="has-active-observations">has active observations</dfn> run these steps:</p>
    <ol>
     <li data-md="">
-     <p>For each <var>observer</var> in {Document/resizeObservers}} run this step:</p>
+     <p>For each <var>observer</var> in <code class="idl"><a data-link-type="idl" href="#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-3">resizeObservers</a></code> run this step:</p>
      <ol>
       <li data-md="">
        <p>If <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activetargets" id="ref-for-dom-resizeobserver-activetargets-4">activeTargets</a></code> is not empty, return true.</p>
@@ -1804,7 +1808,7 @@ Content rect for <a data-link-type="dfn" href="https://www.w3.org/TR/SVG2/#Inter
    <p>To determine if <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code> <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="has-skipped-observations">has skipped observations</dfn> run these steps:</p>
    <ol>
     <li data-md="">
-     <p>For each <var>observer</var> in {Document/resizeObservers}} run this step:</p>
+     <p>For each <var>observer</var> in <code class="idl"><a data-link-type="idl" href="#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-4">resizeObservers</a></code> run this step:</p>
      <ol>
       <li data-md="">
        <p>If <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-skippedtargets" id="ref-for-dom-resizeobserver-skippedtargets-3">skippedTargets</a></code> is not empty, return true.</p>
@@ -1821,7 +1825,7 @@ run these steps:</p>
     <li data-md="">
      <p>Let <var>shallowestTargetDepth</var> be ∞</p>
     </li><li data-md="">
-     <p>For each <var>observer</var> in <var>document</var>.<code class="idl"><a data-link-type="idl" href="#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-3">resizeObservers</a></code> run these steps:</p>
+     <p>For each <var>observer</var> in <var>document</var>.<code class="idl"><a data-link-type="idl" href="#dom-document-resizeobservers" id="ref-for-dom-document-resizeobservers-5">resizeObservers</a></code> run these steps:</p>
      <ol>
       <li data-md="">
        <p>If <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-activetargets" id="ref-for-dom-resizeobserver-activetargets-5">activeTargets</a></code> slot is empty, continue.</p>
@@ -1839,7 +1843,9 @@ run these steps:</p>
         </li><li data-md="">
          <p>Set <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-broadcastheight" id="ref-for-dom-resizeobservation-broadcastheight-5">broadcastHeight</a></code> to <var>entry</var>.contentRect.height.</p>
         </li><li data-md="">
-         <p>Set <var>shallowestTargetDepth</var> to <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-10">target</a></code>.depth if <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-11">target</a></code>.depth &lt; <var>shallowestTargetDepth</var></p>
+         <p>Set <var>targetDepth</var> to the result of <a data-link-type="dfn" href="#calculate-depth-for-node" id="ref-for-calculate-depth-for-node-2">calculate depth for node</a> for <var>observation</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobservation-target" id="ref-for-dom-resizeobservation-target-10">target</a></code>.</p>
+        </li><li data-md="">
+         <p>Set <var>shallowestTargetDepth</var> to <var>targetDepth</var> if <var>targetDepth</var> &lt; <var>shallowestTargetDepth</var></p>
        </li></ol>
       </li><li data-md="">
        <p>Invoke <var>observer</var>.<code class="idl"><a data-link-type="idl" href="#dom-resizeobserver-callback" id="ref-for-dom-resizeobserver-callback-2">callback</a></code> with <var>entries</var>.</p>
@@ -1858,6 +1864,14 @@ run these steps:</p>
      <p>Initialize event’s message slot to "ResizeObserver loop completed with undelivered notifications.".</p>
     </li><li data-md="">
      <p>Dispach the event to document’s window.</p>
+   </li></ol>
+   <h4 class="heading settled" data-level="3.3.6" id="calculate-depth-for-node-h"><span class="secno">3.3.6. </span><span class="content">Calculate depth for node</span><a class="self-link" href="#calculate-depth-for-node-h"></a></h4>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="calculate-depth-for-node">calculate depth for node</dfn> <var>node</var> run these steps:</p>
+   <ol>
+    <li data-md="">
+     <p>Let <var>p</var> be the parent-traversal path from <var>node</var> to enclosing <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code>.</p>
+    </li><li data-md="">
+     <p>Return length of <var>p</var>.</p>
    </li></ol>
    <h3 class="heading settled" data-level="3.4" id="lifetime"><span class="secno">3.4. </span><span class="content">ResizeObserver Lifetime</span><a class="self-link" href="#lifetime"></a></h3>
    <p>A <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-9">ResizeObserver</a></code> will remain alive until both of these conditions are met:</p>
@@ -2072,6 +2086,7 @@ are undelivered notifications.</p>
    </li><li><a href="#broadcast-active-observations">broadcast active observations</a><span>, in §3.3.4</span>
    </li><li><a href="#dom-resizeobservation-broadcastheight">broadcastHeight</a><span>, in §2.4</span>
    </li><li><a href="#dom-resizeobservation-broadcastwidth">broadcastWidth</a><span>, in §2.4</span>
+   </li><li><a href="#calculate-depth-for-node">calculate depth for node</a><span>, in §3.3.6</span>
    </li><li><a href="#dom-resizeobserver-callback">callback</a><span>, in §3.1.2</span>
    </li><li><a href="#content-rect">content rect</a><span>, in §3.2.1</span>
    </li><li><a href="#dom-resizeobserverentry-contentrect">contentRect</a><span>, in §2.3</span>
@@ -2116,6 +2131,11 @@ are undelivered notifications.</p>
      </li><li><a href="https://dom.spec.whatwg.org/#concept-document">document</a>
     </li></ul>
    </li><li>
+    <a data-link-type="biblio">[geometry-1]</a> defines the following terms:
+    <ul>
+     <li><a href="https://drafts.fxtf.org/geometry-1/#domrectreadonly">DOMRectReadOnly</a>
+    </li></ul>
+   </li><li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#errorevent">ErrorEvent</a>
@@ -2131,6 +2151,8 @@ are undelivered notifications.</p>
   <dl>
    <dt id="biblio-cssom-view-1">[CSSOM-VIEW-1]
    </dt><dd>Simon Pieters. <a href="https://drafts.csswg.org/cssom-view/">CSSOM View Module</a>. 17 March 2016. WD. URL: <a href="https://drafts.csswg.org/cssom-view/">https://drafts.csswg.org/cssom-view/</a>
+   </dd><dt id="biblio-geometry-1">[GEOMETRY-1]
+   </dt><dd>Simon Pieters; Dirk Schulze; Rik Cabanier. <a href="http://dev.w3.org/fxtf/geometry/">Geometry Interfaces Module Level 1</a>. 25 November 2014. CR. URL: <a href="http://dev.w3.org/fxtf/geometry/">http://dev.w3.org/fxtf/geometry/</a>
    </dd><dt id="biblio-html">[HTML]
    </dt><dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    </dd><dt id="biblio-rfc2119">[RFC2119]
@@ -2155,7 +2177,7 @@ are undelivered notifications.</p>
 ]
 <span class="kt">interface</span> <a class="nv" href="#resizeobserverentry">ResizeObserverEntry</a> {
     <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="Element" href="#dom-resizeobserverentry-target">target</a>;
-    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name">DOMReadOnlyRect</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="DOMReadOnlyRect" href="#dom-resizeobserverentry-contentrect">contentRect</a>;
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://drafts.fxtf.org/geometry-1/#domrectreadonly">DOMRectReadOnly</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="DOMRectReadOnly" href="#dom-resizeobserverentry-contentrect">contentRect</a>;
 };
 
 [<a class="nv idl-code" data-link-type="constructor" href="#dom-resizeobservation-resizeobservation">Constructor</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="nv" href="#dom-resizeobservation-resizeobservation-target-target">target</a>)
@@ -2249,7 +2271,7 @@ are undelivered notifications.</p>
    <ul>
     <li><a href="#ref-for-dom-resizeobservation-target-1">2.4. ResizeObservation</a> <a href="#ref-for-dom-resizeobservation-target-2">(2)</a> <a href="#ref-for-dom-resizeobservation-target-3">(3)</a> <a href="#ref-for-dom-resizeobservation-target-4">(4)</a> <a href="#ref-for-dom-resizeobservation-target-5">(5)</a> <a href="#ref-for-dom-resizeobservation-target-6">(6)</a> <a href="#ref-for-dom-resizeobservation-target-7">(7)</a> <a href="#ref-for-dom-resizeobservation-target-8">(8)</a>
     </li><li><a href="#ref-for-dom-resizeobservation-target-9">3.3.1. Gather active observations at depth</a>
-    </li><li><a href="#ref-for-dom-resizeobservation-target-10">3.3.4. Broadcast active observations</a> <a href="#ref-for-dom-resizeobservation-target-11">(2)</a>
+    </li><li><a href="#ref-for-dom-resizeobservation-target-10">3.3.4. Broadcast active observations</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobservation-broadcastwidth">
@@ -2284,7 +2306,9 @@ are undelivered notifications.</p>
    <ul>
     <li><a href="#ref-for-dom-document-resizeobservers-1">2.1. ResizeObserver interface</a>
     </li><li><a href="#ref-for-dom-document-resizeobservers-2">3.3.1. Gather active observations at depth</a>
-    </li><li><a href="#ref-for-dom-document-resizeobservers-3">3.3.4. Broadcast active observations</a>
+    </li><li><a href="#ref-for-dom-document-resizeobservers-3">3.3.2. Has active observations</a>
+    </li><li><a href="#ref-for-dom-document-resizeobservers-4">3.3.3. Has skipped observations</a>
+    </li><li><a href="#ref-for-dom-document-resizeobservers-5">3.3.4. Broadcast active observations</a>
    </li></ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-resizeobserver-callback">
@@ -2354,6 +2378,13 @@ are undelivered notifications.</p>
    <b><a href="#deliver-resize-loop-error-notification">#deliver-resize-loop-error-notification</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-deliver-resize-loop-error-notification-1">3.5.1.  HTML Processing Model: Event Loop</a>
+   </li></ul>
+  </aside>
+  <aside class="dfn-panel" data-for="calculate-depth-for-node">
+   <b><a href="#calculate-depth-for-node">#calculate-depth-for-node</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-calculate-depth-for-node-1">3.3.1. Gather active observations at depth</a>
+    </li><li><a href="#ref-for-calculate-depth-for-node-2">3.3.4. Broadcast active observations</a>
    </li></ul>
   </aside>
 <script>/* script-dfn-panel */
