@@ -182,7 +182,7 @@ This callback delivers {{ResizeObserver}}'s notifications. It is invoked by a
 ]
 interface ResizeObserverEntry {
     readonly attribute Element target;
-    readonly attribute DOMReadOnlyRect contentRect;
+    readonly attribute DOMRectReadOnly contentRect;
 };
 </pre>
 
