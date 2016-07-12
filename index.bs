@@ -337,7 +337,7 @@ It computes all active observations for a |document|. To <dfn>gather active obse
 
 To determine if {{Document}} <dfn>has active observations</dfn> run these steps:
 
-1. For each |observer| in {Document/resizeObservers}} run this step:
+1. For each |observer| in {{Document/resizeObservers}} run this step:
 
     1. If |observer|.{{ResizeObserver/activeTargets}} is not empty, return true.
 
@@ -347,7 +347,7 @@ To determine if {{Document}} <dfn>has active observations</dfn> run these steps:
 
 To determine if {{Document}} <dfn>has skipped observations</dfn> run these steps:
 
-1. For each |observer| in {Document/resizeObservers}} run this step:
+1. For each |observer| in {{Document/resizeObservers}} run this step:
 
     1. If |observer|.{{ResizeObserver/skippedTargets}} is not empty, return true.
 
