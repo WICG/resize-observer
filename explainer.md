@@ -37,56 +37,64 @@ The absolute child method will not work in ShadowDOM, or frameworks such as Reac
 None of these approaches are desirable.
 They fail in correctness, code complexity, and performance.
 
-
 ## Proposed API
 
 The proposed API is an observer-style API. It is modeled after [other](https://www.w3.org/TR/dom/#mutation-observers) DOM [observers](https://github.com/WICG/IntersectionObserver/blob/master/explainer.md).
 
-Providing solution to iframe content height sizing is not a goal.
-
-### Interface
-
-    [Constructor(ResizeObserverCallback callback)]
-
-    interface ResizeObserver {
-        void observe(Element target);
-        void unobserve(Element target);
-        void disconnect();
-    };
-
-    callback ResizeObserverCallback = void (sequence<ResizeObserverEntry> entries, ResizeObserver observer);
-
-    interface ResizeObserverEntry {
-        readonly Element target;
-        readonly long clientWidth;
-        readonly long clientHeight;
-    };
+Here is an example of using ResizeObserver to draw an elipse inside canvas.
+```html
+<canvas style="width:10%;height:10%px"></canvas>
+<canvas style="width:20%px;height:20%px"></canvas>
+```
+```javascript
+    function drawEllipse(entry) {
+        let ctx = entry.target.getContext('2d');
+        let rx = Math.floor(entry.contentRect.width / 2);
+        let ry = Math.floor(entry.contentRect.height / 2);
+        ctx.beginPath();
+        ctx.clearRect(0,0, entry.contentRect.width,entry.contentRect.height);
+        ctx.ellipse(rx, ry, rx, ry, 0, 0, 2 * Math.PI);
+        ctx.stroke();
+    }
+    // ResizeObserver delegates action to Element's handleResize method
+    let ro = new ResizeObserver( entries => {
+        for (let entry of entries) {
+            if (entry.target.handleResize)
+                entry.target.handleResize(entry);
+        }
+    });
+    // Set up observations
+    var canvases = document.querySelector('canvas');
+    for (let canvas of canvases) {
+        ro.observe(canvas);
+        canvas.handleResize = drawEllipse;
+    }
+```
 
 ### Design discussion
 
 #### What triggers a resize notification?
 
-Component authors are interested in size of the content box.
-Content box is best represented by clientSize, which includes inner width and padding, but not the scrollBar.
+Component authors are interested in size of component's content box.
 
-A change in element's clientWidth or clientHeight should trigger a resize notification.
-
-Edge case: what happens if changes to clientSize get reverted before notification fires?
-Resize notification may still be fired.
-This avoids implementation complexity.
+A change in element's content box size should trigger a resize notification.
+Further discussion is [here](https://github.com/WICG/ResizeObserver/issues/6).
 
 #### What information do notifications contain?
 
-The element, clientWidth, and clientHeight.
+Notifications should contain enough information for observers to
+respond to size changes, without DOM calls that force layout.
 
-Open issue: should notification contain more geomentry information to help developers avoid triggering layout?
+* The element.
+
+* Content size.
+
+* Padding top/left. This is useful to components that wish to absolutely
+position children, as absolute coordinate system is anchored by padding rect.
 
 #### Why an observer based API, and not events?
 
-Performance: resize notifications can be high frequency. Observer API avoids the overhead of events:
-
-* event capture/bubble
-* avoid calling O(n) callbacks for n elements.
+Performance: resize notifications can have high frequency. Observer API avoids the overhead of event capture/bubble.
 
 Framework authors could provide a developer-friendly 'event-like' based API on top of ResizeObserver to avoid registering too many observers.
 
@@ -107,18 +115,13 @@ The callbacks themselves can (and will) modify style and tree structure, so we n
 ResizeObserver will keep delivering resize notifications in a single frame, until no further notifications are available.
 
 Notification callbacks can manipulate DOM, and trigger further notifications.
-The notifications can cascade into an infinite loop, which would be very bad user experience.
+The notifications can cascade into an infinite loop, which would be a bad user experience.
 
-To prevent this, the number of times ResizeObserver can be triggered in a single frame will be limited to REPEAT_LIMIT.
+Notification delivery gets limited by depth to prevent infinite loops. (Discussion [here](https://github.com/WICG/ResizeObserver/issues/7)). On each iteration, the depth limit increases, only nodes deeper than limit are allowed to notify.
+
 If the limit is exceeded, an error task will be queued.
-An error object will contain the observer that triggered the error, and its changeset.
 
 The user might observe DOM in an inconsistent state, which is less harmful than a frozen page.
-
-ISSUE: If the page has resize observers in an infinite observation loop,
-it'll peg the CPU to 100%, and the only clue will be the error console. Should rogue observers be disconnected after the error?
-
-TODO: determine the REPEAT_LIMIT, why not 16?
 
 #### Order of notification delivery
 
@@ -132,17 +135,17 @@ Inline elements should not generate resize notifications.
 
 #### What about transforms?
 
-Transforms do not affect clientSize. They should not trigger notifications.
+Transforms do not affect content size. They should not trigger notifications.
 
 #### What about animations?
 
-Animations that affect clientSize should trigger notifications.
+Animations that affect content size should trigger notifications.
 
 Developers might want to skip doing work during animation if work is expensive.
 
 #### Resizing and visibility
 
-clientSize becomes 0 when element is invisible.
+content size becomes 0 when element is invisible.
 This will generate a resize notification.
 Developers will be able to use ResizeObserver to observe visibility.
 
@@ -155,52 +158,5 @@ It uses the ad-hoc workaround, and requires developers to send map an event on e
 
 > `resize` event:  Developers should trigger this event on the map when the div changes size: google.maps.event.trigger(map, 'resize') .
 
-Google Maps can eliminate the event and use ResizeObserver instead.
+Google Maps can eliminate the need for this event and use ResizeObserver instead.
 
-#### EXAMPLE: [Disqus](https://disqus.com/)
-
-Discuss uses polling.
-
-> The Disqus commenting system is embedded into other sites through an iframe.
-When the content inside their iframe changes size they want to be able
-to resize the top level iframe and move around elements inside
-the iframe as well. Today they do this by periodically polling the
-document height, through MutationObservers and requestAnimationFrame,
-to detect when things might have changed. What they really want is a
-resize listener instead so they can avoid polling and causing
-unnecessary synchronous layouts. This has benefits for both battery
-life and performance.
-
-```html
-    <!-- ResizeObserver works well for this use case -->
-    <iframe id="toplevel">
-        <div id="content"></div>
-    </iframe>
-    <script>
-        var content = document.getElementById('content');
-
-        var resizeObserver = new ResizeObserver(function handler(changes) {
-            if (changes.find(function(record) { return record.element === content })) {
-                console.log("resize the top level iframe and move around elements inside the iframe");
-            }
-        });
-        resizeObserver.observe( document.getElementById('content'));
-    </script>
-```
-
-#### EXAMPLE: [Facebook](https://www.facebook.com/)
-
-Facebook would like to use resize event to optimize friend list loading.
-
-> use case we have right now is inserting a `<div>` that will hold a list of friends who are online in chat. As soon as we insert the `<div>` we want to know it's size so we can plan how many people we should render in the list. Querying the height right away triggers a layout, so we encourage people to do so inside a RAF. This requires cooperation between all RAF users to coordinate queries and modifications to the DOM. I think users of ResizeObserver would find a similar issue if the code triggered by one event modifies the DOM and the code from the next event queries it, a layout is forced.
-
-```javascript
-    // ResizeObserver helps: automatically places callback in RAF.
-    // geometry information
-    var friends = document.createElement('div');
-    resizeObserver = new ResizeObserver(function handler(changes) {
-        var change = changes.find( function cmp(record) { return record.element == friends });
-        if (change)
-            var howManyFriends = change.clientHeight / 24;
-    });
-```
