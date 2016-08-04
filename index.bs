@@ -108,8 +108,8 @@ ResizeObserver's notifications can be used to respond to changes in {{Element}}'
             entry.handleResize(entry);
       }
     });
-    ro.observe(document.querySelector('#elipse');
-    ro.observe(document.querySelector('#menu');
+    ro.observe(document.querySelector('#elipse'));
+    ro.observe(document.querySelector('#menu'));
   </pre>
 </div>
 
