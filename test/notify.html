@@ -1,18 +1,15 @@
 <!doctype html>
-<head>
-  <script src="../resources/testharness.js"></script>
-  <script src="../resources/testharnessreport.js"></script>
-  <script src="./resources/resizeTestHelper.js"></script>
-  <style>
-    div {
-      border: 1px dotted gray
-    }
-    .transform {
-      transform: scale(2,2) rotate(90deg)
-    }
-  </style>
-</head>
-<body>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="./resources/resizeTestHelper.js"></script>
+<style>
+  div {
+    border: 1px dotted gray
+  }
+  .transform {
+    transform: scale(2,2) rotate(90deg)
+  }
+</style>
 <p>ResizeObserver tests</p>
 <div id="target1" style="width:100px;height:100px;">t1
   <div id="target2" style="width:100px;height:100px;">t2
@@ -25,8 +22,6 @@
 <script>
 'use strict';
 
-var helper = new ResizeTestHelper();
-
 let t1 = document.querySelector('#target1');
 let t2 = document.querySelector('#target2');
 let t3 = document.querySelector('#target3');
@@ -34,307 +29,318 @@ let abs = document.querySelector('#absolute');
 let inline = document.querySelector('#inline');
 
 function test0() {
-  helper.createTest(
+  let helper = new ResizeTestHelper(
     "test0: notification ordering",
-    setup => {
-      helper.observer.disconnect();
-      helper.observer.observe(t3);
-      helper.observer.observe(t2);
-      helper.observer.observe(t1);
-      t1.style.width = "5px";
-      t3.style.width = "5px";
-      t2.style.width = "5px";
-
-    },
-    entries => {
-      assert_equals(entries.length, 3, "3 resizes");
-      assert_equals(entries[0].target, t3, "ordering");
-      assert_equals(entries[1].target, t2, "ordering");
-      assert_equals(entries[2].target, t1, "ordering");
-      helper.observer.disconnect();
-      t1.style.width = "100px";
-      t2.style.width = "100px";
-      t3.style.width = "100px";
-      test1();
+  [
+    {
+      setup: observer => {
+        observer.observe(t3);
+        observer.observe(t2);
+        observer.observe(t1);
+        t1.style.width = "5px";
+        t3.style.width = "5px";
+        t2.style.width = "5px";
+      },
+      notify: (entries, observer) => {
+        assert_equals(entries.length, 3, "3 resizes");
+        assert_equals(entries[0].target, t3, "ordering");
+        assert_equals(entries[1].target, t2, "ordering");
+        assert_equals(entries[2].target, t1, "ordering");
+        observer.disconnect();
+        t1.style.width = "100px";
+        t2.style.width = "100px";
+        t3.style.width = "100px";
+      }
     }
-  );
-  helper.nextTestRaf();
+  ]);
+  return helper.start();
 }
 
 function test1() {
-  helper.createTest(
+  let helper = new ResizeTestHelper(
     "test1: display:none triggers notification",
-    setup => {
-      helper.observer.disconnect();
-      helper.observer.observe(t1);
+  [
+    {
+      setup: observer => {
+        observer.observe(t1);
+      },
+      notify: (entries, observer) => {
+        return true;  // Delay next step
+      }
     },
-    entries => {
-      // initial observation happens here
-      helper.nextTestRaf();
+    {
+      setup: observer => {
+        t1.style.display = "none";
+      },
+      notify: (entries, observer) => {
+        t1.style.display = "";
+      }
     }
-  );
-  helper.createTest(
-    "display:none triggers notification, part 2",
-    setup => {
-      t1.style.display = "none";
-    },
-    entries => {
-      helper.observer.disconnect();
-      t1.style.display = "";
-      test2();
-    }
-  );
-  helper.nextTestRaf();
+  ]);
+  return helper.start();
 }
 
 
 function test2() {
-  helper.createTest(
-    "test2: remove/reinsert",
-    setup => {
-      helper.observer.disconnect();
-      helper.observer.observe(t1);
+  let helper = new ResizeTestHelper(
+    "test2: remove/appendChild trigger notification",
+  [
+    {
+      setup: observer => {
+        observer.observe(t1);
+      },
+      notify: (entries, observer) => {
+        return true;  // Delay next step
+      }
     },
-    entries => {
-      // initial observation
-      helper.nextTestRaf();
-    }
-  );
-  helper.createTest(
-    "removeChild triggers notification",
-    setup => {
-      t1.parentNode.removeChild(t1);
+    { // "removeChild triggers notification"
+      setup: observer => {
+        t1.parentNode.removeChild(t1);
+      },
+      notify: (entries, observer) => {
+        assert_equals(entries[0].target, t1);
+        return true;  // Delay next step
+      }
     },
-    entries => {
-      assert_equals(entries[0].target, t1);
-      helper.nextTestRaf();
+    { // "appendChild triggers notification",
+      setup: observer => {
+        document.body.appendChild(t1);
+      },
+      notify: (entries, observer) => {
+        assert_equals(entries[0].target, t1)
+      }
     }
-  );
-  helper.createTest(
-    "appendChild triggers notification",
-    setup => {
-      document.body.appendChild(t1);
-    },
-    entries => {
-      assert_equals(entries[0].target, t1);
-      test3();
-    }
-  );
-  helper.nextTestRaf();
+  ]);
+  return helper.start();
 }
 
 
 function test3() {
-  helper.createTest(
+  let helper = new ResizeTestHelper(
     "test3: dimensions match",
-    setup => {
-      helper.observer.disconnect();
-      helper.observer.observe(t1);
-      t1.style.width = "200.5px";
-      t1.style.height = "100px";
-      t1.style.paddingLeft = "20px";
-      t1.style.paddingTop = "10px";
-    },
-    entries => {
-      assert_equals(entries[0].contentRect.left,20);
-      assert_equals(entries[0].contentRect.top,10);
-      assert_between_inclusive(entries[0].contentRect.width, 200.4, 200.6, "width is not rounded");
-      assert_equals(entries[0].contentRect.height, 100);
-      test4();
+  [
+    {
+      setup: observer => {
+        observer.observe(t1);
+        t1.style.width = "200.5px";
+        t1.style.height = "100px";
+        t1.style.paddingLeft = "20px";
+        t1.style.paddingTop = "10px";
+      },
+      notify: (entries, observer) => {
+        assert_equals(entries[0].contentRect.left,20);
+        assert_equals(entries[0].contentRect.top,10);
+        assert_between_inclusive(entries[0].contentRect.width, 200.4, 200.6, "width is not rounded");
+        assert_equals(entries[0].contentRect.height, 100);
+      }
     }
-  );
-  helper.nextTestRaf();
+  ]);
+  return helper.start();
 }
 
 function test4() {
-  helper.createTest(
+  let helper = new ResizeTestHelper(
     "test4: transform do not cause notifications",
-    setup => {
-      helper.observer.disconnect();
-      helper.observer.observe(t2);
+  [
+    {
+      setup: observer => {
+        observer.observe(t2);
+      },
+      notify: (entries, observer) => {
+        return true; // Delay next step
+      }
     },
-    entries => {
-      // initial notification
-      helper.nextTestRaf();
+    {
+      setup: observer => {
+        t2.classList.add("transform");
+      },
+      notify: (entries, observer) => {
+        assert_unreached("transform must not trigger notifications");
+      },
+      timeout: () => {
+        t2.classList.remove("transform");
+      }
     }
-  );
-  helper.createTest(
-    "transform do not cause notification, part 2",
-    setup => {
-      t2.classList.add("transform");
-    },
-    entries => {
-      assert_unreached("transform must not trigger notifications");
-    },
-    timeout => {
-      t2.classList.remove("transform");
-      test5();
-    }
-  );
-  helper.nextTestRaf();
-
+  ]);
+  return helper.start();
 }
 
-
 function test5() {
-  helper.createTest(
+  let helper = new ResizeTestHelper(
     "test5: moving an element does not trigger notifications",
-    setup => {
-      helper.observer.disconnect();
-      helper.observer.observe(abs);
+  [
+    {
+      setup: observer => {
+        observer.observe(abs);
+      },
+      notify: (entries, observer) => {
+        return true; // Delay next step
+      }
     },
-    entries => {
-      // initial observation
-      helper.nextTest();
+    {
+      setup: observer => {
+        abs.style.top = "20.33px";
+        abs.style.left = "20.33px";
+      },
+      notify: (entries, observer) => {
+        assert_unreached("movement should not cause resize notifications");
+      },
+      timeout: () => {
+      }
     }
-  );
-  helper.createTest(
-    "moving an element does not trigger notifications, part 2",
-    setup => {
-      abs.style.top = "20.33px";
-      abs.style.left = "20.33px";
-    },
-    entries => {
-      assert_unreached("movement should not cause resize notifications");
-    },
-    timeout => {
-      test6();
-    }
-  );
-  helper.nextTestRaf();
+  ]);
+  return helper.start();
 }
 
 function test6() {
-  helper.createTest(
+  let helper = new ResizeTestHelper(
     "test6: inline element does not notify",
-    setup => {
-      helper.observer.disconnect();
-      helper.observer.observe(inline);
-      helper.observer.observe(t1);
-      t1.style.width = "66px";
-      inline.style.width = "66px";
+  [
+    {
+      setup: observer => {
+        observer.observe(inline);
+        observer.observe(t1);
+        t1.style.width = "66px";
+        inline.style.width = "66px";
+      },
+      notify: (entries, observer) => {
+        assert_equals(entries.length, 1, "inline elements must not trigger notifications");
+        assert_equals(entries[0].target, t1, "inline elements must not trigger notifications");
+        return true; // Delay next step
+      }
     },
-    entries => {
-      assert_equals(entries.length, 1, "inline elements must not trigger notifications");
-      assert_equals(entries[0].target, t1,  "inline elements must not trigger notifications");
-      helper.nextTestRaf();
+    { // "inline element that becomes block should notify",
+      setup: observer => {
+        inline.style.display = "block";
+      },
+      notify: (entries, observer) => {
+        assert_equals(entries[0].target, inline);
+      }
     }
-  );
-  helper.createTest(
-    "inline element that becomes block should notify",
-    setup => {
-      inline.style.display = "block";
-    },
-    entries => {
-      assert_equals(entries[0].target, inline);
-      helper.observer.disconnect();
-      test7();
-    }
-  );
-  helper.nextTestRaf();
+  ]);
+  return helper.start();
 }
 
 function test7() {
-  let test = async_test("test7: unobserve inside notify callback");
-
-  let notifyStep = 0;
-  let notify = entries => {
-    switch(notifyStep) {
-      case 0:
-        // initial setup
-        window.requestAnimationFrame( _ => {
-          t1.style.width = "777px";
-          t2.style.width = "777px";
-          ro.unobserve(t1);
-        });
-        break;
-      case 1:
-        test.step(_ => {
-          assert_equals(entries.length, 1, "only t2 is observed");
-          assert_equals(entries[0].target, t2, "only t2 is observed");
-          test8();
-          ro.disconnect();
-          test.done();
-        });
-        break;
+  let helper = new ResizeTestHelper(
+    "test7: unobserve inside notify callback",
+  [
+    {
+      setup: observer => {
+        observer.observe(t1);
+        observer.observe(t2);
+      },
+      notify: (entries, observer) => {
+        t1.style.width = "777px";
+        t2.style.width = "777px";
+        observer.unobserve(t1);
+        return true;  // Delay next step
+      }
+    },
+    {
+      setup: observer => {
+      },
+      notify: (entries, observer) => {
+        assert_equals(entries.length, 1, "only t2 is observed");
+        assert_equals(entries[0].target, t2, "only t2 is observed");
+      }
     }
-    notifyStep++;
-  }
-
-  var ro;
-  window.requestAnimationFrame( _ => {
-    ro = new ResizeObserver(notify);
-    ro.observe(t1);
-    ro.observe(t2);
-  });
+  ]);
+  return helper.start();
 }
 
 function test8() {
-  let test = async_test("test8: observe inside notify callback");
-
-  let notifyStep = 0;
-  let notify = entries => {
-    switch(notifyStep) {
-      case 0:
-      // intial setup
-        window.requestAnimationFrame( _ => {
-          ro.observe(t2);
-          t2.style.width = "888px";
-        });
-      break;
-      case 1:
-        test.step( _ => {
-          assert_equals(entries.length, 1, "only t2 is observed");
-          assert_equals(entries[0].target, t2, "only t2 is observed");
-          ro.disconnect();
-          test9();
-          test.done();
-        });
-      break;
+  let helper = new ResizeTestHelper(
+    "test8: observe inside notify callback",
+  [
+    {
+      setup: observer => {
+        observer.observe(t1);
+      },
+      notify: (entries, observer) => {
+        observer.observe(t2);
+        t2.style.width = "888px";
+        return true;  // Delay next step
+      }
+    },
+    {
+      setup: observer => {
+      },
+      notify: (entries, observer) => {
+        assert_equals(entries.length, 1, "only t2 is observed");
+        assert_equals(entries[0].target, t2, "only t2 is observed");
+      }
     }
-    notifyStep++;
-  }
-  var ro;
-  window.requestAnimationFrame( _ => {
-    ro = new ResizeObserver(notify);
-    ro.observe(t1);
-  });
+  ]);
+  return helper.start();
 }
 
 function test9() {
-  let test = async_test("test9: disconnect inside notify callback");
-
-  let notifyStep = 0;
-  let timeoutId = 0;
-  let notify = entries => {
-    switch(notifyStep) {
-      case 0:
-      // initial setup
-        t1.style.width = "888px";
-        ro.disconnect();
-        timeoutId = test.step_timeout(_ => {
-          test.done();
-        }, ResizeTestHelper.TIMEOUT);
-      break;
-      case 1:
-        window.clearTimeout(timeoutId);
-        test.step( _ => {
-          assert_unreached("there should be no notifications after disconnect");
-        });
-      break;
+  let helper = new ResizeTestHelper(
+    "test9: disconnect inside notify callback",
+  [
+    {
+      setup: observer => {
+        observer.observe(t1);
+      },
+      notify: (entries, observer) => {
+        t1.style.width = "999px";
+        observer.disconnect();
+        return true;  // Delay next step
+      }
+    },
+    {
+      setup: observer => {
+      },
+      notify: (entries, observer) => {
+        assert_unreached("there should be no notifications after disconnect");
+      },
+      timeout: () => {
+      }
     }
-    notifyStep++;
-  }
-
-  var ro;
-  window.requestAnimationFrame( _ => {
-    ro = new ResizeObserver(notify);
-    ro.observe(t1);
-  });
+  ]);
+  return helper.start();
 }
 
-test0();
+function test10() {
+  var parent = t1.parentNode;
+  let helper = new ResizeTestHelper(
+    "test10: element notifies when parent removed",
+  [
+    {
+      setup: observer => {
+        observer.observe(t3);
+      },
+      notify: (entries, observer) => {
+        return true;  // Delay next step
+      }
+    },
+    {
+      setup: observer => {
+        t1.parentNode.removeChild(t1);
+      },
+      notify: (entries, observer) => {
+        assert_equals(entries.length, 1);
+        assert_equals(entries[0].target, t3);
+        parent.appendChild(t1);
+      }
+    }
+  ]);
+  return helper.start();
+}
+
+let guard = async_test('guard');
+test0()
+  .then(() => { return test1(); })
+  .then(() => { return test2(); })
+  .then(() => { return test3(); })
+  .then(() => { return test4(); })
+  .then(() => { return test5(); })
+  .then(() => { return test6(); })
+  .then(() => { return test7(); })
+  .then(() => { return test8(); })
+  .then(() => { return test9(); })
+  .then(() => { return test10(); })
+  .then(() => { guard.done(); });
 
 </script>
-<!-- file:///usr/local/google/home/atotic/chromium/src/third_party/WebKit/LayoutTests/resize-observer/notify.html -->
-</body>

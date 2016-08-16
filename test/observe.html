@@ -1,20 +1,14 @@
 <!doctype html>
-<head>
-  <script src="../resources/testharness.js"></script>
-  <script src="../resources/testharnessreport.js"></script>
-  <script src="./resources/resizeTestHelper.js"></script>
-</head>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="./resources/resizeTestHelper.js"></script>
 <p>ResizeObserver tests</p>
 <div id="target1" style="width:100px;height:100px;">t1</div>
 <div id="target2" style="width:100px;height:100px;">t2</div>
-<svg height="100" width="100">
-  <circle id="targetC" cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
-  Sorry, your browser does not support inline SVG.
-</svg>
+<img id="target3" style="width:100px;height:100px;">
+<iframe src="./resources/iframe.html" width="300px" height="100px" style="display:block"></iframe>
 <script>
 'use strict';
-
-var helper = new ResizeTestHelper();
 
 let t1 = document.querySelector('#target1');
 let t2 = document.querySelector('#target2');
@@ -24,116 +18,160 @@ let t2 = document.querySelector('#target2');
 setup({allow_uncaught_exception: true});
 
 function test0() {
-  helper.createTest(
-    "simple observation",
-    _ => {
-      helper.observer.disconnect();
-      helper.observer.observe(t1);
-      t1.style.width = "5px";
-    },
-    entries => {
-      assert_equals(entries.length, 1, "1 pending notification");
-      assert_equals(entries[0].target, t1, "target is t1");
-      assert_equals(entries[0].contentRect.width, 5, "target width");
-      test1();
+  let helper = new ResizeTestHelper(
+    "test0: simple observation",
+  [
+    {
+      setup: observer => {
+        observer.observe(t1);
+        t1.style.width = "5px";
+      },
+      notify: entries => {
+        assert_equals(entries.length, 1, "1 pending notification");
+        assert_equals(entries[0].target, t1, "target is t1");
+        assert_equals(entries[0].contentRect.width, 5, "target width");
+      }
     }
-  );
-  helper.nextTest();
+  ]);
+  return helper.start();
 }
 
 function test1() {
-  helper.createTest(
-    "multiple observation on same element trigger only one",
-    _ => {
-      helper.observer.observe(t1);
-      helper.observer.observe(t1);
-      t1.style.width = "10px";
-    },
-    entries => {
-      assert_equals(entries.length, 1, "1 pending notification");
-      helper.observer.disconnect();
-      test2();
+  let helper = new ResizeTestHelper(
+    "test1: multiple observation on same element trigger only one",
+  [
+    {
+      setup: observer => {
+        observer.observe(t1);
+        observer.observe(t1);
+        t1.style.width = "10px";
+      },
+      notify: entries => {
+        assert_equals(entries.length, 1, "1 pending notification");
+      }
     }
-  );
-  helper.nextTestRaf();
+  ]);
+  return helper.start();
 }
 
 function test2() {
-  test(_ => {
+  test(() => {
       assert_throws(null, _=> {
-        helper.observer.observe({});
+        let ro = new ResizeObserver(() => {});
+        ro.observe({});
       });
-      test3();
     },
-    "throw exception when observing non-element"
+    "test2: throw exception when observing non-element"
   );
+  return Promise.resolve();
 }
 
 function test3() {
-  helper.createTest(
-    "disconnect stops all notifications",
-    _ => {
-      helper.observer.observe(t1);
-      helper.observer.observe(t2);
-      helper.observer.disconnect();
-      t1.style.width = "30px";
-    },
-    entries => {
-      assert_unreached("no entries should happen");
-    },
-    _ => {
-      // timeout happened, all is well.
-      test4();
+  let helper = new ResizeTestHelper(
+    "test3: disconnect stops all notifications", [
+    {
+      setup: observer => {
+        observer.observe(t1);
+        observer.observe(t2);
+        observer.disconnect();
+        t1.style.width = "30px";
+      },
+      notify: entries => {
+         assert_unreached("no entries should be observed");
+      },
+      timeout: () => {
+        // expected
+      }
     }
-  );
-  helper.nextTestRaf();
+  ]);
+  return helper.start();
 }
 
 function test4() {
-  helper.createTest(
-    "unobserve target stops notifications, unobserve non-observed does nothing",
-    _ => {
-      helper.observer.observe(t1);
-      helper.observer.observe(t2);
-      helper.observer.unobserve(t1);
-      helper.observer.unobserve(document.body);
-      t1.style.width = "40px";
-      t2.style.width = "40px";
-    },
-    entries => {
-      assert_equals(entries.length, 1, "only t2");
-      assert_equals(entries[0].target, t2, "t2 was observed");
-      helper.observer.disconnect();
-      test5();
+  let helper = new ResizeTestHelper(
+    "test4: unobserve target stops notifications, unobserve non-observed does nothing", [
+    {
+      setup: observer => {
+        observer.observe(t1);
+        observer.observe(t2);
+        observer.unobserve(t1);
+        observer.unobserve(document.body);
+        t1.style.width = "40px";
+        t2.style.width = "40px";
+      },
+      notify: entries => {
+        assert_equals(entries.length, 1, "only t2");
+        assert_equals(entries[0].target, t2, "t2 was observed");
+      }
     }
-  );
-  helper.nextTestRaf();
+  ]);
+  return helper.start();
 }
 
 function test5() {
-  let circle = document.querySelector('#targetC');
-  helper.createTest(
-    "observe svg",
-    setup => {
-      helper.observer.observe(circle);
+  let t3 = document.querySelector('#target3');
+  var helper = new ResizeTestHelper("test5: observe img",[
+    {
+      setup: observer => {
+        observer.observe(t3);
+      },
+      notify: entries => {
+      }
     },
-    entries => {
-      helper.nextTest();
+    {
+      setup: observer => {
+        t3.style.width = "100.5px";
+      },
+      notify: entries => {
+        assert_equals(entries.length, 1);
+        assert_equals(entries[0].contentRect.width, 100.5);
+      }
     }
-  );
-  helper.createTest(
-    "observe svg, pt 2",
-    setup => {
-      circle.setAttribute('r', 50);
-    },
-    entries => {
-      assert_equals(entries.length, 1);
-      helper.observer.disconnect();
-    }
-  );
-  helper.nextTestRaf();
+  ]);
+  return helper.start();
 }
 
-test0();
+function test6() {
+  let resolvePromise;
+  let promise = new Promise((resolve) => {
+    resolvePromise = resolve;
+  });
+  let test = async_test('test6: iframe notifications');
+  let testRequested = false;
+  let iframe = document.querySelector('iframe');
+  window.addEventListener('message', event => {
+    switch(event.data) {
+    case 'readyToTest':
+      if (!testRequested) {
+        //iframe.contentWindow.postMessage('startTest', '*');
+        testRequested = true;
+        test.step(()=>{test.done()});
+        resolvePromise();
+      }
+    break;
+    case 'success':
+    case 'fail':
+      window.requestAnimationFrame(() => {
+        test.step( () => {
+          assert_equals(event.data, 'success');
+          test.done();
+          resolvePromise();
+        });
+      });
+    break;
+    }
+  }, false);
+  return promise;
+}
+
+let guard = async_test('guard');
+test0()
+  .then(() => { return test1(); })
+  .then(() => { return test2(); })
+  .then(() => { return test3(); })
+  .then(() => { return test4(); })
+  .then(() => { return test5(); })
+  .then(() => { return test6(); })
+  .then(() => { guard.done(); });
 
 </script>
