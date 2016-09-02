@@ -3,7 +3,8 @@ Title: Resize Observer
 Shortname: resize-observer
 Level: 1
 Status: ED
-Group: Web Performance Working Group
+ED: https://wicg.github.io/ResizeObserver/index.html
+Group: webperf
 URL: https://github.com/WICG/ResizeObserver/
 Editor: Aleks Totic, Google, atotic@google.com
 Abstract: This specification describes an API for observing changes to Element's size.
@@ -33,7 +34,6 @@ urlPrefix: https://www.w3.org/TR/SVG2/#InterfaceSVGGraphicsElement
         url: #InterfaceSVGGraphicsElement; type: dfn; text: SVGGraphicsElement
 urlPrefix: https://www.w3.org/TR/css3-multicol/
     url: #; type: dfn; text: Multi-column
-
 </pre>
 <pre class=link-defaults>
 spec:dom; type:interface; text:Document
@@ -205,13 +205,24 @@ interface ResizeObserverEntry {
 
         2. Set |this| {{ResizeObserverEntry/target}} slot to |target|.
 
-        3. Set |this|.contentRect.width to |target|.<a>content width</a>.
+        3. If |target| is not an SVG element do these steps:
 
-        4. Set |this|.contentRect.height to |target|.<a>content height</a>.
+            1. Set |this|.contentRect.width to |target|.<a>content width</a>.
 
-        5. Set |this|.contentRect.top to |target|.<a>padding top</a>.
+            2. Set |this|.contentRect.height to |target|.<a>content height</a>.
 
-        6. Set |this|.contentRect.left to |target|.<a>padding left</a>.
+            3. Set |this|.contentRect.top to |target|.<a>padding top</a>.
+
+            4. Set |this|.contentRect.left to |target|.<a>padding left</a>.
+
+        4. If |target| is an SVG element do these steps:
+
+            1. Set |this|.contentRect.top and |this|.contentRect.bottom to 0.
+
+            2. Set |this|.contentRect.width to |target|.<a>bounding box</a>.width.
+
+            3. Set |this|.contentRect.height to |target|.<a>bounding box</a>.height.
+
 </div>
 
 <h3 id="resize-observation-interface">ResizeObservation</h3>
