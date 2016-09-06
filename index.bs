@@ -217,7 +217,7 @@ interface ResizeObserverEntry {
 
         4. If |target| is an SVG element do these steps:
 
-            1. Set |this|.contentRect.top and |this|.contentRect.bottom to 0.
+            1. Set |this|.contentRect.top and |this|.contentRect.left to 0.
 
             2. Set |this|.contentRect.width to |target|.<a>bounding box</a>.width.
 
