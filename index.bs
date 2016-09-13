@@ -61,7 +61,7 @@ ResizeObserver's notifications can be used to respond to changes in {{Element}}'
 
 * observation will fire when watched Element is inserted/removed from DOM.
 
-* observation will fire when watched Element display gets set to hidden.
+* observation will fire when watched Element display gets set to none.
 
 * observations do not fire for non-replaced inline Elements.
 
