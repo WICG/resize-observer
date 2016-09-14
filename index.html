@@ -2,7 +2,7 @@
 <!doctype html><html lang="en">
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-  <title>Resize Observer 1</title>
+  <title>Resize Observer</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
@@ -253,8 +253,8 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <header>
     <p data-fill-with="logo"><a href="https://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"></a> </p>
-    <h1 class="p-name no-ref" id="title">Resize Observer 1</h1>
-    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-09-02">2 September 2016</time></span></h2>
+    <h1 class="p-name no-ref" id="title">Resize Observer</h1>
+    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-09-14">14 September 2016</time></span></h2>
    </header>
    <div data-fill-with="spec-metadata">
     <dl>
@@ -371,7 +371,7 @@ counterpart to window.<code class="idl"><a data-link-type="idl" href="https://dr
     <li data-md="">
      <p>observation will fire when watched Element is inserted/removed from DOM.</p>
     <li data-md="">
-     <p>observation will fire when watched Element display gets set to hidden.</p>
+     <p>observation will fire when watched Element display gets set to none.</p>
     <li data-md="">
      <p>observations do not fire for non-replaced inline Elements.</p>
     <li data-md="">
@@ -381,50 +381,52 @@ counterpart to window.<code class="idl"><a data-link-type="idl" href="https://dr
    </ul>
    <div class="example" id="example-cc41daa3">
     <a class="self-link" href="#example-cc41daa3"></a>
-<pre class="highlight"><span></span><span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">id</span><span class="o">=</span><span class="s">"elipse"</span> <span class="na">style</span><span class="o">=</span><span class="s">"display:block"</span><span class="p">>&lt;/</span><span class="nt">canvas</span><span class="p">></span>
+<pre class="highlight"><span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">id</span><span class="o">=</span><span class="s">"elipse"</span> <span class="na">style</span><span class="o">=</span><span class="s">"display:block"</span><span class="p">></span><span class="p">&lt;</span><span class="p">/</span><span class="nt">canvas</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"menu"</span> <span class="na">style</span><span class="o">=</span><span class="s">"display:block;width:100px"</span><span class="p">></span>
     <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">"hamburger.jpg"</span> <span class="na">style</span><span class="o">=</span><span class="s">"width:24px;height:24px"</span><span class="p">></span>
-    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">"title"</span><span class="p">></span>menu title<span class="p">&lt;/</span><span class="nt">p</span><span class="p">></span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">></span></pre>
-<pre class="highlight"><span></span><span class="c1">// In response to resize, elipse paints an elipse inside a canvas</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'#elipse'</span><span class="p">).</span><span class="nx">handleResize</span> <span class="o">=</span> <span class="nx">entry</span> <span class="o">=></span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">rx</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">contentRect</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
-    <span class="kd">let</span> <span class="nx">ry</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">contentRect</span><span class="p">.</span><span class="nx">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
-    <span class="kd">let</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">'2d'</span><span class="p">);</span>
-    <span class="nx">ctx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
-    <span class="nx">ctx</span><span class="p">.</span><span class="nx">ellipse</span><span class="p">(</span><span class="nx">rx</span><span class="p">,</span> <span class="nx">ry</span><span class="p">,</span> <span class="nx">rx</span><span class="p">,</span> <span class="nx">ry</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">);</span>
-    <span class="nx">ctx</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
+    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">"title"</span><span class="p">></span>menu title<span class="p">&lt;</span><span class="p">/</span><span class="nt">p</span><span class="p">></span>
+<span class="p">&lt;</span><span class="p">/</span><span class="nt">div</span><span class="p">></span>
+</pre>
+<pre class="highlight"><span class="c1">// In response to resize, elipse paints an elipse inside a canvas
+</span>document<span class="p">.</span>querySelector<span class="p">(</span><span class="s1">'#elipse'</span><span class="p">)</span><span class="p">.</span>handleResize <span class="o">=</span> entry <span class="o">=></span> <span class="p">{</span>
+    <span class="kd">let</span> rx <span class="o">=</span> Math<span class="p">.</span>floor<span class="p">(</span>entry<span class="p">.</span>contentRect<span class="p">.</span>width <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="p">;</span>
+    <span class="kd">let</span> ry <span class="o">=</span> Math<span class="p">.</span>floor<span class="p">(</span>entry<span class="p">.</span>contentRect<span class="p">.</span>height <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="p">;</span>
+    <span class="kd">let</span> ctx <span class="o">=</span> entry<span class="p">.</span>target<span class="p">.</span>getContext<span class="p">(</span><span class="s1">'2d'</span><span class="p">)</span><span class="p">;</span>
+    ctx<span class="p">.</span>beginPath<span class="p">(</span><span class="p">)</span><span class="p">;</span>
+    ctx<span class="p">.</span>ellipse<span class="p">(</span>rx<span class="p">,</span> ry<span class="p">,</span> rx<span class="p">,</span> ry<span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> Math<span class="p">.</span>PI<span class="p">)</span><span class="p">;</span>
+    ctx<span class="p">.</span>stroke<span class="p">(</span><span class="p">)</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="c1">// In response to resize, change title visibility depending on width</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'#menu'</span><span class="p">).</span><span class="nx">handleResize</span> <span class="o">=</span> <span class="nx">entry</span> <span class="o">=></span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">title</span> <span class="o">=</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">".title"</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">contentRect</span><span class="p">.</span><span class="nx">width</span> <span class="o">&lt;</span> <span class="mi">40</span><span class="p">)</span>
-        <span class="nx">title</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">"none"</span><span class="p">;</span>
+<span class="c1">// In response to resize, change title visibility depending on width
+</span>document<span class="p">.</span>querySelector<span class="p">(</span><span class="s1">'#menu'</span><span class="p">)</span><span class="p">.</span>handleResize <span class="o">=</span> entry <span class="o">=></span> <span class="p">{</span>
+    <span class="kd">let</span> title <span class="o">=</span> entry<span class="p">.</span>target<span class="p">.</span>querySelector<span class="p">(</span><span class="s2">".title"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span>entry<span class="p">.</span>contentRect<span class="p">.</span>width <span class="o">&lt;</span> <span class="mi">40</span><span class="p">)</span>
+        title<span class="p">.</span>style<span class="p">.</span>display <span class="o">=</span> <span class="s2">"none"</span><span class="p">;</span>
     <span class="k">else</span>
-        <span class="nx">title</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">"inline-block"</span><span class="p">;</span>
+        title<span class="p">.</span>style<span class="p">.</span>display <span class="o">=</span> <span class="s2">"inline-block"</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kd">var</span> <span class="nx">ro</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ResizeObserver</span><span class="p">(</span> <span class="nx">entries</span> <span class="o">=></span> <span class="p">{</span>
-  <span class="k">for</span> <span class="p">(</span><span class="nx">entry</span> <span class="k">of</span> <span class="nx">entries</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">cs</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">getComputedStyle</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">);</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'watching element:'</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">);</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">contentRect</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="s1">' is '</span><span class="p">,</span> <span class="nx">cs</span><span class="p">.</span><span class="nx">width</span><span class="p">);</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">contentRect</span><span class="p">.</span><span class="nx">height</span><span class="p">,</span><span class="s1">' is '</span><span class="p">,</span> <span class="nx">cs</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">contentRect</span><span class="p">.</span><span class="nx">top</span><span class="p">,</span><span class="s1">' is '</span><span class="p">,</span> <span class="nx">cs</span><span class="p">.</span><span class="nx">paddingTop</span><span class="p">);</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">contentRect</span><span class="p">.</span><span class="nx">left</span><span class="p">,</span><span class="s1">' is '</span><span class="p">,</span> <span class="nx">cs</span><span class="p">.</span><span class="nx">paddignLeft</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">handleResize</span><span class="p">)</span>
-        <span class="nx">entry</span><span class="p">.</span><span class="nx">handleResize</span><span class="p">(</span><span class="nx">entry</span><span class="p">);</span>
+<span class="kd">var</span> ro <span class="o">=</span> <span class="k">new</span> ResizeObserver<span class="p">(</span> entries <span class="o">=></span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span>entry <span class="k">of</span> entries<span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> cs <span class="o">=</span> window<span class="p">.</span>getComputedStyle<span class="p">(</span>entry<span class="p">.</span>target<span class="p">)</span><span class="p">;</span>
+    console<span class="p">.</span>log<span class="p">(</span><span class="s1">'watching element:'</span><span class="p">,</span> entry<span class="p">.</span>target<span class="p">)</span><span class="p">;</span>
+    console<span class="p">.</span>log<span class="p">(</span>entry<span class="p">.</span>contentRect<span class="p">.</span>width<span class="p">,</span><span class="s1">' is '</span><span class="p">,</span> cs<span class="p">.</span>width<span class="p">)</span><span class="p">;</span>
+    console<span class="p">.</span>log<span class="p">(</span>entry<span class="p">.</span>contentRect<span class="p">.</span>height<span class="p">,</span><span class="s1">' is '</span><span class="p">,</span> cs<span class="p">.</span>height<span class="p">)</span><span class="p">;</span>
+    console<span class="p">.</span>log<span class="p">(</span>entry<span class="p">.</span>contentRect<span class="p">.</span>top<span class="p">,</span><span class="s1">' is '</span><span class="p">,</span> cs<span class="p">.</span>paddingTop<span class="p">)</span><span class="p">;</span>
+    console<span class="p">.</span>log<span class="p">(</span>entry<span class="p">.</span>contentRect<span class="p">.</span>left<span class="p">,</span><span class="s1">' is '</span><span class="p">,</span> cs<span class="p">.</span>paddignLeft<span class="p">)</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span>entry<span class="p">.</span>handleResize<span class="p">)</span>
+        entry<span class="p">.</span>handleResize<span class="p">(</span>entry<span class="p">)</span><span class="p">;</span>
   <span class="p">}</span>
-<span class="p">});</span>
-<span class="nx">ro</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'#elipse'</span><span class="p">));</span>
-<span class="nx">ro</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'#menu'</span><span class="p">));</span></pre>
+<span class="p">}</span><span class="p">)</span><span class="p">;</span>
+ro<span class="p">.</span>observe<span class="p">(</span>document<span class="p">.</span>querySelector<span class="p">(</span><span class="s1">'#elipse'</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+ro<span class="p">.</span>observe<span class="p">(</span>document<span class="p">.</span>querySelector<span class="p">(</span><span class="s1">'#menu'</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+</pre>
    </div>
    <h2 class="heading settled" data-level="2" id="api"><span class="secno">2. </span><span class="content">Resize Observer API</span><a class="self-link" href="#api"></a></h2>
    <h3 class="heading settled" data-level="2.1" id="resize-observer-interface"><span class="secno">2.1. </span><span class="content">ResizeObserver interface</span><a class="self-link" href="#resize-observer-interface"></a></h3>
    <p>The ResizeObserver interface is used to observe changes to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>'s <a data-link-type="dfn" href="#content-rect" id="ref-for-content-rect-3">content rect</a>.</p>
    <p>It is modeled after <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#mutationobserver">MutationObserver</a></code> and <a data-link-type="dfn" href="https://github.com/WICG/IntersectionObserver/index.html#intersection-observer-interface">IntersectionObserver</a>.</p>
 <pre class="idl highlight def">[<a class="nv idl-code" data-link-type="constructor" href="#dom-resizeobserver-resizeobserver" id="ref-for-dom-resizeobserver-resizeobserver-1">Constructor</a>(<a class="n" data-link-type="idl-name" href="#callbackdef-resizeobservercallback" id="ref-for-callbackdef-resizeobservercallback-1">ResizeObserverCallback</a> <dfn class="nv idl-code" data-dfn-for="ResizeObserver/ResizeObserver(callback)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-resizeobserver-callback-callback">callback<a class="self-link" href="#dom-resizeobserver-resizeobserver-callback-callback"></a></dfn>),
-    <a class="nv idl-code" data-link-type="extended-attribute">Exposed</a>=<span class="n">Window</span>]
+    <a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed">Exposed</a>=<span class="n">Window</span>]
 <span class="kt">interface</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="interface" data-export="" id="resizeobserver">ResizeObserver</dfn> {
     <span class="kt">void</span> <a class="nv idl-code" data-link-type="method" href="#dom-resizeobserver-observe" id="ref-for-dom-resizeobserver-observe-1">observe</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="nv idl-code" data-dfn-for="ResizeObserver/observe(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-observe-target-target">target<a class="self-link" href="#dom-resizeobserver-observe-target-target"></a></dfn>);
     <span class="kt">void</span> <a class="nv idl-code" data-link-type="method" href="#dom-resizeobserver-unobserve" id="ref-for-dom-resizeobserver-unobserve-1">unobserve</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="nv idl-code" data-dfn-for="ResizeObserver/unobserve(target)" data-dfn-type="argument" data-export="" id="dom-resizeobserver-unobserve-target-target">target<a class="self-link" href="#dom-resizeobserver-unobserve-target-target"></a></dfn>);
@@ -525,7 +527,7 @@ counterpart to window.<code class="idl"><a data-link-type="idl" href="https://dr
         <p>If <var>target</var> is an SVG element do these steps:</p>
         <ol>
          <li data-md="">
-          <p>Set <var>this</var>.contentRect.top and <var>this</var>.contentRect.bottom to 0.</p>
+          <p>Set <var>this</var>.contentRect.top and <var>this</var>.contentRect.left to 0.</p>
          <li data-md="">
           <p>Set <var>this</var>.contentRect.width to <var>target</var>.<a data-link-type="dfn" href="https://www.w3.org/TR/SVG2/coords.html#BoundingBoxes">bounding box</a>.width.</p>
          <li data-md="">
@@ -553,11 +555,11 @@ interface is not visible to Javascript.
      <dd data-md="">
       <p>The observed <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>.</p>
      <dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="attribute" data-export="" id="dom-resizeobservation-broadcastwidth">broadcastWidth</dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-float">float</a>, readonly</span></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="attribute" data-export="" id="dom-resizeobservation-broadcastwidth">broadcastWidth</dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#idl-float">float</a>, readonly</span></p>
      <dd data-md="">
       <p>Width of last broadcast <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/box.html#content-width">content width</a>.</p>
      <dt data-md="">
-      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="attribute" data-export="" id="dom-resizeobservation-broadcastheight">broadcastHeight</dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#dom-float">float</a>, readonly</span></p>
+      <p><dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObservation" data-dfn-type="attribute" data-export="" id="dom-resizeobservation-broadcastheight">broadcastHeight</dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#idl-float">float</a>, readonly</span></p>
      <dd data-md="">
       <p>Width of last broadcast <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/box.html#content-height">content height</a>.</p>
     </dl>
@@ -632,9 +634,9 @@ It represents all Elements being observed.</p>
     <li data-md="">
      <p>observation will fire when watched Element is inserted/removed from DOM.</p>
     <li data-md="">
-     <p>observation will fire when watched Element display gets set to hidden.</p>
+     <p>observation will fire when watched Element display gets set to none.</p>
     <li data-md="">
-     <p>observations do not fire for non-replaced inline Elements.</p>
+     <p>non-replaced inline Elements will always have an empty content rect.</p>
     <li data-md="">
      <p>observations will not be triggered by CSS transforms.</p>
    </ul>
@@ -881,7 +883,8 @@ are undelivered notifications.</p>
    <li>
     <a data-link-type="biblio">[WebIDL-1]</a> defines the following terms:
     <ul>
-     <li><a href="https://heycam.github.io/webidl/#dom-float">float</a>
+     <li><a href="https://heycam.github.io/webidl/#Exposed">Exposed</a>
+     <li><a href="https://heycam.github.io/webidl/#idl-float">float</a>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
@@ -900,7 +903,7 @@ are undelivered notifications.</p>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
 <pre class="idl def">[<a class="nv idl-code" data-link-type="constructor" href="#dom-resizeobserver-resizeobserver">Constructor</a>(<a class="n" data-link-type="idl-name" href="#callbackdef-resizeobservercallback">ResizeObserverCallback</a> <a class="nv" href="#dom-resizeobserver-resizeobserver-callback-callback">callback</a>),
-    <a class="nv idl-code" data-link-type="extended-attribute">Exposed</a>=<span class="n">Window</span>]
+    <a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed">Exposed</a>=<span class="n">Window</span>]
 <span class="kt">interface</span> <a class="nv" href="#resizeobserver">ResizeObserver</a> {
     <span class="kt">void</span> <a class="nv idl-code" data-link-type="method" href="#dom-resizeobserver-observe">observe</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="nv" href="#dom-resizeobserver-observe-target-target">target</a>);
     <span class="kt">void</span> <a class="nv idl-code" data-link-type="method" href="#dom-resizeobserver-unobserve">unobserve</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <a class="nv" href="#dom-resizeobserver-unobserve-target-target">target</a>);
