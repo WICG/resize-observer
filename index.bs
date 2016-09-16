@@ -419,9 +419,9 @@ To <dfn>deliver resize loop error notification</dfn> run these steps:
 
 To <dfn>calculate depth for node</dfn> |node| run these steps:
 
-    1. Let |p| be the parent-traversal path from |node| to a root of this element's DOM tree.
+    1. Let |p| be the parent-traversal path from |node| to a root Element of this element's DOM tree.
 
-    2. Return length of |p|.
+    2. Return number of nodes in |p|.
 
 <h3 id="lifetime">ResizeObserver Lifetime</h3>
 
