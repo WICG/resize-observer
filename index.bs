@@ -462,7 +462,8 @@ only nodes deeper than the shallowest node in previous iteration
 can notify.
 
 An error is generated if notification loop completes, and there
-are undelivered notifications.
+are undelivered notifications. Elements with undelivered notifications
+will be considered for delivery in the next loop.
 
 
 Step 12 with {{ResizeObserver}} notifications is:
