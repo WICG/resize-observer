@@ -2,7 +2,7 @@
 <!doctype html><html lang="en">
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-  <title>Resize Observer</title>
+  <title>Resize Observer 1</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
@@ -253,8 +253,8 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <header>
     <p data-fill-with="logo"><a href="https://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"></a> </p>
-    <h1 class="p-name no-ref" id="title">Resize Observer</h1>
-    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-09-14">14 September 2016</time></span></h2>
+    <h1 class="p-name no-ref" id="title">Resize Observer 1</h1>
+    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-09-16">16 September 2016</time></span></h2>
    </header>
    <div data-fill-with="spec-metadata">
     <dl>
@@ -754,9 +754,9 @@ run these steps:</p>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="calculate-depth-for-node">calculate depth for node</dfn> <var>node</var> run these steps:</p>
    <ol>
     <li data-md="">
-     <p>Let <var>p</var> be the parent-traversal path from <var>node</var> to enclosing <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code>.</p>
+     <p>Let <var>p</var> be the parent-traversal path from <var>node</var> to a root Element of this element’s DOM tree.</p>
     <li data-md="">
-     <p>Return length of <var>p</var>.</p>
+     <p>Return number of nodes in <var>p</var>.</p>
    </ol>
    <h3 class="heading settled" data-level="3.4" id="lifetime"><span class="secno">3.4. </span><span class="content">ResizeObserver Lifetime</span><a class="self-link" href="#lifetime"></a></h3>
    <p>A <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-9">ResizeObserver</a></code> will remain alive until both of these conditions are met:</p>
@@ -790,7 +790,8 @@ nodes that can notify at every iteration. In each iteration,
 only nodes deeper than the shallowest node in previous iteration
 can notify.</p>
    <p>An error is generated if notification loop completes, and there
-are undelivered notifications.</p>
+are undelivered notifications. Elements with undelivered notifications
+will be considered for delivery in the next loop.</p>
    <p>Step 12 with <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-12">ResizeObserver</a></code> notifications is:</p>
    <p>For each fully active Document in docs, run the following steps for that Document and its browsing contentx:</p>
    <ol>
@@ -897,7 +898,7 @@ are undelivered notifications.</p>
    <dt id="biblio-html">[HTML]
    <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-webidl-1">[WebIDL-1]
-   <dd>Cameron McCormack; Boris Zbarsky. <a href="https://heycam.github.io/webidl/">WebIDL Level 1</a>. 8 March 2016. CR. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
+   <dd>Cameron McCormack; Boris Zbarsky. <a href="https://heycam.github.io/webidl/">WebIDL Level 1</a>. 15 September 2016. PR. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
    <dt id="biblio-whatwg-dom">[WHATWG-DOM]
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
   </dl>
