@@ -104,8 +104,8 @@ ResizeObserver's notifications can be used to respond to changes in {{Element}}'
         console.log(entry.contentRect.height,' is ', cs.height);
         console.log(entry.contentRect.top,' is ', cs.paddingTop);
         console.log(entry.contentRect.left,' is ', cs.paddignLeft);
-        if (entry.handleResize)
-            entry.handleResize(entry);
+        if (entry.target.handleResize)
+            entry.target.handleResize(entry);
       }
     });
     ro.observe(document.querySelector('#elipse'));
