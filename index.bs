@@ -80,6 +80,8 @@ ResizeObserver's notifications can be used to respond to changes in {{Element}}'
   <pre highlight="js">
     // In response to resize, elipse paints an elipse inside a canvas
     document.querySelector('#elipse').handleResize = entry => {
+        entry.target.width = entry.contentRect.width;
+        entry.target.height = entry.contentRect.height;
         let rx = Math.floor(entry.contentRect.width / 2);
         let ry = Math.floor(entry.contentRect.height / 2);
         let ctx = entry.target.getContext('2d');
