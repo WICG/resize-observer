@@ -1,8 +1,7 @@
-
 <!doctype html><html lang="en">
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-  <title>Resize Observer</title>
+  <title>Resize Observer 1</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
@@ -253,13 +252,15 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <header>
     <p data-fill-with="logo"><a href="https://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"></a> </p>
-    <h1 class="p-name no-ref" id="title">Resize Observer</h1>
-    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-09-14">14 September 2016</time></span></h2>
+    <h1 class="p-name no-ref" id="title">Resize Observer 1</h1>
+    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-10-05">5 October 2016</time></span></h2>
    </header>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
      <dd><a class="u-url" href="https://github.com/WICG/ResizeObserver/">https://github.com/WICG/ResizeObserver/</a>
+     <dt>Issue Tracking:
+     <dd><a href="https://github.com/eeeps/ResizeObserver/issues/">GitHub</a>
      <dt class="editor">Editor:
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:atotic@google.com">Aleks Totic</a> (<span class="p-org org">Google</span>)
     </dl>
@@ -379,8 +380,8 @@ counterpart to window.<code class="idl"><a data-link-type="idl" href="https://dr
     <li data-md="">
      <p>observation will fire when observation starts if Element has display, and Element’s size is not 0,0.</p>
    </ul>
-   <div class="example" id="example-cc41daa3">
-    <a class="self-link" href="#example-cc41daa3"></a>
+   <div class="example" id="example-bf33255c">
+    <a class="self-link" href="#example-bf33255c"></a> 
 <pre class="highlight"><span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">id</span><span class="o">=</span><span class="s">"elipse"</span> <span class="na">style</span><span class="o">=</span><span class="s">"display:block"</span><span class="p">></span><span class="p">&lt;</span><span class="p">/</span><span class="nt">canvas</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"menu"</span> <span class="na">style</span><span class="o">=</span><span class="s">"display:block;width:100px"</span><span class="p">></span>
     <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">"hamburger.jpg"</span> <span class="na">style</span><span class="o">=</span><span class="s">"width:24px;height:24px"</span><span class="p">></span>
@@ -412,7 +413,7 @@ counterpart to window.<code class="idl"><a data-link-type="idl" href="https://dr
     console<span class="p">.</span>log<span class="p">(</span>entry<span class="p">.</span>contentRect<span class="p">.</span>width<span class="p">,</span><span class="s1">' is '</span><span class="p">,</span> cs<span class="p">.</span>width<span class="p">)</span><span class="p">;</span>
     console<span class="p">.</span>log<span class="p">(</span>entry<span class="p">.</span>contentRect<span class="p">.</span>height<span class="p">,</span><span class="s1">' is '</span><span class="p">,</span> cs<span class="p">.</span>height<span class="p">)</span><span class="p">;</span>
     console<span class="p">.</span>log<span class="p">(</span>entry<span class="p">.</span>contentRect<span class="p">.</span>top<span class="p">,</span><span class="s1">' is '</span><span class="p">,</span> cs<span class="p">.</span>paddingTop<span class="p">)</span><span class="p">;</span>
-    console<span class="p">.</span>log<span class="p">(</span>entry<span class="p">.</span>contentRect<span class="p">.</span>left<span class="p">,</span><span class="s1">' is '</span><span class="p">,</span> cs<span class="p">.</span>paddignLeft<span class="p">)</span><span class="p">;</span>
+    console<span class="p">.</span>log<span class="p">(</span>entry<span class="p">.</span>contentRect<span class="p">.</span>left<span class="p">,</span><span class="s1">' is '</span><span class="p">,</span> cs<span class="p">.</span>paddingLeft<span class="p">)</span><span class="p">;</span>
     <span class="k">if</span> <span class="p">(</span>entry<span class="p">.</span>handleResize<span class="p">)</span>
         entry<span class="p">.</span>handleResize<span class="p">(</span>entry<span class="p">)</span><span class="p">;</span>
   <span class="p">}</span>
@@ -538,7 +539,7 @@ ro<span class="p">.</span>observe<span class="p">(</span>document<span class="p"
    </div>
    <h3 class="heading settled" data-level="2.4" id="resize-observation-interface"><span class="secno">2.4. </span><span class="content">ResizeObservation</span><a class="self-link" href="#resize-observation-interface"></a></h3>
     ResizeObservation holds observation information for a single <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element">Element</a></code>. This
-interface is not visible to Javascript.
+interface is not visible to Javascript. 
 <pre class="idl highlight def">[<a class="nv idl-code" data-link-type="constructor" href="#dom-resizeobservation-resizeobservation" id="ref-for-dom-resizeobservation-resizeobservation-1">Constructor</a>(<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element">Element</a> <dfn class="nv idl-code" data-dfn-for="ResizeObservation/ResizeObservation(target)" data-dfn-type="argument" data-export="" id="dom-resizeobservation-resizeobservation-target-target">target<a class="self-link" href="#dom-resizeobservation-resizeobservation-target-target"></a></dfn>)
 ]
 <span class="kt">interface</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="interface" data-export="" id="resizeobservation">ResizeObservation</dfn> {
@@ -616,7 +617,7 @@ It represents all Elements being observed.</p>
    <p><code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-8">ResizeObserver</a></code> has a <dfn class="dfn-paneled idl-code" data-dfn-for="ResizeObserver" data-dfn-type="attribute" data-export="" id="dom-resizeobserver-skippedtargets">skippedTargets</dfn> slot, which is a list of <code class="idl"><a data-link-type="idl" href="#resizeobservation" id="ref-for-resizeobservation-6">ResizeObservation</a></code>s. It represents all Elements whose size has changed since last observation broadcast that are **not** eligible for broadcast</p>
    <h3 class="heading settled" data-level="3.2" id="css-definitions"><span class="secno">3.2. </span><span class="content">CSS Definitions</span><a class="self-link" href="#css-definitions"></a></h3>
    <h4 class="heading settled" data-level="3.2.1" id="content-rect-h"><span class="secno">3.2.1. </span><span class="content">content rect</span><a class="self-link" href="#content-rect-h"></a></h4>
-    DOM <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="content-rect">content rect</dfn> is a rect whose:
+    DOM <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="content-rect">content rect</dfn> is a rect whose: 
    <ul>
     <li data-md="">
      <p>width is <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/box.html#content-width">content width</a></p>
@@ -754,9 +755,9 @@ run these steps:</p>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="calculate-depth-for-node">calculate depth for node</dfn> <var>node</var> run these steps:</p>
    <ol>
     <li data-md="">
-     <p>Let <var>p</var> be the parent-traversal path from <var>node</var> to enclosing <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document">Document</a></code>.</p>
+     <p>Let <var>p</var> be the parent-traversal path from <var>node</var> to a root Element of this element’s DOM tree.</p>
     <li data-md="">
-     <p>Return length of <var>p</var>.</p>
+     <p>Return number of nodes in <var>p</var>.</p>
    </ol>
    <h3 class="heading settled" data-level="3.4" id="lifetime"><span class="secno">3.4. </span><span class="content">ResizeObserver Lifetime</span><a class="self-link" href="#lifetime"></a></h3>
    <p>A <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-9">ResizeObserver</a></code> will remain alive until both of these conditions are met:</p>
@@ -790,7 +791,8 @@ nodes that can notify at every iteration. In each iteration,
 only nodes deeper than the shallowest node in previous iteration
 can notify.</p>
    <p>An error is generated if notification loop completes, and there
-are undelivered notifications.</p>
+are undelivered notifications. Elements with undelivered notifications
+will be considered for delivery in the next loop.</p>
    <p>Step 12 with <code class="idl"><a data-link-type="idl" href="#resizeobserver" id="ref-for-resizeobserver-12">ResizeObserver</a></code> notifications is:</p>
    <p>For each fully active Document in docs, run the following steps for that Document and its browsing contentx:</p>
    <ol>
@@ -897,7 +899,7 @@ are undelivered notifications.</p>
    <dt id="biblio-html">[HTML]
    <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-webidl-1">[WebIDL-1]
-   <dd>Cameron McCormack; Boris Zbarsky. <a href="https://heycam.github.io/webidl/">WebIDL Level 1</a>. 8 March 2016. CR. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
+   <dd>Cameron McCormack; Boris Zbarsky. <a href="https://heycam.github.io/webidl/">WebIDL Level 1</a>. 15 September 2016. PR. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
    <dt id="biblio-whatwg-dom">[WHATWG-DOM]
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
   </dl>
