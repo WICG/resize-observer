@@ -1,0 +1,1 @@
+The `chat` example shows how a few lines of JavaScript with `ResizeObserver` are enough to keep a window scrolled to the bottom, as you’d expect from a chat conversation. It reacts to window resizes and new messages being appended.
