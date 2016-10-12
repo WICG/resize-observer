@@ -99,7 +99,7 @@ ResizeObserver's notifications can be used to respond to changes in {{Element}}'
     }
 
     var ro = new ResizeObserver( entries => {
-      for (entry of entries) {
+      for (let entry of entries) {
         let cs = window.getComputedStyle(entry.target);
         console.log('watching element:', entry.target);
         console.log(entry.contentRect.width,' is ', cs.width);
