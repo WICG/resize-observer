@@ -64,7 +64,7 @@ Here is an example of using ResizeObserver to draw an elipse inside canvas.
         }
     });
     // Set up observations
-    var canvases = document.querySelector('canvas');
+    var canvases = document.querySelectorAll('canvas');
     for (let canvas of canvases) {
         ro.observe(canvas);
         canvas.handleResize = drawEllipse;
