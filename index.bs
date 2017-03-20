@@ -492,4 +492,4 @@ For each fully active Document in docs, run the following steps for that Documen
 
 6. if {{Document}} <a>has skipped observations</a> then <a>deliver resize loop error notification</a>
 
-
+7. update the rendering or user interface of {{Document}} and its browsing context to reflect the current state.
