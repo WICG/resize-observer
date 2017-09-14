@@ -43,8 +43,8 @@ The proposed API is an observer-style API. It is modeled after [other](https://w
 
 Here is an example of using ResizeObserver to draw an elipse inside canvas.
 ```html
-<canvas style="width:10%;height:10%px"></canvas>
-<canvas style="width:20%px;height:20%px"></canvas>
+<canvas style="width:10%;height:10%"></canvas>
+<canvas style="width:20%;height:20%"></canvas>
 ```
 ```javascript
     function drawEllipse(entry) {
@@ -66,12 +66,64 @@ Here is an example of using ResizeObserver to draw an elipse inside canvas.
     // Set up observations
     var canvases = document.querySelectorAll('canvas');
     for (let canvas of canvases) {
-        ro.observe(canvas);
         canvas.handleResize = drawEllipse;
+        ro.observe(canvas);
     }
+```
+### Usage examples
+
+Knowing when Element's size has changed can be used to solve other common
+webdev problems. Fully functional examples are available on [github](examples/index.html).
+
+#### Example: `iframe` resizing to content size.
+
+iframes can detect when their size has changed, and notify the parent window.
+
+```javascript
+    let ro = new ResizeObserver(entries => {
+    let idealSize = computeIdealSize();
+    window.parent.postMessage({
+            name: "iframeResize",
+            width: idealSize.width,
+            height: idealSize.height
+        }, '*');
+    });
+    ro.observe(document.body);
+```
+
+#### Example: Keeping chat window scrolled to the bottom
+
+How do we keep chat window scrolled to the bottom when new messages arrive?
+ResizeObserver solution holds all messages in a growing `div`, and observe its
+size. When new messages arrive, scroll to the bottom. [Full example](examples/chat.html)
+goes into detail of dealing with user scrolling.
+
+```css
+    .chat {
+        overflow: scroll;
+    }
+```
+```html
+<div class="chat">  <!-- chat has the scrollbar -->
+  <div class="chat-text"> <!-- chat-text contains chat text -->
+    <div>jack: hi </div>
+    <div>jill: hi </div>
+  </div>
+</div
+```
+```javascript
+let ro = new ResizeObserver( entries => {
+  for (let e of entries) {
+    let chat = e.target.parentNode;
+    chat.scrollTop = chat.scrollHeight - chat.clientHeight;
+  }
+});
+ro.observe(document.querySelector('.chat-text'))
 ```
 
 ### Design discussion
+
+Most of the discussions happened in [github](https://github.com/WICG/ResizeObserver/issues) issues.
 
 #### What triggers a resize notification?
 
@@ -148,15 +200,4 @@ Developers might want to skip doing work during animation if work is expensive.
 content size becomes 0 when element is invisible.
 This will generate a resize notification.
 Developers will be able to use ResizeObserver to observe visibility.
-
-## Usage examples
-
-#### EXAMPLE: [Google Maps API](https://developers.google.com/maps/documentation/javascript/3.exp/reference)
-
-Google Maps is one of the most widely used components.
-It uses the ad-hoc workaround, and requires developers to send map an event on every resize:
-
-> `resize` event:  Developers should trigger this event on the map when the div changes size: google.maps.event.trigger(map, 'resize') .
-
-Google Maps can eliminate the need for this event and use ResizeObserver instead.
 
