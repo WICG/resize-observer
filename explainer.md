@@ -73,7 +73,7 @@ Here is an example of using ResizeObserver to draw an elipse inside canvas.
 ### Usage examples
 
 Knowing when Element's size has changed can be used to solve other common
-webdev problems. Fully functional examples are available on [github](examples/index.html).
+webdev problems. Fully functional examples are available on [github](https://rawgit.com/WICG/ResizeObserver/master/examples/index.html).
 
 #### Example: `iframe` resizing to content size.
 
@@ -95,7 +95,7 @@ iframes can detect when their size has changed, and notify the parent window.
 
 How do we keep chat window scrolled to the bottom when new messages arrive?
 ResizeObserver solution holds all messages in a growing `div`, and observe its
-size. When new messages arrive, scroll to the bottom. [Full example](examples/chat.html)
+size. When new messages arrive, scroll to the bottom. [Full example](https://rawgit.com/WICG/ResizeObserver/master/examples/chat.html)
 goes into detail of dealing with user scrolling.
 
 ```css
@@ -122,8 +122,6 @@ ro.observe(document.querySelector('.chat-text'))
 ```
 
 ### Design discussion
-
-Most of the discussions happened in [github](https://github.com/WICG/ResizeObserver/issues) issues.
 
 #### What triggers a resize notification?
 
