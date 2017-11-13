@@ -41,7 +41,7 @@ They fail in correctness, code complexity, and performance.
 
 The proposed API is an observer-style API. It is modeled after [other](https://www.w3.org/TR/dom/#mutation-observers) DOM [observers](https://github.com/WICG/IntersectionObserver/blob/master/explainer.md).
 
-Here is an example of using ResizeObserver to draw an elipse inside canvas.
+Here is an example of using ResizeObserver to draw an ellipse inside canvas.
 ```html
 <canvas style="width:10%;height:10%"></canvas>
 <canvas style="width:20%;height:20%"></canvas>
