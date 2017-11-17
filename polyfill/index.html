@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ResizeObserver polyfill</title>
+
+  <style>
+    .box {
+      background-color: #1976d2;
+
+      /* rects */
+      height: 200px;
+      width: 200px;
+
+      /* position */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+
+  <script src="ResizeObserver.js"></script>
+  <script>
+    var observer = new ResizeObserver(function(entries) {
+      entries.forEach(function(entry) {
+        console.log(entry);
+      });
+    });
+
+    observer.observe(document.querySelector('.box'));
+  </script>
+</body>
+</html>
