@@ -1,0 +1,237 @@
+<!doctype html>
+<title>hidpi2</title>
+<body>
+<style>
+  html {
+    height: 100%;
+    overflow:hidden;
+  }
+  body {
+    margin:0;
+    height:100%;
+  }
+  #canvas3D {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 25%;
+    height: 25%;
+  }
+  #canvas2D {
+    position: absolute;
+    top: 5%;
+    left: 35%;
+    width: 33%;
+    height: 33%;
+  }
+</style>
+<canvas id="canvas3D" width="100" height="100"></canvas>
+<canvas id="canvas2D" width="100" height="100"></canvas>
+<script> // 3D canvas
+(function() {
+  let canvas3D = document.querySelector("#canvas3D");
+  let gl = canvas3D.getContext("webgl2");
+  let vertexShader = gl.createShader(gl.VERTEX_SHADER);
+  gl.clearColor(0, 0, 1, 1); // Blue color should never show up
+  gl.shaderSource(vertexShader, `
+  #version 300 es
+  layout (location=0) in vec4 position;
+  out vec2 pos;
+  void main() {
+    pos = (position.xy + vec2(1,1)) * 0.5;
+    gl_Position = position;
+  }
+  `.trim());
+  gl.compileShader(vertexShader);
+  if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(vertexShader));
+  var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+  gl.shaderSource(fragmentShader, `
+  #version 300 es
+  precision highp float;
+  in vec2 pos;
+  out vec4 fragColor;
+  uniform uvec2 canvasSize;
+  void main() {
+    uvec2 xy = uvec2(vec2(canvasSize) * pos) % 2u;
+    fragColor = vec4(xy, 0, 1);
+  }
+  `.trim());
+  gl.compileShader(fragmentShader);
+  if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(fragmentShader));
+  let program = gl.createProgram();
+  gl.attachShader(program, vertexShader);
+  gl.attachShader(program, fragmentShader);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) console.error(gl.getProgramInfoLog(program));
+  gl.useProgram(program);
+  let triangleArray = gl.createVertexArray();
+  gl.bindVertexArray(triangleArray);
+  let positions = new Float32Array([-1, -1, 1, -1, 1,  1, 1,  1, -1, -1, -1,  1]);
+  let positionBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(0);
+
+  function paint3D() {
+    gl.uniform2ui(gl.getUniformLocation(program, "canvasSize"), canvas3D.width, canvas3D.height);
+    gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  }
+  function updateCanvasSize3D(snappedSize) {
+    if (!snappedSize)
+      return console.error("No snapped size");
+    canvas3D.width = snappedSize.inlineSize || snappedSize.width;
+    canvas3D.height = snappedSize.blockSize || snappedSize.height;
+    paint3D();
+  }
+  window.updateCanvasSize3D = updateCanvasSize3D;
+})();
+</script>
+<script> // Canvas 2D
+(function() {
+  let canvas2D = document.querySelector("#canvas2D");
+  let ctx = canvas2D.getContext("2d");
+  function paint2D() {
+    let step = Math.round(window.devicePixelRatio * 2);
+    let halfstep = step / 2;
+    let w = canvas2D.width;
+    let h = canvas2D.height;
+    ctx.beginPath();
+    ctx.strokeStyle = 'black';
+    for (let i=halfstep; i<w; i+= step) {
+      ctx.moveTo(i, 0);
+      ctx.lineTo(i, h);
+    }
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle = '#DA3D1D';  // red
+    for (let i=step; i<w; i+= step) {
+      ctx.moveTo(i, 0);
+      ctx.lineTo(i, h);
+    }
+    ctx.stroke();
+    ctx.strokeStyle = '#B2FE0E';
+    ctx.beginPath();
+    for (let i=step; i<h; i+=step) { // green
+      ctx.moveTo(0, i);
+      ctx.lineTo(w, i);
+    }
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle = 'black';
+    let dpr = window.devicePixelRatio;
+    ctx.strokeRect(canvas2D.width - 50 * dpr, canvas2D.height - 50 * dpr, 50 * dpr, 50 * dpr);
+    ctx.stroke();
+  }
+  function updateCanvasSize2D(snappedSize) {
+    if (!snappedSize)
+      return console.error("No snapped size");
+    canvas2D.width = snappedSize.inlineSize || snappedSize.width;
+    canvas2D.height = snappedSize.blockSize || snappedSize.height;
+    paint2D();
+  }
+  window.updateCanvasSize2D = updateCanvasSize2D;
+})();
+</script>
+<pre id="legend" style="position:absolute;bottom:0;right:0;min-width: 180px; border:1px solid black;margin:0">
+  top: <input id="top" size=6/>
+  left: <input id="left" size=6/>
+  width: <input id="width" size=6/>
+  height: <input id="height" size=6/>
+  3D canvasWidth: <span id="canvas3DWidth">NA</span>
+  3D canvasHeight: <span id="canvas3DHeight">NA</span>
+  <div style="position:absolute;top:0;right:0">dpr:<span id="dpr"></span></div>
+</pre>
+<script>
+(function() {
+  // Event handling, UI
+  let canvas3D = document.querySelector("#canvas3D");
+  let canvas2D = document.querySelector("#canvas2D");
+  function updateLegend() {
+    let clientRect = canvas3D.getClientRects()[0];
+    document.querySelector('#dpr').innerText = (window.devicePixelRatio + "").substring(0,4);
+    document.querySelector('#top').value = clientRect.top;
+    document.querySelector('#left').value = clientRect.left;
+    document.querySelector('#width').value = clientRect.width;
+    document.querySelector('#height').value = clientRect.height;
+    document.querySelector('#canvas3DWidth').innerText = (canvas3D.width + " (" + canvas3D.width / clientRect.width + ")").substring(0,13);
+    document.querySelector('#canvas3DHeight').innerText = (canvas3D.height + " (" + canvas3D.height / clientRect.height + ")").substring(0,13);
+  }
+
+  function observeSizes() {
+    let ro = new ResizeObserver( entries => {
+      for (entry of entries) {
+        if (entry.target == canvas3D) {
+          updateCanvasSize3D(entry.snappedConcreteSize || entry.contentRect);
+        }
+        if (entry.target == canvas2D) {
+          updateCanvasSize2D(entry.snappedConcreteSize || entry.contentRect);
+        }
+      }
+      updateLegend();
+    });
+    ro.observe(canvas3D, { size: ["border-box", "pixel-snapped-box"]});
+    ro.observe(canvas2D);
+  }
+
+  function initMouseHandling() {
+    let dragInfo = {
+      isMouse: true,
+      isResize: false,
+      target: null,
+      screenX: 0,
+      screenY: 0
+    };
+
+    let dragMove = ev => {
+      let deltaX = ev.screenX - dragInfo.screenX;
+      let deltaY = ev.screenY - dragInfo.screenY;
+      dragInfo.screenX += deltaX;
+      dragInfo.screenY += deltaY;
+      let border_rect = dragInfo.target.getClientRects()[0];
+      if (dragInfo.isResize) {
+        dragInfo.target.style.width = border_rect.width + deltaX + "px";
+        dragInfo.target.style.height = border_rect.height + deltaY + "px";
+      } else {
+        dragInfo.target.style.top = border_rect.top + deltaY + "px";
+        dragInfo.target.style.left = border_rect.left + deltaX + "px";
+      }
+    };
+
+    let dragEnd = ev => {
+      if (dragInfo.isMouse) {
+        document.removeEventListener('mousemove', dragMove);
+        document.removeEventListener('mouseup', dragEnd);
+      } else {
+        document.removeEventListener('touchmove', dragMove);
+        document.removeEventListener('touchend', dragEnd);
+      }
+    };
+
+    let dragStart = ev => {
+      if (ev.target != canvas3D && ev.target != canvas2D)
+        return;
+      dragInfo.target = ev.target;
+      dragInfo.isMouse = ev.type == 'mousedown';
+      dragInfo.screenX = ev.screenX;
+      dragInfo.screenY = ev.screenY;
+      dragInfo.isResize = (ev.offsetX > dragInfo.target.offsetWidth - 50) &&
+        (ev.offsetY > dragInfo.target.offsetHeight - 50);
+      if (dragInfo.isResize)
+        console.log('isResize');
+      if (dragInfo.isMouse) {
+        document.addEventListener('mousemove', dragMove);
+        document.addEventListener('mouseup', dragEnd);
+      } else {
+        document.addEventListener('touchmove', dragMove);
+        document.addEventListener('touchend', dragEnd);
+      }
+    }
+    document.addEventListener('mousedown', dragStart);
+  }
+  observeSizes();
+  initMouseHandling();
+})();
+</script>
